@@ -50,6 +50,8 @@ class ProfileController extends Controller
             $status = $user->commodityConsumerProfile != null ? 'true' : 'false';
         } elseif(Gate::allows('Logistic Company')) {
             $status = $user->logisticCompanyProfile != null ? 'true' : 'false';
+        } else {
+            return redirect('/home')->with('denied', 'You are not authorized');
         }
         return view('pages.user.profile', compact('status'));
     }

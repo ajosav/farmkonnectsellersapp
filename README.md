@@ -14,17 +14,6 @@ After cloning the repo, run the fillowing commands
 
 **php artisan migrate --seed**
 
-### Setting up the mailer in ther env file. You can use the following info
-
-    MAIL_MAILER=smtp
-    MAIL_HOST=mail.farmkonnectng.com
-    MAIL_PORT=465
-    MAIL_USERNAME=sellers@farmkonnectng.com
-    MAIL_PASSWORD=RO*tz*OoD+v+
-    MAIL_ENCRYPTION=ssl
-    MAIL_FROM_ADDRESS=sellers@farmkonnectng.com
-    MAIL_FROM_NAME="${APP_NAME}"
-    MAIL_REPLY_TO_ADDRESS=youremailaddress.@mailserver.com**
 
 ## Note
 Event Listeners, Notifications and observers are being used, please check them out

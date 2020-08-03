@@ -21,8 +21,6 @@ use Spatie\Permission\Models\Permission;
 
 Route::get('/', function () {
 
-    $image_link = Storage::url('/products/small/1596388628921name-card potrait-back.jpg');
-    // return $image_link;
     if(auth()->check()) {
         $user = auth()->user();
         $user->syncPermissions([$user->positionName->name]);

@@ -2185,7 +2185,6 @@ __webpack_require__.r(__webpack_exports__);
 
         toastr["error"](error.response.data.message);
         $('.submit_action').attr('disabled', false);
-        return;
       })["finally"](function () {
         _this2.loading = false;
       });
@@ -2214,7 +2213,6 @@ __webpack_require__.r(__webpack_exports__);
 
         toastr["error"](error.response.data.message);
         $('.submit_action').attr('disabled', false);
-        return;
       })["finally"](function () {
         _this3.loading = false;
       });
@@ -2537,7 +2535,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         toastr["error"](error.response.data.message);
         $('.submit_action').attr('disabled', false);
-        return;
       })["finally"](function () {
         _this5.loading = false;
       });
@@ -3661,7 +3658,7 @@ __webpack_require__.r(__webpack_exports__);
   }
 });
 tinymce.init({
-  selector: 'textarea',
+  selector: 'textarea.product_desc',
   height: 130,
   plugins: ['advlist autolink lists link image charmap print preview anchor textcolor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table contextmenu paste code wordcount'],
   toolbar: 'insert | undo redo |  formatselect | bold italic backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
@@ -11352,7 +11349,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css?2e8c":
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css":
 /*!***********************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css ***!
   \***********************************************************************************************************************************************************/
@@ -72255,7 +72252,7 @@ var render = function() {
                       expression: "product.description"
                     }
                   ],
-                  staticClass: "form-control",
+                  staticClass: "form-control product_desc",
                   attrs: { name: "product_description", rows: "3" },
                   domProps: { value: _vm.product.description },
                   on: {
@@ -84599,7 +84596,7 @@ if (false) {} else {
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vue2-daterange-picker.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css?2e8c");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vue2-daterange-picker.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 

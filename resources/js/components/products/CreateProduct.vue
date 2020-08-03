@@ -156,7 +156,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label><strong>Product Description</strong> </label>
-                                <textarea name="product_description" class="form-control" v-model="product.description" rows="3"></textarea>
+                                <textarea name="product_description" class="form-control product_desc" v-model="product.description" rows="3"></textarea>
                                 <!-- <input type="number" name="quantity" required class="form-control" step="any" min="1"> -->
                                 <span class="validation-msg" id="name-error" v-if="errors && errors.description">{{errors.description[0]}}</span>
                             </div>
@@ -372,7 +372,7 @@ export default {
 }
 
     tinymce.init({
-        selector: 'textarea',
+        selector: 'textarea.product_desc',
         height: 130,
         plugins: [
             'advlist autolink lists link image charmap print preview anchor textcolor',

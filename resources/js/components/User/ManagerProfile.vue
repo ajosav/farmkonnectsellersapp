@@ -202,7 +202,6 @@ export default {
                 toastr["error"](error.response.data.message)
 
                 $('.submit_action').attr('disabled', false);
-                return
             }).finally(() => {
                 this.loading = false;
             })
@@ -237,7 +236,6 @@ export default {
                 toastr["error"](error.response.data.message)
 
                 $('.submit_action').attr('disabled', false);
-                return
             }).finally(() => {
                 this.loading = false;
             })

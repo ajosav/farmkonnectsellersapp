@@ -123,7 +123,6 @@ export default {
                     this.$selectState(this.profile.state)
                 }).catch(error => {
                     toastr["error"](error.response.data.message)
-                    return
                 })
             }
 
@@ -158,7 +157,6 @@ export default {
                 toastr["error"](error.response.data.message)
 
                 $('.submit_action').attr('disabled', false);
-                return
             }).finally(() => {
                 this.loading = false;
             })
@@ -194,7 +192,6 @@ export default {
                 toastr["error"](error.response.data.message)
 
                 $('.submit_action').attr('disabled', false);
-                return
             }).finally(() => {
                 this.loading = false;
             })
