@@ -42,31 +42,59 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
 
-    public function farmManagerProfile() {
+    public function farmManagerProfile()
+    {
         return $this->hasOne(FarmManagerProfile::class, 'user_uuid', 'uuid');
     }
 
-    public function logisticCompanyProfile() {
+    public function logisticCompanyProfile()
+    {
         return $this->hasOne(LogisticCompanyProfile::class, 'user_uuid', 'uuid');
     }
 
-    public function commodityConsumerProfile() {
+    public function commodityConsumerProfile()
+    {
         return $this->hasOne(CommodityConsumerProfile::class, 'user_uuid', 'uuid');
     }
 
-    public function commodityDistributorProfile() {
+    public function commodityDistributorProfile()
+    {
         return $this->hasOne(CommodityDistributorProfile::class, 'user_uuid', 'uuid');
     }
 
-    public function commodityRetailerProfile() {
+    public function commodityRetailerProfile()
+    {
         return $this->hasOne(CommodityRetailerProfile::class, 'user_uuid', 'uuid');
     }
 
-    public function positionName() {
+    public function positionName()
+    {
         return $this->hasOne(UserPosition::class, 'id', 'position');
     }
 
-    public function userProducts() {
+    public function userProducts()
+    {
         return $this->hasMany(Product::class, 'created_by', 'uuid');
+    }
+
+
+    public function wallet()
+    {
+        return $this->hasOne('App\Model\Wallet', 'user_id', 'uuid');
+    }
+
+    public function wallet_balance()
+    {
+        return $this->wallet->balance;
+    }
+
+    public function bank_account()
+    {
+        return $this->hasOne('App\Model\Account', 'user_id', 'uuid');
+    }
+
+    public function find_by_email($email)
+    {
+        return $this->where('email', $email)->first();
     }
 }

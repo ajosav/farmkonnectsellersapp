@@ -23,7 +23,7 @@ Route::get('/', function () {
 
     $image_link = Storage::url('/products/small/1596388628921name-card potrait-back.jpg');
     // return $image_link;
-    if(auth()->check()) {
+    if (auth()->check()) {
         $user = auth()->user();
         $user->syncPermissions([$user->positionName->name]);
         return redirect()->route('login');
@@ -39,13 +39,28 @@ Route::get('/getUsers', 'HomeController@getUsers')->name('get.users');
 
 Route::get('/all_commodities', 'HomeController@getCommodities')->name('get.commodities');
 
+Route::get('/bank-account', 'Wallet\WalletController@accounts');
+Route::post('bank-account', 'Wallet\WalletController@bank_account')->name('bank-account');
 
-Route::namespace('Profile')->group(function() {
+
+Route::namespace('Wallet')->prefix('/wallet')->group(function () {
+    Route::get('/', 'WalletController@index')->name('wallet');
+
+    Route::get('/confirm-deposit', array('as' =>  'transactions.status', 'uses' => 'WalletController@status'));
+
+    Route::get('/withdraw', 'WalletController@create')->name('withdraw');
+    Route::post('/withdraw', 'WalletController@confirm_withdrawal');
+
+    Route::post('/withdraw-money', 'WalletController@withdraw_money');
+});
+
+
+Route::namespace('Profile')->group(function () {
     Route::get('/getProfile', 'ProfileController@userProfile');
     Route::resource('/profile', 'ProfileController');
 });
 
-Route::namespace('Manager')->group(function() {
+Route::namespace('Manager')->group(function () {
     Route::get('/product/fetch_units', 'UnitController@index');
     Route::get('/product/sale_unit/{id}', 'UnitController@saleUnit');
     Route::resource('/product', 'ProductController');

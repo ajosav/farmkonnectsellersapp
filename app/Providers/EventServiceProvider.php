@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Support\Facades\Event;
+use App\Listeners\CreateNewUserWallet;
+use Illuminate\Auth\Events\Registered;
+use App\Listeners\OnboardVerifiedUsers;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -20,7 +22,8 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         Verified::class => [
-            'App\Listeners\OnboardVerifiedUsers',
+            OnboardVerifiedUsers::class,
+            CreateNewUserWallet::class,
         ]
     ];
 
