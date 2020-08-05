@@ -29,25 +29,6 @@
                     {{-- <create-product></create-product> --}}
                 @endcan
                 <div class="table-responsive">
-                    {{-- <table id="userTable" class="table table-bordered table-striped dataTable" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Position</th>
-                                <th>Intro</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
-
-                            </tr>
-                        </thead>
-
-                    </table> --}}
-                    <!-- /.box-body -->
-
-
                     {!! $dataTable->table()!!}
                 </div>
             </div>

@@ -28,7 +28,7 @@
                     <div class="small-box bg-info">
                         <div class="inner">
                         <h3>150</h3>
-        
+
                         <p>New Orders</p>
                         </div>
                         <div class="icon">
@@ -43,7 +43,7 @@
                     <div class="small-box bg-success">
                         <div class="inner">
                         <h3>0</h3>
-        
+
                         <p>Delivery Request</p>
                         </div>
                         <div class="icon">
@@ -58,7 +58,7 @@
                     <div class="small-box navbar-teal">
                         <div class="inner">
                             <h3>&#8358; 44</h3>
-            
+
                             <p>Wallet Balance</p>
                         </div>
                         <div class="icon">
@@ -73,7 +73,7 @@
                     <div class="small-box default-primary-color">
                         <div class="inner">
                         <h3>65</h3>
-        
+
                         <p>Unique Visitors</p>
                         </div>
                         <div class="icon">
@@ -84,7 +84,32 @@
                 </div>
                 <!-- ./col -->
 
-                
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-xl">
+                    Launch Extra Large Modal
+                </button>
+
+                <div  class="modal fade show" id="modal-xl" style="padding-right: 17px; opacity: 1">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Extra Large Modal</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>One fine body…</p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+
                 <div class="table-responsive">
                     <table id="userTable" class="table table-bordered table-striped dataTable" style="width:100%">
                         <thead>
@@ -97,10 +122,10 @@
                                 <th>Intro</th>
                                 <th>Created At</th>
                                 <th>Actions</th>
-                               
+
                             </tr>
                         </thead>
-                        
+
                     </table>
                     <!-- /.box-body -->
                 </div>
@@ -115,7 +140,7 @@
 @push('scripts')
     <script>
         $(document).ready(function () {
-            
+
             $('[data-toggle="tooltip"]').tooltip(); //Tooltip on icons top
 
             $('.popoverOption').each(function () {
@@ -172,7 +197,7 @@
                         path: '/home'
                     }
                 ])
-                // ->can('client-create') 
+                // ->can('client-create')
                 var canCreateClient = '{{ auth()->user()}}';
                 if(canCreateClient) {
                     tour.addSteps([

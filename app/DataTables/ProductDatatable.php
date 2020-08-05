@@ -24,13 +24,22 @@ class ProductDatatable extends DataTable
             ->eloquent($query)
             ->editColumn('image', function($query) {
                 $image = explode(',', $query->image);
-                $image_link = Storage::url('/products/small/'.$image[0]);
-                return '<img src="'.$image_link.'">';
+                return '<img src="'.$query->productImage('/products/small/', $image[0]).'">';
             })
             ->editColumn('sale unit', function($query) {
                 return $query->saleUnit->unit_code;
             })
             ->editColumn('purchase unit', function($query) {
+                return $query->purchaseUnit->unit_code;
+            })
+            ->editColumn('status', function($query) {
+                if($query->status == 0) {
+                    return '<span class="right badge badge-warning"><i class="fa fa-clock"></i> In Stock</span>';
+                } elseif($query->status ==1) {
+                    return '<span class="right badge badge-success"><i class="fa fa-clock"></i> In Order</span>';
+                } else {
+                    return '<span class="right badge badge-danger"><i class="fa fa-clock"></i> Sold Out</span>';
+                }
                 return $query->purchaseUnit->unit_code;
             })
             ->editColumn('price', function($query) {
@@ -49,28 +58,8 @@ class ProductDatatable extends DataTable
             // <input type="submit" name="submit" value="' . __('Delete') . '" class="btn btn-danger" onClick="return confirm(\'Are you sure?\')"">
             // {{csrf_field()}}
             // </form>')
-            ->addColumn('Action', '
-            <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu" x-placement="top-end" style="position: absolute; transform: translate3d(-76px, -144px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <li>
-                        <button="type" class="btn btn-link view"><i class="fa fa-eye"></i> View
-                    </button="type"></li><li>
-                    <a href="http://salepropos.test/products/5/edit" class="btn btn-link"><i class="fa fa-edit"></i> Edit</a>
-                </li>
-                <form action="{{ route(\'product.destroy\', $uuid) }}" method="POST">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <li>
-                        <button type="submit" class="btn btn-link text-danger" onclick="return confirm(\'Are you sure?\')"><i class="fa fa-trash"></i> Delete</button>
-                        {{csrf_field()}}
-                    </li>
-                </form>
-                </ul>
-            </div>')
-            ->rawColumns(['Action', 'description', 'image']);
+            ->addColumn('Action', 'pages.datatable.product.action')
+            ->rawColumns(['Action', 'description', 'image', 'status']);
     }
 
     /**
@@ -79,9 +68,9 @@ class ProductDatatable extends DataTable
      * @param \Product $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Product $model)
+    public function query(Product $product)
     {
-        return $model->newQuery();
+        return $product->newQuery()->with('unit')->with('saleUnit')->with('purchaseUnit');
         // return $model->newQuery()->where('id', 1);
     }
 
@@ -123,10 +112,11 @@ class ProductDatatable extends DataTable
             Column::make('image'),
             Column::make('name'),
             Column::make('description'),
-            Column::make('sale unit'),
-            Column::make('purchase unit'),
+            Column::make('sale unit', 'saleUnit.unit_code'),
+            Column::make('purchase unit', 'purchaseUnit.unit_code'),
             Column::make('price'),
-            Column::make('status'),
+            Column::make('status')
+                    ->searchable(false),
             Column::make('category'),
             Column::make('created_at'),
             Column::make('updated_at'),

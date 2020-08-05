@@ -103,11 +103,11 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     public function findProductByUUid($uuid) {
-        return Product::findByUuid($uuid);
+        return Product::where('uuid', $uuid)->firstOrFail();
     }
 
     /**
@@ -118,7 +118,13 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(!Gate::allows('Farm Manager')) {
+            return redirect()->back()->with('denied', __('Permission Denied'));
+        }
+
+        $product = $this->findProductByUUid($id);
+
+        return view('pages.manager.product.edit', ['product' => $product]);
     }
 
     /**
@@ -141,6 +147,9 @@ class ProductController extends Controller
      */
     public function destroy($uuid)
     {
+        if(!Gate::allows('Farm Manager')) {
+            return redirect()->back()->with('denied', __('Permission Denied'));
+        }
         try{
             $product = $this->findProductByUUid($uuid);
             $product->delete();
