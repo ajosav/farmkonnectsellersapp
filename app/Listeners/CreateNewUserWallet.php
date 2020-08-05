@@ -2,12 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Notifications\Onboard;
+use App\Model\Wallet;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
-class OnboardVerifiedUsers implements ShouldQueue
+
+class CreateNewUserWallet
 {
     /**
      * Create the event listener.
@@ -22,11 +21,14 @@ class OnboardVerifiedUsers implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  Verified  $event
+     * @param  object  $event
      * @return void
      */
     public function handle(Verified $event)
     {
-        $event->user->notify(new Onboard($event->user));
+        //
+        $wallet = new Wallet();
+        $wallet->user_id = $event->user->uuid;
+        $wallet->save();
     }
 }
