@@ -238,6 +238,15 @@ export default {
                         return;
                     });
             }
+            if(this.toggleStatus) {
+                 axios.get('/getProfile')
+                .then(response => {
+                    this.profile = response.data.data
+                    this.$selectState(this.profile.state)
+                }).catch(error => {
+                    toastr["error"](error.response.data.message)
+                })
+            }
 
             axios.get("/all_commodities").then(response => {
                 this.commodities = response.data;
@@ -268,11 +277,16 @@ export default {
                     }
                     toastr["error"](error.response.data.message);
 
-                    $(".submit_action").attr("disabled", false);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+                if(error.response.status == 422) {
+                    this.errors = error.response.data.errors
+                }
+                toastr["error"](error.response.data.message)
+
+                $('.submit_action').attr('disabled', false);
+            }).finally(() => {
+                this.loading = false;
+            })
+
         },
 
         activateEdit() {
@@ -300,11 +314,11 @@ export default {
                     }
                     toastr["error"](error.response.data.message);
 
-                    $(".submit_action").attr("disabled", false);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+                $('.submit_action').attr('disabled', false);
+            }).finally(() => {
+                this.loading = false;
+            })
+
         }
     },
     created() {

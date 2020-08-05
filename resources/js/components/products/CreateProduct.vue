@@ -284,15 +284,8 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label
-                                    ><strong>Product Description</strong>
-                                </label>
-                                <textarea
-                                    name="product_description"
-                                    class="form-control product_desc"
-                                    v-model="product.description"
-                                    rows="3"
-                                ></textarea>
+                                <label><strong>Product Description</strong> </label>
+                                <textarea name="product_description" class="form-control product_desc" v-model="product.description" rows="3"></textarea>
                                 <!-- <input type="number" name="quantity" required class="form-control" step="any" min="1"> -->
                                 <span
                                     class="validation-msg"
@@ -546,18 +539,19 @@ export default {
     }
 };
 
-tinymce.init({
-    selector: "textarea.product_desc",
-    height: 130,
-    plugins: [
-        "advlist autolink lists link image charmap print preview anchor textcolor",
-        "searchreplace visualblocks code fullscreen",
-        "insertdatetime media table contextmenu paste code wordcount"
-    ],
-    toolbar:
-        "insert | undo redo |  formatselect | bold italic backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat",
-    branding: false
-});
+    tinymce.init({
+        selector: 'textarea.product_desc',
+        height: 130,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor textcolor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table contextmenu paste code wordcount'
+        ],
+        toolbar: 'insert | undo redo |  formatselect | bold italic backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+        branding:false
+    });
+
+
 </script>
 
 <style>

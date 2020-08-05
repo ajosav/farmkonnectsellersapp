@@ -2185,7 +2185,6 @@ __webpack_require__.r(__webpack_exports__);
 
         toastr["error"](error.response.data.message);
         $('.submit_action').attr('disabled', false);
-        return;
       })["finally"](function () {
         _this2.loading = false;
       });
@@ -2214,7 +2213,6 @@ __webpack_require__.r(__webpack_exports__);
 
         toastr["error"](error.response.data.message);
         $('.submit_action').attr('disabled', false);
-        return;
       })["finally"](function () {
         _this3.loading = false;
       });
@@ -2537,7 +2535,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         toastr["error"](error.response.data.message);
         $('.submit_action').attr('disabled', false);
-        return;
       })["finally"](function () {
         _this5.loading = false;
       });

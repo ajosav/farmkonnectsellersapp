@@ -27,6 +27,15 @@ class ProductDatatable extends DataTable
                 $image_link = Storage::url('/products/small/'.$image[0]);
                 return '<img src="'.$image_link.'">';
             })
+            ->editColumn('sale unit', function($query) {
+                return $query->saleUnit->unit_code;
+            })
+            ->editColumn('purchase unit', function($query) {
+                return $query->purchaseUnit->unit_code;
+            })
+            ->editColumn('price', function($query) {
+                return '₦' . $query->price;
+            })
             ->editColumn('created_at', function($query) {
                 return $query->created_at->diffForHumans();
             })
@@ -114,6 +123,10 @@ class ProductDatatable extends DataTable
             Column::make('image'),
             Column::make('name'),
             Column::make('description'),
+            Column::make('sale unit'),
+            Column::make('purchase unit'),
+            Column::make('price'),
+            Column::make('status'),
             Column::make('category'),
             Column::make('created_at'),
             Column::make('updated_at'),

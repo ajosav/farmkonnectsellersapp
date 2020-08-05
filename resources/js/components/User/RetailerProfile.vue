@@ -275,11 +275,16 @@ export default {
                     }
                     toastr["error"](error.response.data.message);
 
-                    $(".submit_action").attr("disabled", false);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+                if(error.response.status == 422) {
+                    this.errors = error.response.data.errors
+                }
+                toastr["error"](error.response.data.message)
+
+                $('.submit_action').attr('disabled', false);
+            }).finally(() => {
+                this.loading = false;
+            })
+
         },
 
         activateEdit() {
@@ -307,11 +312,11 @@ export default {
                     }
                     toastr["error"](error.response.data.message);
 
-                    $(".submit_action").attr("disabled", false);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+                $('.submit_action').attr('disabled', false);
+            }).finally(() => {
+                this.loading = false;
+            })
+
         }
     },
     created() {

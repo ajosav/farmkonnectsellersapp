@@ -20,4 +20,10 @@ class Product extends Model
     public function unit() {
         return $this->hasOne(Unit::class, 'id', 'unit_id');
     }
+    public function saleUnit() {
+        return $this->hasOne(Unit::class, 'id', 'sale_unit_id');
+    }
+    public function purchaseUnit() {
+        return $this->hasOne(Unit::class, 'id', 'purchase_unit_id');
+    }
 }
