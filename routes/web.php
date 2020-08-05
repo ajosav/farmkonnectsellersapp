@@ -49,6 +49,13 @@ Route::namespace('Manager')->group(function() {
     Route::resource('/product', 'ProductController');
 });
 
+Route::namespace('CommodityRetailer')->prefix('retailer')->group(function() {
+    Route::get('/make_order', 'MakeOrderController@getProducts')->name('get.allProducts');
+	Route::post('/cal_price', 'MakeOrderController@calculatePrice')->name('get.price');
+    Route::post('/process_order', 'OrderController@store')->name('post.processOrder');
+    //Route::resource('/profile', 'ProfileController');
+});
+    
 
 
 

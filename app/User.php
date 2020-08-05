@@ -14,6 +14,15 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasUUID, SoftDeletes, HasRoles;
 
+    // public static function booted() {
+    //     static::creating(function ($user) {
+    //         app('log')->info('Tosin is creating a new user '.$user->name);
+    //     });
+
+    //     static::created(function ($user) {
+    //         app('log')->info('Tosin created new user '.$user->name);
+    //     });
+    // }
     /**
      * The attributes that are mass assignable.
      *
@@ -68,5 +77,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function userProducts() {
         return $this->hasMany(Product::class, 'created_by', 'uuid');
+    }
+
+    public function order() {
+        return $this->hasMany(Order::class, 'user_id', 'uuid');
     }
 }
