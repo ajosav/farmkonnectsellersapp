@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Create Product</h1>
+                    <h1 class="m-0 text-dark">Products</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -26,31 +26,8 @@
             <div class="row"  id="user_info">
 
                 @can('Farm Manager')
-                    <create-product></create-product>
+                    <edit-product :edit="{{$product}}"></edit-product>
                 @endcan
-                <div class="table-responsive">
-                    
-                    {{-- <table id="userTable" class="table table-bordered table-striped dataTable" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Position</th>
-                                <th>Intro</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
-
-                            </tr>
-                        </thead>
-
-                    </table> --}}
-                    <!-- /.box-body -->
-
-
-                    {{-- {!! $dataTable->table()!!} --}}
-                </div>
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -58,10 +35,4 @@
     <!-- /.content -->
 @endsection
 
-@push('scripts')
 
-<script>
-
-</script>
-
-@endpush

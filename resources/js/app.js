@@ -1014,6 +1014,8 @@ Vue.component('commodity-retailer', require('./components/User/RetailerProfile.v
 Vue.component('commodity-consumer', require('./components/User/CommodityConsumer.vue').default);
 Vue.component('logistic-company', require('./components/User/LogisticCompany.vue').default);
 Vue.component('create-product', require('./components/products/CreateProduct.vue').default);
+Vue.component('create-product', require('./components/products/CreateProduct.vue').default);
+Vue.component('edit-product', require('./components/products/EditProduct.vue').default);
 Vue.component('access-denied', require('./components/InfoAlert/403.vue').default);
 Vue.component('success-response', require('./components/InfoAlert/success.vue').default);
 
