@@ -2,28 +2,27 @@
 
 namespace App\Http\Controllers\Profile;
 
-use App\CommodityConsumerProfile;
-use App\CommodityDistributorProfile;
-use App\CommodityRetailerProfile;
-use App\FarmManagerProfile;
 use App\User;
 use Exception;
+use App\Model\Product;
+use App\FarmManagerProfile;
 use Illuminate\Http\Request;
+use App\LogisticCompanyProfile;
+use App\CommodityConsumerProfile;
+use App\CommodityRetailerProfile;
+use App\CommodityDistributorProfile;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\QueryException;
+use App\Http\Requests\ProfileValidation;
 use App\Http\Resources\UserProfileResource;
 use App\Http\Resources\ManagerProfileResource;
-use App\Http\Resources\Profile\ManagerProfile;
-use App\Http\Requests\ProfileValidation;
-use App\Http\Resources\profile\ConsumerProfile;
-use App\Http\Resources\Profile\LogisticProfile;
-use App\Http\Resources\profile\RetailerProfile;
-use App\Http\Resources\profile\SupplierProfile;
-use App\LogisticCompanyProfile;
-use App\Model\Product;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Resources\ProfileResource\ConsumerProfileResource;
+use App\Http\Resources\ProfileResource\LogisticProfileResource;
+use App\Http\Resources\ProfileResource\RetailerProfileResource;
+use App\Http\Resources\ProfileResource\SupplierProfileResource;
 
 class ProfileController extends Controller
 {
@@ -62,23 +61,23 @@ class ProfileController extends Controller
         if(request()->wantsJson()) {
             if(Gate::allows('Farm Manager')) {
                 if($user->farmManagerProfile != null) {
-                    return new ManagerProfile($user->farmManagerProfile);
+                    return new ManagerProfileResource($user->farmManagerProfile);
                 }
             } elseif(Gate::allows('Commodity Distributor')) {
                 if($user->commodityDistributorProfile != null) {
-                    return new SupplierProfile($user->commodityDistributorProfile);
+                    return new SupplierProfileResource($user->commodityDistributorProfile);
                 }
             } elseif(Gate::allows('Commodity Retailer')) {
                 if($user->commodityRetailerProfile != null) {
-                    return new RetailerProfile($user->commodityRetailerProfile);
+                    return new RetailerProfileResource($user->commodityRetailerProfile);
                 }
             } elseif(Gate::allows('Commodity Consumer')) {
                 if($user->commodityConsumerProfile != null) {
-                    return new ConsumerProfile($user->commodityConsumerProfile);
+                    return new ConsumerProfileResource($user->commodityConsumerProfile);
                 }
             } elseif(Gate::allows('Logistic Company')) {
                 if($user->logisticCompanyProfile != null) {
-                    return new LogisticProfile($user->logisticCompanyProfile);
+                    return new LogisticProfileResource($user->logisticCompanyProfile);
                 }
             }
             return abort(433, 'You are not authorized');
