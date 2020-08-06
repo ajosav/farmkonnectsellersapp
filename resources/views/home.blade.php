@@ -1,230 +1,198 @@
 @extends('layouts.farmkonnect')
 
 @section('content')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Dashboard</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Home</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Dashboard</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active">Home</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <!-- Small boxes (Stat box) -->
-            <div class="row" id="summary">
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row" id="summary">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
                         <h3>150</h3>
-        
-                        <p>New Orders</p>
-                        </div>
-                        <div class="icon">
-                        <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                        <h3>0</h3>
-        
-                        <p>Delivery Request</p>
-                        </div>
-                        <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box navbar-teal">
-                        <div class="inner">
-                            <h3>&#8358; 44</h3>
-            
-                            <p>Wallet Balance</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box default-primary-color">
-                        <div class="inner">
-                        <h3>65</h3>
-        
-                        <p>Unique Visitors</p>
-                        </div>
-                        <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
 
-                
-                <div class="table-responsive">
-                    <table id="userTable" class="table table-bordered table-striped dataTable" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Position</th>
-                                <th>Intro</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
-                               
-                            </tr>
-                        </thead>
-                        
-                    </table>
-                    <!-- /.box-body -->
+                        <p>New Orders</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>0</h3>
+
+                        <p>Delivery Request</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box navbar-teal">
+                    <div class="inner">
+                        <h3>&#8358; 44</h3>
+
+                        <p>Wallet Balance</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box default-primary-color">
+                    <div class="inner">
+                        <h3>65</h3>
+
+                        <p>Unique Visitors</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 @endsection
 
 
 @push('scripts')
-    <script>
-        $(document).ready(function () {
-            
-            $('[data-toggle="tooltip"]').tooltip(); //Tooltip on icons top
+<script>
+    $(document).ready(function () {
 
-            $('.popoverOption').each(function () {
-                var $this = $(this);
-                $this.popover({
-                    trigger: 'hover',
-                    placement: 'left',
-                    container: $this,
-                    html: true,
+        $('[data-toggle="tooltip"]').tooltip(); //Tooltip on icons top
 
-                });
+        $('.popoverOption').each(function () {
+            var $this = $(this);
+            $this.popover({
+                trigger: 'hover',
+                placement: 'left',
+                container: $this,
+                html: true,
+
             });
         });
-        $(document).ready(function () {
-            if(!getCookie("step_dashboard")) {
-                console.log('executed');
-                $("#dashboard").addClass("in");
-                // Instance the tour
-                var tour = new Tour({
-                    storage: false,
-                    backdrop: true,
-                    smartPlacement: true,
-                    steps: [
-                        {
-                            element: "body",
-                            title: "{{trans("Sellers App")}}",
-                            content: "{{trans("Welcome to FarmKonnect Sellers App. Let's have a one time quick tour.")}}",
-                            placement: 'top'
-                        },
-                        {
-                            element: ".col-lg-12",
-                            title: "{{trans("Dashboard")}}",
-                            content: "{{trans("This is your dashboard, which you can use to get a fast and nice overview, of all your tasks, deliveries, commdities, etc.")}}",
-                            placement: 'top'
-                        },
-                        {
-                            element: "#myNavMenu",
-                            title: "{{trans("Navigation")}}",
-                            content: "{{trans("This is your primary navigation bar, which you can use to get around Sellers APP")}}"
-                        }
-                    ]
-                });
-                tour.addSteps([
-                    {
-                        placement: top,
-                        smartPlacement: true
+    });
+    $(document).ready(function () {
+        if (!getCookie("step_dashboard")) {
+            console.log('executed');
+            $("#dashboard").addClass("in");
+            // Instance the tour
+            var tour = new Tour({
+                storage: false,
+                backdrop: true,
+                smartPlacement: true,
+                steps: [{
+                        element: "body",
+                        title: "{{trans("
+                        Sellers App ")}}",
+                        content: "{{trans("
+                        Welcome to FarmKonnect Sellers App.Let 's have a one time quick tour.")}}",
+                        placement: 'top'
                     },
                     {
-                        element: ".content-wrapper",
-                        title: "{{trans("Demographics")}}",
-                        content: "{{trans("Infographics showing the summary of activities")}}"
+                        element: ".col-lg-12",
+                        title: "{{trans("
+                        Dashboard ")}}",
+                        content: "{{trans("
+                        This is your dashboard,
+                        which you can use to get a fast and nice overview,
+                        of all your tasks,
+                        deliveries,
+                        commdities,
+                        etc.
+                        ")}}",
+                        placement: 'top'
                     },
                     {
-                        path: '/home'
+                        element: "#myNavMenu",
+                        title: "{{trans("
+                        Navigation ")}}",
+                        content: "{{trans("
+                        This is your primary navigation bar,
+                        which you can use to get around Sellers APP ")}}"
+                    }
+                ]
+            });
+            tour.addSteps([{
+                    placement: top,
+                    smartPlacement: true
+                },
+                {
+                    element: ".content-wrapper",
+                    title: "{{trans("
+                    Demographics ")}}",
+                    content: "{{trans("
+                    Infographics showing the summary of activities ")}}"
+                },
+                {
+                    path: '/home'
+                }
+            ])
+            // ->can('client-create')
+            var canCreateClient = '{{ auth()->user()}}';
+            if (canCreateClient) {
+                tour.addSteps([{
+                        element: "#profile",
+                        title: "{{trans("
+                        Create Your Profile ")}}",
+                        content: "{{trans("
+                        Let 's take our first step, by creating a Profile")}}"
+                    },
+                    {
+                        path: '/profile'
                     }
                 ])
-                // ->can('client-create') 
-                var canCreateClient = '{{ auth()->user()}}';
-                if(canCreateClient) {
-                    tour.addSteps([
-                        {
-                            element: "#profile",
-                            title: "{{trans("Create Your Profile")}}",
-                            content: "{{trans("Let's take our first step, by creating a Profile")}}"
-                        },
-                        {
-                            path: '/profile'
-                        }
-                    ])
-                }
-
-                // Initialize the tour
-                tour.init();
-
-                tour.start();
-                setCookie("step_dashboard", true, 1000)
             }
-            // function setCookie(key, value, expiry) {
-            //     var expires = new Date();
-            //     expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 2000));
-            //     document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
-            // }
 
-        });
-    </script>
-@endpush
+            // Initialize the tour
+            tour.init();
 
+            tour.start();
+            setCookie("step_dashboard", true, 1000)
+        }
+        // function setCookie(key, value, expiry) {
+        //     var expires = new Date();
+        //     expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 2000));
+        //     document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+        // }
 
-@push('scripts')
-<script>
-    $(document).ready(function() {
-        $('#userTable').dataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{!! route('get.users') !!}',
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                // {data: 'DT_RowData.data-name', name: 'name'},
-                {data: 'email', name: 'email'},
-                {data: 'phone', name: 'phone'},
-                {data: 'position', name: 'position'},
-                {data: 'intro', name: 'Intro'},
-                {data: 'created_at', name: 'created_at'},
-                {data: 'action'},
-            ]
-        })
-    } );
+    });
 
 </script>
-
 @endpush
