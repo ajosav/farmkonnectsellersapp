@@ -110,7 +110,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ url('/transactions') }}" class="nav-link">
                     <i class="nav-icon fas fa-history"></i>
                     <p>
                         Transaction History
@@ -119,30 +119,31 @@
             </li>
 
             @can('Commodity Retailer')
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-shopping-cart"></i>
-                        <p>
-                            Orders
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('get.allProducts')}}" class="nav-link {{Request::is('retailer/make_order') ? 'active' : ''}}">
-                                <i class="fas fa-plus nav-icon"></i>Make Order
-                            </a>
-                        </li>
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-shopping-cart"></i>
+                    <p>
+                        Orders
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{route('get.allProducts')}}"
+                            class="nav-link {{Request::is('retailer/make_order') ? 'active' : ''}}">
+                            <i class="fas fa-plus nav-icon"></i>Make Order
+                        </a>
+                    </li>
 
-                        <li class="nav-item">
-                            <a href="" class="">
-                                <i class="fa fa-cart-arrow-down nav-icon"></i>My Orders
-                                <span class="badge badge-info right">6</span>
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a href="" class="">
+                            <i class="fa fa-cart-arrow-down nav-icon"></i>My Orders
+                            <span class="badge badge-info right">6</span>
+                        </a>
+                    </li>
 
-                    </ul>
-                </li>
+                </ul>
+            </li>
             @endcan
 
         </ul>

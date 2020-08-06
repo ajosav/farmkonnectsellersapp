@@ -82,9 +82,16 @@ class WalletController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         //
+        $transactions = Transaction::where('user_id', Auth::user()->uuid)->latest()->get();
+
+        $total_credit = Transaction::where('user_id', Auth::user()->uuid)->where('type', 'Credit')->where('status', 1)->sum('amount');
+
+        $total_debit = Transaction::where('user_id', Auth::user()->uuid)->where('type', 'Debit')->where('status', 1)->sum('amount');
+
+        return view('pages.user.transactions', ['transactions' => $transactions, 'total_credit' => $total_credit, 'total_debit' => $total_debit]);
     }
 
     /**

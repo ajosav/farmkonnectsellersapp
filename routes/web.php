@@ -40,6 +40,8 @@ Route::get('/all_commodities', 'HomeController@getCommodities')->name('get.commo
 Route::get('/bank-account', 'Wallet\WalletController@accounts');
 Route::post('bank-account', 'Wallet\WalletController@bank_account')->name('bank-account');
 
+Route::get('/transactions', 'Wallet\WalletController@show');
+
 
 Route::namespace('Wallet')->prefix('/wallet')->group(function () {
     Route::get('/', 'WalletController@index')->name('wallet');
@@ -66,13 +68,13 @@ Route::namespace('Manager')->group(function () {
     Route::resource('/product', 'ProductController');
 });
 
-Route::namespace('CommodityRetailer')->prefix('retailer')->group(function() {
+Route::namespace('CommodityRetailer')->prefix('retailer')->group(function () {
     Route::get('/make_order', 'MakeOrderController@getProducts')->name('get.allProducts');
-	Route::post('/cal_price', 'MakeOrderController@calculatePrice')->name('get.price');
+    Route::post('/cal_price', 'MakeOrderController@calculatePrice')->name('get.price');
     Route::post('/process_order', 'OrderController@store')->name('post.processOrder');
     //Route::resource('/profile', 'ProfileController');
 });
-    
+
 
 
 
