@@ -48,7 +48,7 @@ Route::namespace('Wallet')->prefix('/wallet')->group(function () {
 
     Route::get('/confirm-deposit', array('as' =>  'transactions.status', 'uses' => 'WalletController@status'));
 
-    Route::get('/withdraw', 'WalletController@create')->name('withdraw');
+    Route::get('/withdraw', 'WalletController@create')->middleware('password.confirm')->name('withdraw');
     Route::post('/withdraw', 'WalletController@confirm_withdrawal');
 
     Route::post('/cookie', 'WalletController@set_cookie')->name('cookie');
