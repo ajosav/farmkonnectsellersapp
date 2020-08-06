@@ -2960,6 +2960,80 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     status: {
@@ -2969,13 +3043,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      states: ['Abia', 'Adamawa', 'AkwaIbom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT', 'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Lagos', 'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamafara'],
+      states: ["Abia", "Adamawa", "AkwaIbom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamafara"],
       value: [],
       profile: null,
       commodities: [],
       errors: null,
       toggleStatus: this.status,
-      btn_success: 'btn-primary',
+      btn_success: "btn-primary",
       loading: false
     };
   },
@@ -2995,7 +3069,7 @@ __webpack_require__.r(__webpack_exports__);
       };
 
       if (this.toggleStatus) {
-        axios.get('/getProfile').then(function (response) {
+        axios.get("/getProfile").then(function (response) {
           _this.profile = response.data.data;
 
           _this.$selectState(_this.profile.state);
@@ -3005,25 +3079,25 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
 
-      axios.get('/all_commodities').then(function (response) {
+      axios.get("/all_commodities").then(function (response) {
         _this.commodities = response.data;
       });
     },
     selected: function selected() {
-      this.profile.commodities_planted = $('#commodity_id').selectpicker('val');
+      this.profile.commodities_planted = $("#commodity_id").selectpicker("val");
     },
     createProfile: function createProfile() {
       var _this2 = this;
 
       this.loading = true;
-      $('.submit_action').attr('disabled', true);
-      axios.post('/profile', this.profile).then(function (response) {
-        swal.fire('Success', 'User Profile Successfully Created', 'success');
+      $(".submit_action").attr("disabled", true);
+      axios.post("/profile", this.profile).then(function (response) {
+        swal.fire("Success", "User Profile Successfully Created", "success");
         _this2.commodities = [];
         _this2.errors = null;
         _this2.toggleStatus = !_this2.toggleStatus;
-        $('.submit_action').attr('disabled', false);
-        Fire.$emit('AfterCreate');
+        $(".submit_action").attr("disabled", false);
+        Fire.$emit("AfterCreate");
       })["catch"](function (error) {
         if (error.response.status == 422) {
           _this2.errors = error.response.data.errors;
@@ -3043,15 +3117,15 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.loading = true;
-      $('.submit_action').attr('disabled', true);
+      $(".submit_action").attr("disabled", true);
       axios.post("profile", this.profile).then(function (response) {
-        swal.fire('Sucess', 'Profile Updated', 'success');
-        $('.submit_action').attr('disabled', false);
+        swal.fire("Sucess", "Profile Updated", "success");
+        $(".submit_action").attr("disabled", false);
         _this3.commodities = [];
         _this3.errors = null;
         _this3.btn_success = "btn-primary";
         _this3.toggleStatus = !_this3.toggleStatus;
-        Fire.$emit('AfterCreate');
+        Fire.$emit("AfterCreate");
       })["catch"](function (error) {
         if (error.response.status == 422) {
           _this3.errors = error.response.data.errors;
@@ -3068,7 +3142,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this4 = this;
 
     this.loadCommodities();
-    Fire.$on('AfterCreate', function () {
+    Fire.$on("AfterCreate", function () {
       _this4.loadCommodities();
     });
   }
@@ -3170,6 +3244,80 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     status: {
@@ -3179,13 +3327,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      states: ['Abia', 'Adamawa', 'AkwaIbom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT', 'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Lagos', 'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamafara'],
+      states: ["Abia", "Adamawa", "AkwaIbom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamafara"],
       value: [],
       profile: null,
       commodities: [],
       errors: null,
       toggleStatus: this.status,
-      btn_success: 'btn-primary'
+      btn_success: "btn-primary"
     };
   },
   methods: {
@@ -3204,7 +3352,7 @@ __webpack_require__.r(__webpack_exports__);
       };
 
       if (this.toggleStatus) {
-        axios.get('/getProfile').then(function (response) {
+        axios.get("/getProfile").then(function (response) {
           _this.profile = response.data.data;
 
           _this.$selectState(_this.profile.state);
@@ -3213,7 +3361,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
 
-      axios.get('/all_commodities').then(function (response) {
+      axios.get("/all_commodities").then(function (response) {
         _this.commodities = response.data;
       });
     },
@@ -3221,14 +3369,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.loading = true;
-      $('.submit_action').attr('disabled', true);
-      axios.post('/profile', this.profile).then(function (response) {
-        swal.fire('Success', 'User Profile Successfully Created', 'success');
+      $(".submit_action").attr("disabled", true);
+      axios.post("/profile", this.profile).then(function (response) {
+        swal.fire("Success", "User Profile Successfully Created", "success");
         _this2.commodities = [];
         _this2.errors = null;
         _this2.toggleStatus = !_this2.toggleStatus;
-        $('.submit_action').attr('disabled', false);
-        Fire.$emit('AfterCreate');
+        $(".submit_action").attr("disabled", false);
+        Fire.$emit("AfterCreate");
       })["catch"](function (error) {
         if (error.response.status == 422) {
           _this2.errors = error.response.data.errors;
@@ -3248,15 +3396,15 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.loading = true;
-      $('.submit_action').attr('disabled', true);
+      $(".submit_action").attr("disabled", true);
       axios.post("profile", this.profile).then(function (response) {
-        swal.fire('Sucess', 'Profile Updated', 'success');
-        $('.submit_action').attr('disabled', false);
+        swal.fire("Sucess", "Profile Updated", "success");
+        $(".submit_action").attr("disabled", false);
         _this3.commodities = [];
         _this3.errors = null;
         _this3.btn_success = "btn-primary";
         _this3.toggleStatus = !_this3.toggleStatus;
-        Fire.$emit('AfterCreate');
+        Fire.$emit("AfterCreate");
       })["catch"](function (error) {
         if (error.response.status == 422) {
           _this3.errors = error.response.data.errors;
@@ -3273,7 +3421,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this4 = this;
 
     this.loadCommodities();
-    Fire.$on('AfterCreate', function () {
+    Fire.$on("AfterCreate", function () {
       _this4.loadCommodities();
     });
   }
@@ -3482,6 +3630,169 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3494,9 +3805,9 @@ __webpack_require__.r(__webpack_exports__);
         duplicateCheck: true,
         maxFilesize: 0.5,
         parallelUploads: 100,
-        paramName: 'image',
+        paramName: "image",
         uploadMultiple: true,
-        url: '/product',
+        url: "/product",
         headers: {
           "X-CSRF-TOKEN": this.$csrfToken
         },
@@ -3517,7 +3828,7 @@ __webpack_require__.r(__webpack_exports__);
         quantity: null,
         date: {
           startDate: moment(new Date()),
-          endDate: moment(new Date()).endOf('year')
+          endDate: moment(new Date()).endOf("year")
         },
         price: null,
         unit_id: null,
@@ -3528,8 +3839,8 @@ __webpack_require__.r(__webpack_exports__);
       datepicker: {
         minDate: null,
         maxDate: null,
-        daysOfWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-        monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        daysOfWeek: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         firstDay: 0,
         singleDatePicker: false,
         timePicker: false,
@@ -3550,12 +3861,12 @@ __webpack_require__.r(__webpack_exports__);
     loadUnits: function loadUnits() {
       var _this = this;
 
-      axios.get('/product/fetch_units').then(function (response) {
+      axios.get("/product/fetch_units").then(function (response) {
         _this.defaultunits = response.data;
       })["catch"](function (response) {
         toastr["error"](error.response.data.message);
       });
-      axios.get('/all_commodities').then(function (response) {
+      axios.get("/all_commodities").then(function (response) {
         _this.commodities = response.data;
       })["catch"](function (response) {
         toastr["error"](error.response.data.message);
@@ -3568,7 +3879,7 @@ __webpack_require__.r(__webpack_exports__);
       this.product.sale_unit_id = null;
 
       if (unit) {
-        axios.get('/product/sale_unit/' + unit.id).then(function (response) {
+        axios.get("/product/sale_unit/" + unit.id).then(function (response) {
           _this2.purchaseunits = response.data, _this2.saleunits = response.data;
         })["catch"](function (response) {
           toastr["error"](error.response.data.message);
@@ -3578,14 +3889,14 @@ __webpack_require__.r(__webpack_exports__);
     sendingEvent: function sendingEvent(file, xhr, formData) {
       tinyMCE.triggerSave();
       var description = $('textarea[name="product_description"]').val();
-      formData.append('description', description);
+      formData.append("description", description);
 
       for (var key in this.product) {
-        if (key == 'unit_id' || key == 'purchase_unit_id' || key == 'sale_unit_id') {
+        if (key == "unit_id" || key == "purchase_unit_id" || key == "sale_unit_id") {
           formData.append(key, this.product[key].id);
-        } else if (key == 'date') {
-          formData.append('startDate', this.formatDateYmd(this.product[key].startDate));
-          formData.append('finishDate', this.formatDateYmd(this.product[key].endDate));
+        } else if (key == "date") {
+          formData.append("startDate", this.formatDateYmd(this.product[key].startDate));
+          formData.append("finishDate", this.formatDateYmd(this.product[key].endDate));
         } else {
           formData.append(key, this.product[key]);
         }
@@ -3596,14 +3907,14 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = [];
 
       for (var key in this.product) {
-        if (this.product[key] == '' || this.product[key] == null) {
-          toastr["error"]('Please fill all the required fields');
+        if (this.product[key] == "" || this.product[key] == null) {
+          toastr["error"]("Please fill all the required fields");
           return;
         }
       }
 
       if (this.$refs["myVueDropzone"].getQueuedFiles().length < 1) {
-        swal.fire('Error', 'Please upload at least an Image', 'error');
+        swal.fire("Error", "Please upload at least an Image", "error");
       }
 
       this.$refs["myVueDropzone"].processQueue();
@@ -3617,13 +3928,13 @@ __webpack_require__.r(__webpack_exports__);
 
         toastr["error"](message.message);
       } else {
-        swal.fire('File too big', message, 'error');
+        swal.fire("File too big", message, "error");
         this.$refs["myVueDropzone"].removeAllFiles();
       }
     },
     totalUploadProgress: function totalUploadProgress(totaluploadprogress, totalBytes, totalBytesSent) {},
     uploadComplete: function uploadComplete() {
-      location.href = '/home';
+      location.href = "/home";
       this.loading = false;
       this.$refs["myVueDropzone"].removeAllFiles;
     },
@@ -3631,7 +3942,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
     },
     formatDateYmd: function formatDateYmd(date) {
-      return moment(date).format('YYYY/MM/DD');
+      return moment(date).format("YYYY/MM/DD");
     },
     formatDate: function formatDate() {
       this.product.date.startDate = this.formatDateYmd(this.product.date.startDate);
@@ -3643,16 +3954,16 @@ __webpack_require__.r(__webpack_exports__);
     var _this3 = this;
 
     this.loadUnits();
-    Fire.$on('AfterCreate', function () {
+    Fire.$on("AfterCreate", function () {
       _this3.loadUnits();
     });
   }
 });
 tinymce.init({
-  selector: 'textarea.product_desc',
+  selector: "textarea.product_desc",
   height: 130,
-  plugins: ['advlist autolink lists link image charmap print preview anchor textcolor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table contextmenu paste code wordcount'],
-  toolbar: 'insert | undo redo |  formatselect | bold italic backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
+  plugins: ["advlist autolink lists link image charmap print preview anchor textcolor", "searchreplace visualblocks code fullscreen", "insertdatetime media table contextmenu paste code wordcount"],
+  toolbar: "insert | undo redo |  formatselect | bold italic backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat",
   branding: false
 });
 
@@ -11869,7 +12180,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#axiosForm {\n    position: relative;\n}\n#date_picker {\n    width: 100%\n}\n.daterangepicker {\n    top: calc(1.6em + 0.75rem + 2px) !important;\n}\n.reportrange-text{\n    min-width: 100% !important;\n}\n", ""]);
+exports.push([module.i, "\n#axiosForm {\n    position: relative;\n}\n#date_picker {\n    width: 100%;\n}\n.daterangepicker {\n    top: calc(1.6em + 0.75rem + 2px) !important;\n}\n.reportrange-text {\n    min-width: 100% !important;\n}\n", ""]);
 
 // exports
 
@@ -71791,7 +72102,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Edit")]
+                [_vm._v("\n                        Edit\n                    ")]
               ),
               _vm._v(" "),
               _c(
@@ -71809,7 +72120,13 @@ var render = function() {
                   class: _vm.btn_success,
                   attrs: { type: "submit" }
                 },
-                [_vm._v(_vm._s(_vm.profile.uuid == null ? "Submit" : "Update"))]
+                [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.profile.uuid == null ? "Submit" : "Update") +
+                      "\n                    "
+                  )
+                ]
               )
             ])
           ])
@@ -72158,7 +72475,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Edit")]
+                [_vm._v("\n                        Edit\n                    ")]
               ),
               _vm._v(" "),
               _c(
@@ -72176,7 +72493,13 @@ var render = function() {
                   class: _vm.btn_success,
                   attrs: { type: "submit" }
                 },
-                [_vm._v(_vm._s(_vm.profile.uuid == null ? "Submit" : "Update"))]
+                [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.profile.uuid == null ? "Submit" : "Update") +
+                      "\n                    "
+                  )
+                ]
               )
             ])
           ])
@@ -72327,9 +72650,9 @@ var render = function() {
                             _vm._l(_vm.errors.startDate, function(error) {
                               return [
                                 _vm._v(
-                                  "\n                                    " +
+                                  "\n                                        " +
                                     _vm._s(error) +
-                                    "\n                                "
+                                    "\n                                    "
                                 )
                               ]
                             })
@@ -72349,9 +72672,9 @@ var render = function() {
                             _vm._l(_vm.errors.finishDate, function(error) {
                               return [
                                 _vm._v(
-                                  "\n                                    " +
+                                  "\n                                        " +
                                     _vm._s(error) +
-                                    "\n                                "
+                                    "\n                                    "
                                 )
                               ]
                             })
@@ -72761,7 +73084,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "italic text-danger" }, [
       _c("small", [
-        _vm._v("The field labels marked with * are required input fields.")
+        _vm._v(
+          "The field labels marked with * are required input\n                    fields."
+        )
       ])
     ])
   },
@@ -72771,7 +73096,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", [
       _c("strong", [
-        _vm._v("Product Name "),
+        _vm._v("Product Name\n                                    "),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ])
     ])
@@ -72782,7 +73107,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "date_picker" } }, [
       _c("strong", [
-        _vm._v("Availability [from - to] "),
+        _vm._v(
+          "Availability [from - to]\n                                    "
+        ),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ])
     ])
@@ -72793,7 +73120,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", [
       _c("strong", [
-        _vm._v("Unit "),
+        _vm._v("Unit\n                                    "),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ])
     ])
@@ -72804,7 +73131,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", [
       _c("strong", [
-        _vm._v("Sale Unit "),
+        _vm._v("Sale Unit\n                                    "),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ])
     ])
@@ -72815,7 +73142,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", [
       _c("strong", [
-        _vm._v("Purchase Unit "),
+        _vm._v("Purchase Unit\n                                    "),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ])
     ])
@@ -72826,7 +73153,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", [
       _c("strong", [
-        _vm._v("Product quantity "),
+        _vm._v("Product quantity\n                                    "),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ])
     ])
@@ -72837,7 +73164,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", [
       _c("strong", [
-        _vm._v("Price (Per Product Unit) "),
+        _vm._v(
+          "Price (Per Product Unit)\n                                    "
+        ),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ])
     ])
@@ -72847,7 +73176,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "commodities_planted" } }, [
-      _vm._v("Product category "),
+      _vm._v("Product category\n                            "),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },
@@ -72863,7 +73192,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", [
       _c("strong", [
-        _vm._v("Other Images  "),
+        _vm._v("Other Images\n                                    "),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ])
     ])
@@ -86943,8 +87272,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\sellersApp\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\sellersApp\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /opt/lampp/htdocs/farmkonnectsellersapp/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/farmkonnectsellersapp/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
