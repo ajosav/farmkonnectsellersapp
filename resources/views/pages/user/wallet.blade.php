@@ -86,7 +86,10 @@
 
         $('#credit_wallet_btn').click(function () {
             const amount = $('#deposit-amount').val();
-
+            $.post("{{ route('cookie') }}", {
+                '_token': $('meta[name="csrf-token"]').attr('content'),
+                'amount': amount
+            });
             makePayment(amount);
         });
 

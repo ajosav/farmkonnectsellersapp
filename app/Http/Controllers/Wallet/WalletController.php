@@ -6,14 +6,20 @@ use App\User;
 use App\Model\Wallet;
 use App\Model\Account;
 use GuzzleHttp\Client;
+use App\Model\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Auth;
+use App\Events\WalletCreditValidated;
+use Illuminate\Support\Facades\Cookie;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Validator;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
+use App\Events\SuccessfulUserWalletWithdrawal;
 
 class WalletController extends Controller
 {
@@ -187,17 +193,34 @@ class WalletController extends Controller
         }
     }
 
+    public function set_cookie(Request $request)
+    {
+
+        $response = new Response('Set Cookie');
+        $response->withCookie(cookie('amount', $request->amount));
+        return $response;
+    }
+
     public function status(Request $request)
     {
         # code...
         $txn_id = $request->transaction_id;
-        $amount = $request->amount;
         $txn_ref = $request->tx_ref;
+        $amount = $request->cookie('amount');
+        Cookie::queue(Cookie::forget('amount'));
 
         $valid_transaction = $this->validate_rave_transaction($txn_id);
 
         if ($valid_transaction != true) {
             # code...
+            $log = (object) [
+                'transaction_id' => $txn_id,
+                'txn_ref' => $txn_ref,
+                'reason' => 'The transaction was not completed on flutterwave.',
+                'time' => now()
+            ];
+
+            Log::channel('transactions')->info(json_encode($log));
             return redirect()->route('wallet')->with('error', 'Transaction Error. Please Try again later.');
         }
 
@@ -205,17 +228,40 @@ class WalletController extends Controller
 
         if ($amount_paid < $amount) {
             # code...
+
+            $log = [
+                'transaction_id' => $txn_id,
+                'txn_ref' => $txn_ref,
+                'reason' => 'The amount debited from customer was ' . $amount_paid . ' instead of ' . $amount,
+            ];
+
+            $log = (object) $log;
+
+            Log::channel('transactions')->info(json_encode($log));
+
             return redirect()->route('wallet')->with('error', 'Invalid Transaction. Please Try again later.');
+        }
+
+        $transaction = new Transaction();
+
+        $existing_transaction = $transaction->existing_transaction($valid_transaction->data->id, $valid_transaction->data->tx_ref);
+
+        if ($existing_transaction) {
+            # code...
+
+            return redirect()->route('wallet')->with('error', 'Invalid Transaction Detected.');
         }
 
         $credit_wallet = $this->credit_wallet($amount_paid, Auth::user()->uuid);
 
-        if ($credit_wallet != true) {
+        if ($credit_wallet) {
             # code...
-            return redirect()->route('wallet')->with('error', 'Error Crediting wallet. Kindly try again later.');
+            event(new WalletCreditValidated($valid_transaction));
+
+            return redirect()->route('wallet')->with('success', 'Wallet Successfully credited.');
         }
 
-        return redirect()->route('wallet')->with('success', 'Wallet Successfully credited.');
+        return redirect()->route('wallet')->with('error', 'Error Crediting wallet. Kindly try again later.');
     }
 
     protected function account_validator($request)
@@ -387,6 +433,8 @@ class WalletController extends Controller
                 Wallet::where('user_id', Auth::user()->uuid)->update([
                     'balance' => $available_balance - $amount_withdrawn
                 ]);
+
+                event(new SuccessfulUserWalletWithdrawal($response));
 
                 return response()->json(['status' => '1', 'msg' => 'Withdrawal Request Successfully Queued']);
             }

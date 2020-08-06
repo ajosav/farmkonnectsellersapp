@@ -2,11 +2,15 @@
 
 namespace App\Providers;
 
+use App\Listeners\LogWalletCredit;
 use Illuminate\Auth\Events\Verified;
+use App\Events\WalletCreditValidated;
 use Illuminate\Support\Facades\Event;
 use App\Listeners\CreateNewUserWallet;
+use App\Listeners\LogWalletWithdrawal;
 use Illuminate\Auth\Events\Registered;
 use App\Listeners\OnboardVerifiedUsers;
+use App\Events\SuccessfulUserWalletWithdrawal;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -24,7 +28,13 @@ class EventServiceProvider extends ServiceProvider
         Verified::class => [
             OnboardVerifiedUsers::class,
             CreateNewUserWallet::class,
-        ]
+        ],
+        WalletCreditValidated::class => [
+            LogWalletCredit::class
+        ],
+        SuccessfulUserWalletWithdrawal::class => [
+            LogWalletWithdrawal::class
+        ],
     ];
 
     /**
