@@ -3,8 +3,10 @@
 namespace App\Model;
 
 use App\User;
-use BinaryCabin\LaravelUUID\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use BinaryCabin\LaravelUUID\Traits\HasUUID;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -28,9 +30,14 @@ class Product extends Model
         return $this->hasOne(Unit::class, 'id', 'purchase_unit_id');
     }
 
-    public function productImage(string $path, $img){
-        return \Storage::url($path.$img);
+    public function productImage($path, $imageName) {
+        return Storage::url($path.$imageName);
     }
+
+    public function carbonParseDate($date) {
+        return Carbon::parse($date);
+    }
+
 
     public function order() {
         return $this->hasMany(Order::class, 'order_id', 'uuid');

@@ -21,6 +21,7 @@ use App\Http\Resources\Profile\LogisticProfile;
 use App\Http\Resources\profile\RetailerProfile;
 use App\Http\Resources\profile\SupplierProfile;
 use App\LogisticCompanyProfile;
+use App\Model\Product;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -91,7 +92,8 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        //
+        // return Product::addSelect(User::whereColumn('uuid', 'products.uuid')->where('users.position', 2))->get();
+        dd(User::permission('Farm Manager')->select('uuid')->get());
     }
 
     /**
