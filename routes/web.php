@@ -21,7 +21,7 @@ use Spatie\Permission\Models\Permission;
 
 Route::get('/', function () {
 
-    if(auth()->check()) {
+    if (auth()->check()) {
         $user = auth()->user();
         $user->syncPermissions([$user->positionName->name]);
         return redirect()->route('login');
@@ -48,6 +48,8 @@ Route::namespace('Wallet')->prefix('/wallet')->group(function () {
 
     Route::get('/withdraw', 'WalletController@create')->name('withdraw');
     Route::post('/withdraw', 'WalletController@confirm_withdrawal');
+
+    Route::post('/cookie', 'WalletController@set_cookie')->name('cookie');
 
     Route::post('/withdraw-money', 'WalletController@withdraw_money');
 });
