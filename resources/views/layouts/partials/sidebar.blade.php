@@ -1,7 +1,6 @@
 <!-- Brand Logo -->
 <a href="#" class="brand-link navbar-teal">
-    <img src="/images/logo/logo.jpeg" alt="FarmKonnect" class="brand-image img-circle elevation-3"
-        style="opacity: .8">
+    <img src="/images/logo/logo.jpeg" alt="FarmKonnect" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">FarmKonnect</span>
 </a>
 
@@ -19,8 +18,9 @@
 
     <!-- Sidebar Menu -->
     <nav class="mt-2" id="myNavMenu">
-        <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
-        {{-- <ul class="nav nav-pills nav-sidebar flex-column nav-legacy nav-compact " data-widget="treeview" role="menu" data-accordion="false"> --}}
+        <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu"
+            data-accordion="false">
+            {{-- <ul class="nav nav-pills nav-sidebar flex-column nav-legacy nav-compact " data-widget="treeview" role="menu" data-accordion="false"> --}}
 
             <li class="nav-item" id="dashboard">
                 <a href="{{route('home')}}" class="nav-link {{Request::is('home') ? 'active' : ''}}">
@@ -40,47 +40,73 @@
 
             </li>
             @can('Farm Manager')
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-shopping-cart"></i>
-                        <p>
-                            Sale
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('product.create')}}" class="nav-link {{Request::is('product/create') ? 'active' : ''}}">
-                                <i class="fas fa-plus nav-icon"></i>
-                                <p>Add Product</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('product.index')}}" class="nav-link {{Request::is('product') ? 'active' : ''}}">
-                                <i class="fa fa-tasks nav-icon"></i>
-                                <p>Products</p>
-                            </a>
-                        </li>
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-shopping-cart"></i>
+                    <p>
+                        Sale
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{route('product.create')}}"
+                            class="nav-link {{Request::is('product/create') ? 'active' : ''}}">
+                            <i class="fas fa-plus nav-icon"></i>
+                            <p>Add Product</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('product.index')}}"
+                            class="nav-link {{Request::is('product') ? 'active' : ''}}">
+                            <i class="fa fa-tasks nav-icon"></i>
+                            <p>Products</p>
+                        </a>
+                    </li>
 
-                        <li class="nav-item">
-                            <a href="layout/fixed-topnav.html" class="nav-link">
-                                <i class="fa fa-cart-arrow-down"></i>
-                                <p>Orders</p>
-                                <span class="badge badge-info right">6</span>
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a href="layout/fixed-topnav.html" class="nav-link">
+                            <i class="fa fa-cart-arrow-down"></i>
+                            <p>Orders</p>
+                            <span class="badge badge-info right">6</span>
+                        </a>
+                    </li>
 
-                    </ul>
-                </li>
+                </ul>
+            </li>
             @endcan
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-coins"></i>
+                <a href="{{ url('/bank-account') }}" class="nav-link">
+                    <i class="nav-icon fas fa-landmark"></i>
                     <p>
-                        My Wallet
+                        Bank Account
                     </p>
                 </a>
             </li>
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-wallet"></i>
+                    <p>
+                        My Wallet
+                        <i class="fas fa-angle-right right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ url('/wallet') }}"
+                            class="nav-link {{Request::is('product/create') ? 'active' : ''}}">
+                            <i class="fas fa-credit-card nav-icon"></i>
+                            <p>Credit Wallet</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/wallet/withdraw') }}"
+                            class="nav-link {{Request::is('product') ? 'active' : ''}}">
+                            <i class="fas fa-money-bill nav-icon"></i>
+                            <p>Make Withdrawal</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
 
             <li class="nav-item">
