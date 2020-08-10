@@ -114,7 +114,7 @@
                         }, 5000);
 
                     } else {
-                        swal.close()
+                        swal.close();
                         setTimeout(function () {
                             swal.fire({
                                 icon: 'error',

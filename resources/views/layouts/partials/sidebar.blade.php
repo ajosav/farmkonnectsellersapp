@@ -75,6 +75,36 @@
                 </ul>
             </li>
             @endcan
+
+            @if(auth()->user()->can('Commodity Retailer') || auth()->user()->can('Commodity Distributor') ||
+            auth()->user()->can('Commodity Consumer'))
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-store"></i>
+                    <p>
+                        Market Place
+                        <i class="fas fa-angle-right right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{route('get.allProducts')}}"
+                            class="nav-link {{Request::is('orders/make_order') ? 'active' : ''}}">
+                            <i class="fas fa-plus nav-icon"></i>Make Order
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="" class="">
+                            <i class="fa fa-cart-arrow-down nav-icon"></i>My Orders
+                            <span class="badge badge-info right">6</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            @endif
+
             <li class="nav-item">
                 <a href="{{ url('/bank-account') }}" class="nav-link">
                     <i class="nav-icon fas fa-landmark"></i>
@@ -117,34 +147,6 @@
                     </p>
                 </a>
             </li>
-
-            @can('Commodity Retailer')
-            <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-shopping-cart"></i>
-                    <p>
-                        Orders
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{route('get.allProducts')}}"
-                            class="nav-link {{Request::is('retailer/make_order') ? 'active' : ''}}">
-                            <i class="fas fa-plus nav-icon"></i>Make Order
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="" class="">
-                            <i class="fa fa-cart-arrow-down nav-icon"></i>My Orders
-                            <span class="badge badge-info right">6</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </li>
-            @endcan
 
         </ul>
 
