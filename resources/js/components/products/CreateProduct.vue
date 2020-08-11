@@ -300,7 +300,7 @@
                             <div class="form-group">
                                 <label
                                     ><strong
-                                        >Other Images
+                                        >Product Images (Not more than 500kb, maximum of 5 images in total)
                                         <span class="text-danger"
                                             >*</span
                                         ></strong
@@ -359,6 +359,7 @@ export default {
                     "<i class='fa fa-cloud-upload'></i>Click to Upload Product Images or Drag N Drop Image",
                 duplicateCheck: true,
                 maxFilesize: 0.5,
+                maxFiles: 5,
                 parallelUploads: 100,
                 paramName: "image",
                 uploadMultiple: true,
@@ -505,15 +506,24 @@ export default {
                 }
                 toastr["error"](message.message);
             } else {
-                swal.fire("File too big", message, "error");
-                this.$refs["myVueDropzone"].removeAllFiles();
+                this.$refs["myVueDropzone"].removeFile(file);
+                swal.fire("Error", message, "error");
             }
+            this.loading = false;
         },
         totalUploadProgress(totaluploadprogress, totalBytes, totalBytesSent) {},
         uploadComplete() {
-            location.href = "/home";
+            for (var key in this.product) {
+                if (key == "date") {
+                    this.product[key].startDate = moment(new Date());
+                    this.product[key].endDate =moment(new Date()).endOf("year");
+                } else {
+                    this.product[key] == null
+                }      
+            }
             this.loading = false;
             this.$refs["myVueDropzone"].removeAllFiles;
+            location.href = "/home";
         },
         uploadInit(file) {
             this.loading = true;

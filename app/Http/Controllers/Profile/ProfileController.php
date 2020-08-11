@@ -15,13 +15,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\QueryException;
 use App\Http\Requests\ProfileValidation;
-use App\Http\Resources\ProfileResource\ManagerProfileResource;
-use App\Http\Resources\ProfileResource\ConsumerProfileResource;
-use App\Http\Resources\ProfileResource\LogisticProfileResource;
-use App\Http\Resources\ProfileResource\RetailerProfileResource;
-use App\Http\Resources\ProfileResource\SupplierProfileResource;
+use App\Http\Resources\UserProfileResource;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Resources\ProfileResource\ManagerProfileResource;
 use App\Http\Resources\ProfileResource\ConsumerProfileResource;
 use App\Http\Resources\ProfileResource\LogisticProfileResource;
 use App\Http\Resources\ProfileResource\RetailerProfileResource;
@@ -94,8 +91,9 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        // return Product::addSelect(User::whereColumn('uuid', 'products.uuid')->where('users.position', 2))->get();
-        dd(User::permission('Farm Manager')->select('uuid')->get());
+        return Product::whereHas('created_by', function($query) {
+            return $query->permission('Commodity Distributor');
+        })->get();
     }
 
     /**
