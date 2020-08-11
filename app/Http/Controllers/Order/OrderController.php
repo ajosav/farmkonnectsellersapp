@@ -6,6 +6,7 @@ use App\Model\Unit;
 use App\Model\Order;
 use App\Model\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\CalculatePriceRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -252,7 +253,7 @@ class OrderController extends Controller
         return redirect('/home')->with('denied', 'Permission Denied');
     }
 
-    public function calculatePrice(Request $request)
+    public function calculatePrice(CalculatePriceRequest $request)
     {
         $msg = '';
 
