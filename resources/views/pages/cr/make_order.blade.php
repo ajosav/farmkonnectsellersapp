@@ -13,10 +13,8 @@
               </div>
             </div>
             <div class="card-body">
-              @php
-                $images = explode(',', $product->image)
-              @endphp
-              <img src="{{$product->productImage('/products/large/', $images[0])}}" class="img-fluid">
+             
+              <img src="{{$product->productImage('/products/large/', $product->image[0])}}" class="img-fluid">
               <div>
                 <span class="badge badge-warning">Category: </span> {{$product->category}}
               </div>
@@ -44,12 +42,12 @@
                   <div class="col-md-5">
                     <div id="carouselExampleIndicators{{$product->id}}" class="carousel slide" data-ride="carousel">
                       <ol class="carousel-indicators">
-                        @foreach($images as $index => $image)
+                        @foreach($product->image as $index => $image)
                           <li data-target="#carouselExampleIndicators" data-slide-to="$index" class="{{$index == 0 ? 'active' : ''}}"></li>
                         @endforeach 
                       </ol>
                       <div class="carousel-inner">
-                        @foreach($images as $index => $image)
+                        @foreach($product->image as $index => $image)
                           <div class="carousel-item {{$index == 0 ? 'active' : ''}}">
                             <img class="d-block w-100" src="{{$product->productImage('/products/large/', $image)}}" alt="First slide">
                           </div>

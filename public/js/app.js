@@ -3820,6 +3820,7 @@ __webpack_require__.r(__webpack_exports__);
         dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>Click to Upload Product Images or Drag N Drop Image",
         duplicateCheck: true,
         maxFilesize: 0.5,
+        maxFiles: 5,
         parallelUploads: 100,
         paramName: "image",
         uploadMultiple: true,
@@ -3944,15 +3945,26 @@ __webpack_require__.r(__webpack_exports__);
 
         toastr["error"](message.message);
       } else {
-        swal.fire("File too big", message, "error");
-        this.$refs["myVueDropzone"].removeAllFiles();
+        this.$refs["myVueDropzone"].removeFile(file);
+        swal.fire("Error", message, "error");
       }
+
+      this.loading = false;
     },
     totalUploadProgress: function totalUploadProgress(totaluploadprogress, totalBytes, totalBytesSent) {},
     uploadComplete: function uploadComplete() {
-      location.href = "/home";
+      for (var key in this.product) {
+        if (key == "date") {
+          this.product[key].startDate = moment(new Date());
+          this.product[key].endDate = moment(new Date()).endOf("year");
+        } else {
+          this.product[key] == null;
+        }
+      }
+
       this.loading = false;
       this.$refs["myVueDropzone"].removeAllFiles;
+      location.href = "/home";
     },
     uploadInit: function uploadInit(file) {
       this.loading = true;
@@ -12158,7 +12170,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#axiosForm {\n    position: relative;\n}\n", ""]);
+exports.push([module.i, "\n#axiosForm {\r\n    position: relative;\n}\r\n", ""]);
 
 // exports
 
@@ -12196,7 +12208,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#axiosForm {\n    position: relative;\n}\n#date_picker {\n    width: 100%;\n}\n.daterangepicker {\n    top: calc(1.6em + 0.75rem + 2px) !important;\n}\n.reportrange-text {\n    min-width: 100% !important;\n}\n", ""]);
+exports.push([module.i, "\n#axiosForm {\r\n    position: relative;\n}\n#date_picker {\r\n    width: 100%;\n}\n.daterangepicker {\r\n    top: calc(1.6em + 0.75rem + 2px) !important;\n}\n.reportrange-text {\r\n    min-width: 100% !important;\n}\r\n", ""]);
 
 // exports
 
@@ -73208,7 +73220,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", [
       _c("strong", [
-        _vm._v("Other Images\n                                    "),
+        _vm._v(
+          "Product Images (Not more than 500kb, maximum of 5 images in total)\n                                    "
+        ),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ])
     ])
@@ -87288,8 +87302,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/farmkonnectsellersapp/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/farmkonnectsellersapp/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\sellersApp\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\sellersApp\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

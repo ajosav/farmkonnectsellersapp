@@ -74,6 +74,9 @@ class ProductController extends Controller
         $product_code = $keygen->numeric()->prefix($prefix, false)->generate();
         $data['code'] = $product_code;
         $images = $request->image;
+        if(count($images) > 5) {
+            throw new Exception("Images cannot be more than 5", 1);
+        }
         $image_names = [];
         if($images) {
             foreach ($images as $key => $image) {

@@ -19,6 +19,7 @@ class ProductResource extends JsonResource
             "code" => $this->code,
             "description" => $this->description,
             "end_date" => $this->end_date,
+            "start_date" => $this->start_date,
             "image" => explode(',', $this->image),
             "name" => $this->name,
             "contact_address" => $this->c_person_address,
