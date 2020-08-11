@@ -3104,6 +3104,12 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         toastr["error"](error.response.data.message);
+
+        if (error.response.status == 422) {
+          _this2.errors = error.response.data.errors;
+        }
+
+        toastr["error"](error.response.data.message);
         $('.submit_action').attr('disabled', false);
       })["finally"](function () {
         _this2.loading = false;
@@ -3358,6 +3364,17 @@ __webpack_require__.r(__webpack_exports__);
           _this.$selectState(_this.profile.state);
         })["catch"](function (error) {
           toastr["error"](error.response.data.message);
+          return;
+        });
+      }
+
+      if (this.toggleStatus) {
+        axios.get('/getProfile').then(function (response) {
+          _this.profile = response.data.data;
+
+          _this.$selectState(_this.profile.state);
+        })["catch"](function (error) {
+          toastr["error"](error.response.data.message);
         });
       }
 
@@ -3378,6 +3395,12 @@ __webpack_require__.r(__webpack_exports__);
         $(".submit_action").attr("disabled", false);
         Fire.$emit("AfterCreate");
       })["catch"](function (error) {
+        if (error.response.status == 422) {
+          _this2.errors = error.response.data.errors;
+        }
+
+        toastr["error"](error.response.data.message);
+
         if (error.response.status == 422) {
           _this2.errors = error.response.data.errors;
         }
@@ -3438,13 +3461,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3960,10 +3976,10 @@ __webpack_require__.r(__webpack_exports__);
   }
 });
 tinymce.init({
-  selector: "textarea.product_desc",
+  selector: 'textarea.product_desc',
   height: 130,
-  plugins: ["advlist autolink lists link image charmap print preview anchor textcolor", "searchreplace visualblocks code fullscreen", "insertdatetime media table contextmenu paste code wordcount"],
-  toolbar: "insert | undo redo |  formatselect | bold italic backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat",
+  plugins: ['advlist autolink lists link image charmap print preview anchor textcolor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table contextmenu paste code wordcount'],
+  toolbar: 'insert | undo redo |  formatselect | bold italic backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
   branding: false
 });
 
@@ -12035,7 +12051,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css":
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css?2e8c":
 /*!***********************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css ***!
   \***********************************************************************************************************************************************************/
@@ -12104,7 +12120,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#axiosForm {  /* Components Root Element ID */\r\n    position: relative;\n}\n#add_doc {\r\n    cursor: pointer;\n}\n#add_doc:hover {\r\n    text-decoration: underline;\r\n    -webkit-text-decoration-color: #38c172;\r\n            text-decoration-color: #38c172;\r\n    text-decoration-thickness: 1px;\n}\r\n", ""]);
+exports.push([module.i, "\n#axiosForm {  /* Components Root Element ID */\n    position: relative;\n}\n#add_doc {\n    cursor: pointer;\n}\n#add_doc:hover {\n    text-decoration: underline;\n    -webkit-text-decoration-color: #38c172;\n            text-decoration-color: #38c172;\n    text-decoration-thickness: 1px;\n}\n", ""]);
 
 // exports
 
@@ -12161,7 +12177,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#axiosForm {\r\n    position: relative;\n}\r\n", ""]);
+exports.push([module.i, "\n#axiosForm {\n    position: relative;\n}\n", ""]);
 
 // exports
 
@@ -86032,7 +86048,7 @@ if (false) {} else {
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vue2-daterange-picker.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./vue2-daterange-picker.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css?2e8c");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 

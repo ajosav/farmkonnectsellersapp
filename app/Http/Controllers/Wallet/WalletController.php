@@ -54,6 +54,12 @@ class WalletController extends Controller
      */
     public function create()
     {
+        $wallet = Auth::user()->wallet;
+
+        if ($wallet == null) {
+
+            event(new Verified(Auth::user()));
+        }
         //
         $account = Auth::user()->bank_account;
 
@@ -169,6 +175,14 @@ class WalletController extends Controller
 
     public function credit_wallet($amount, $user_id)
     {
+
+        $wallet = Auth::user()->wallet;
+
+        if ($wallet == null) {
+
+            event(new Verified(Auth::user()));
+        }
+
         $user = $this->find_user($user_id);
 
         if ($user != null) {
@@ -328,6 +342,14 @@ class WalletController extends Controller
     public function accounts()
     {
         //
+
+        $wallet = Auth::user()->wallet;
+
+        if ($wallet == null) {
+
+            event(new Verified(Auth::user()));
+        }
+
         $account = Auth::user()->bank_account;
 
         $fetch_banks = $this->fetch_banks('NG');

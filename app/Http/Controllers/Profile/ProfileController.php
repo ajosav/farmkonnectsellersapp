@@ -22,6 +22,10 @@ use App\Http\Resources\ProfileResource\RetailerProfileResource;
 use App\Http\Resources\ProfileResource\SupplierProfileResource;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Resources\ProfileResource\ConsumerProfileResource;
+use App\Http\Resources\ProfileResource\LogisticProfileResource;
+use App\Http\Resources\ProfileResource\RetailerProfileResource;
+use App\Http\Resources\ProfileResource\SupplierProfileResource;
 
 class ProfileController extends Controller
 {

@@ -67,7 +67,7 @@ $banks = json_decode($banks);
                             @csrf
                             <div class="form-group">
                                 <label for="Account Name">Account Name</label>
-                                <input value="<?= @$account->account_name; ?>" readonly type="text" class="form-control"
+                                <input value="<?= @$account->account_name; ?>" type="text" class="form-control"
                                     aria-describedby="emailHelp" placeholder="Enter account name" name="account_name">
                             </div>
                             <div class="form-group">
