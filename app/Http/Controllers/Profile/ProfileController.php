@@ -15,8 +15,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\QueryException;
 use App\Http\Requests\ProfileValidation;
-use App\Http\Resources\UserProfileResource;
-use App\Http\Resources\ManagerProfileResource;
+use App\Http\Resources\ProfileResource\ManagerProfileResource;
+use App\Http\Resources\ProfileResource\ConsumerProfileResource;
+use App\Http\Resources\ProfileResource\LogisticProfileResource;
+use App\Http\Resources\ProfileResource\RetailerProfileResource;
+use App\Http\Resources\ProfileResource\SupplierProfileResource;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Resources\ProfileResource\ConsumerProfileResource;
@@ -154,18 +157,7 @@ class ProfileController extends Controller
      */
     public function update(ProfileValidation $request, $id)
     {
-        // $user = auth()->user();
-        // if($user->uuid !== $id) {
-        //     throw new Exception('Error updating user profile! please try again later');
-        // }
-        // if($user->position == 1) {
-        //     $request->merge(['commodities_planted'=>implode(',', $request->commodities_planted)]);
-        // }
-        // $user->update([
-        //     $request->validated()
-        // ]);
-
-        // return $request->validated();
+        
     }
 
     /**
