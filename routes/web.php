@@ -2,6 +2,7 @@
 
 use App\User;
 use App\UserPosition;
+use App\Model\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +21,6 @@ use Spatie\Permission\Models\Permission;
 */
 
 Route::get('/', function () {
-
     if (auth()->check()) {
         $user = auth()->user();
         $user->syncPermissions([$user->positionName->name]);
