@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use App\Observers\UserObserver;
 use App\User;
+use Illuminate\Http\Request;
+use App\Observers\UserObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +26,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if(env('app_env') === 'production') {
+            if( ! Request::secure())
+            {
+                return \Redirect::secure(\Request::path());
+            }
+        }
+
+        if(config('app.env') === 'production') {
+            \URL::forceScheme('https');
+        }
+        
         User::observe(UserObserver::class);
         view()->composer('*', function($view) {
             $users = User::all();

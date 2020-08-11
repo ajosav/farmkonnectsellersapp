@@ -34,22 +34,18 @@
                     <div class="row">
                         <div class="col-12 col-sm-6">
                             <div id="carouselExampleIndicators-{{$id}}" class="carousel slide" data-ride="carousel">
-                                @php
-                                    $product_image = explode(',', $image);
-                                @endphp
                                 <ol class="carousel-indicators">
-                                    @foreach ($product_image as $index => $p_img)
+                                    @foreach ($image as $index => $p_img)
                                         <li data-target="#carouselExampleIndicators-{{$id}}" data-slide-to="{{$index}}" class="{{$index == 0 ? 'active' : ''}}"></li>
                                     @endforeach
                                 </ol>
                                 <div class="carousel-inner">
-                                    @foreach ($product_image as $index => $p_img)
-                                        @php
-                                            $image_location = Storage::url('/products/large/'.$p_img)
-                                        @endphp
+                                    @foreach ($image as $index => $p_img)
+                                        <!-- @php
+                                            $image_location = Storage::url('products/large/'.$p_img)
+                                        @endphp -->
                                         <div class="carousel-item {{$index == 0 ? 'active' : ''}}">
-
-                                            <img class="d-block w-100" src="{{$image_location}}" alt="Product Image">
+                                            <img class="d-block w-100" src="{{$model->productImage('products/large/', $p_img)}}" alt="Product Image">
                                         </div>
                                     @endforeach
 

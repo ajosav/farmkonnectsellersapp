@@ -40,7 +40,7 @@
 
             </li>
             @can('Farm Manager')
-            <li class="nav-item has-treeview">
+            <li class="nav-item has-treeview {{Request::is('product*') ? 'menu-open' : ''}}">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-shopping-cart"></i>
                     <p>
@@ -76,14 +76,14 @@
             </li>
             @endcan
             <li class="nav-item">
-                <a href="{{ url('/bank-account') }}" class="nav-link">
+                <a href="{{ url('/bank-account') }}" class="nav-link {{Request::is('bank-account') ? 'active' : ''}}">
                     <i class="nav-icon fas fa-landmark"></i>
                     <p>
                         Bank Account
                     </p>
                 </a>
             </li>
-            <li class="nav-item has-treeview">
+            <li class="nav-item has-treeview {{Request::is('wallet*') ? 'menu-open' : ''}}">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-wallet"></i>
                     <p>
@@ -94,14 +94,14 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{{ url('/wallet') }}"
-                            class="nav-link {{Request::is('product/create') ? 'active' : ''}}">
+                            class="nav-link {{Request::is('wallet') ? 'active' : ''}}">
                             <i class="fas fa-credit-card nav-icon"></i>
                             <p>Credit Wallet</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ url('/wallet/withdraw') }}"
-                            class="nav-link {{Request::is('product') ? 'active' : ''}}">
+                            class="nav-link {{Request::is('wallet/withdraw') ? 'active' : ''}}">
                             <i class="fas fa-money-bill nav-icon"></i>
                             <p>Make Withdrawal</p>
                         </a>
@@ -118,8 +118,8 @@
                 </a>
             </li>
 
-            @can('Commodity Retailer')
-            <li class="nav-item has-treeview">
+            @if(auth()->user()->can('Commodity Retailer'))
+            <li class="nav-item has-treeview {{Request::is('retailer*') ? 'menu-open' : ''}}">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-shopping-cart"></i>
                     <p>
@@ -144,7 +144,7 @@
 
                 </ul>
             </li>
-            @endcan
+            @endif
 
         </ul>
 

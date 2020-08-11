@@ -16,8 +16,8 @@ class Product extends Model
     // protected $image_path = '/products/large/';
 
 
-    public function created_by() {
-        return $this->belongsTo(User::class, 'uuid', 'created_by');
+    public function owner() {
+        return $this->belongsTo(User::class, 'created_by', 'uuid');
     }
 
     public function unit() {
@@ -55,5 +55,8 @@ class Product extends Model
         return $response;
     }
 
+    public function getImageAttribute($image) {
+        return explode(',', $image);
+    }
 
 }

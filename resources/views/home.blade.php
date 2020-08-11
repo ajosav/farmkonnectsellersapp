@@ -120,33 +120,20 @@
                 smartPlacement: true,
                 steps: [{
                         element: "body",
-                        title: "{{trans("
-                        Sellers App ")}}",
-                        content: "{{trans("
-                        Welcome to FarmKonnect Sellers App.Let 's have a one time quick tour.")}}",
+                        title: "{{trans('Sellers App')}}",
+                        content: "{{trans('Welcome to FarmKonnect Sellers App.Let\'s have a one time quick tour.')}}",
                         placement: 'top'
                     },
                     {
                         element: ".col-lg-12",
-                        title: "{{trans("
-                        Dashboard ")}}",
-                        content: "{{trans("
-                        This is your dashboard,
-                        which you can use to get a fast and nice overview,
-                        of all your tasks,
-                        deliveries,
-                        commdities,
-                        etc.
-                        ")}}",
+                        title: "{{trans('Dashboard')}}",
+                        content: "{{trans('This is your dashboard, which you can use to get a fast and nice overview, of all your tasks, deliveries, commdities, etc.')}}",
                         placement: 'top'
                     },
                     {
                         element: "#myNavMenu",
-                        title: "{{trans("
-                        Navigation ")}}",
-                        content: "{{trans("
-                        This is your primary navigation bar,
-                        which you can use to get around Sellers APP ")}}"
+                        title: "{{trans('Navigation')}}",
+                        content: "{{trans('This is your primary navigation bar, which you can use to get around Sellers APP ')}}"
                     }
                 ]
             });
@@ -156,24 +143,19 @@
                 },
                 {
                     element: ".content-wrapper",
-                    title: "{{trans("
-                    Demographics ")}}",
-                    content: "{{trans("
-                    Infographics showing the summary of activities ")}}"
+                    title: "{{trans('Demographics')}}",
+                    content: "{{trans('Infographics showing the summary of activities')}}"
                 },
                 {
                     path: '/home'
                 }
             ])
-            // ->can('client-create')
-            var canCreateClient = '{{ auth()->user()}}';
-            if (canCreateClient) {
+            var userAuth = '{{ auth()->user()}}';
+            if (userAuth) {
                 tour.addSteps([{
                         element: "#profile",
-                        title: "{{trans("
-                        Create Your Profile ")}}",
-                        content: "{{trans("
-                        Let 's take our first step, by creating a Profile")}}"
+                        title: "{{trans('Create Your Profile')}}",
+                        content: "{{trans('Let\'s take our first step, by creating a Profile')}}"
                     },
                     {
                         path: '/profile'
@@ -187,11 +169,7 @@
             tour.start();
             setCookie("step_dashboard", true, 1000)
         }
-        // function setCookie(key, value, expiry) {
-        //     var expires = new Date();
-        //     expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 2000));
-        //     document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
-        // }
+        
 
     });
 
