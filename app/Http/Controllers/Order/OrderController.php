@@ -6,10 +6,13 @@ use App\Model\Unit;
 use App\Model\Order;
 use App\Model\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use GuzzleHttp\Exception\ClientException;
 use App\Http\Controllers\Wallet\WalletController;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class OrderController extends Controller
 {
@@ -97,28 +100,33 @@ class OrderController extends Controller
 
         $wallet = new WalletController();
 
-        $debit_wallet = $wallet->debit_wallet($total_price, Auth::user()->uuid);
+        $order = new Order();
+        $order->user_id = $user_id;
+        $order->product_id = $product_id;
+        $order->quantity_ordered = $quantity_ordered;
+        $order->total_price = $total_price;
 
-        if ($debit_wallet == false) {
+        $place_order = DB::transaction(function () use ($wallet, $total_price, $order) {
+
+            $debit_wallet = $wallet->debit_wallet($total_price, Auth::user()->uuid);
+
+            if ($debit_wallet == false) {
+                # code...
+
+                throw new ModelNotFoundException("Error Processing Request");
+            }
+
+            if ($order->save() == false) {
+
+                throw new ModelNotFoundException("Error Processing Request");
+            }
+
+
+            return true;
+        });
+
+        if ($place_order) {
             # code...
-
-            $response = [
-                'status' => '0',
-                'msg' => 'Error completing transaction. Please try again later.'
-            ];
-
-            return response()->json($response);
-        }
-
-        $create_order = new Order();
-        $create_order->user_id = $user_id;
-        $create_order->product_id = $product_id;
-        $create_order->quantity_ordered = $quantity_ordered;
-        $create_order->total_price = $total_price;
-
-
-        if ($create_order->save()) {
-
             $response = [
                 'status' => '1',
                 'msg' => 'Your order has been successfully placed.'
@@ -126,8 +134,6 @@ class OrderController extends Controller
 
             return response()->json($response);
         }
-
-        $wallet->credit_wallet($total_price, Auth::user()->uuid);
 
         $response = [
             'status' => '0',

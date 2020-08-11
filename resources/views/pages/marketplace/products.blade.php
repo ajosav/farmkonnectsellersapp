@@ -219,6 +219,8 @@
                                 timer: 50000
                             }).then((value) => {}).catch(swal.noop);
 
+                            $('.modal').modal('toggle');
+
                         } else {
 
                             swal.fire({
@@ -230,7 +232,14 @@
                         }
                     })
                     .catch(error => {
-                        console.log(error.response.message)
+
+                        swal.fire({
+                                icon: 'error',
+                                title: 'Oops!',
+                                text: error.response.data.message,
+                                timer: 50000
+                            }).then((value) => {}).catch(swal.noop);
+
                     })
             }
         });
