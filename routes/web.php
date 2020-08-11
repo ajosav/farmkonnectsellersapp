@@ -62,6 +62,16 @@ Route::namespace('Profile')->group(function () {
     Route::resource('/profile', 'ProfileController');
 });
 
+
+Route::namespace('Order')->prefix('/orders')->group(function () {
+
+    Route::get('/', 'OrderController@index')->name('orders');
+    Route::get('/make_order', 'OrderController@getProducts')->name('get.allProducts');
+
+    Route::post('/cal_price', 'OrderController@calculatePrice')->name('get-price');
+    Route::post('/process-order', 'OrderController@store')->name('process-order');
+});
+
 Route::namespace('Manager')->group(function () {
     Route::get('/product/fetch_units', 'UnitController@index');
     Route::get('/product/sale_unit/{id}', 'UnitController@saleUnit');
@@ -69,13 +79,4 @@ Route::namespace('Manager')->group(function () {
 });
 
 Route::namespace('CommodityRetailer')->prefix('retailer')->group(function () {
-    Route::get('/make_order', 'MakeOrderController@getProducts')->name('get.allProducts');
-    Route::post('/cal_price', 'MakeOrderController@calculatePrice')->name('get.price');
-    Route::post('/process_order', 'OrderController@store')->name('post.processOrder');
-    //Route::resource('/profile', 'ProfileController');
 });
-
-
-
-
-// Route::get('/profile', 'HomeController@profile')->name('get.profile');

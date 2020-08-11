@@ -155,18 +155,7 @@ class ProfileController extends Controller
      */
     public function update(ProfileValidation $request, $id)
     {
-        // $user = auth()->user();
-        // if($user->uuid !== $id) {
-        //     throw new Exception('Error updating user profile! please try again later');
-        // }
-        // if($user->position == 1) {
-        //     $request->merge(['commodities_planted'=>implode(',', $request->commodities_planted)]);
-        // }
-        // $user->update([
-        //     $request->validated()
-        // ]);
-
-        // return $request->validated();
+        
     }
 
     /**
