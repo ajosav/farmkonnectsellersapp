@@ -101,7 +101,7 @@
                                     <p>
                                         <label for="exampleFormControlInput1">Quantity</label>
                                         <input type="number" name="quantity" class="form-control"
-                                            id="quantity{{ $product->uuid }}">
+                                            id="quantity{{ $product->uuid }}" min="1">
                                     </p>
                                     <input type="hidden" name="totalprice" id="totalprice{{ $product->uuid }}">
                                 </form>
@@ -145,7 +145,7 @@
                         timer: 50000
                     }).then((value) => {}).catch(swal.noop);
             } else {
-                $("#quantity" + id).keyup(
+                $("#quantity" + id).on('input',
                     _.debounce(function() {
                         var unit_id = $("select#" + id).children("option:selected").val();
                         var quantity = $("#quantity" + id).val();
@@ -171,7 +171,7 @@
                                 swal.fire({
                                     icon: 'error',
                                     title: 'Oops!',
-                                    text: error.response.message,
+                                    text: error.response.data.message,
                                     timer: 50000
                                 }).then((value) => {}).catch(swal.noop);
                             })
@@ -219,7 +219,7 @@
                                 timer: 50000
                             }).then((value) => {}).catch(swal.noop);
 
-                            $('.modal').modal('toggle');
+                            $('.modal').modal('hide');
 
                         } else {
 
