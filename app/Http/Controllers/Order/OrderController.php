@@ -6,12 +6,14 @@ use App\Model\Unit;
 use App\Model\Order;
 use App\Model\Product;
 use Illuminate\Http\Request;
-use App\Http\Requests\CalculatePriceRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Event;
+use App\Events\OrderSuccessfullyPlaced;
 use GuzzleHttp\Exception\ClientException;
+use App\Http\Requests\CalculatePriceRequest;
 use App\Http\Controllers\Wallet\WalletController;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -31,6 +33,24 @@ class OrderController extends Controller
     public function index()
     {
         //
+        $orders = Order::where('user_id', Auth::user()->uuid)->with('product')->latest()->get();
+
+        if (Gate::allows('Commodity Distributor')) {
+
+            $role = "farmManagerProfile";
+        }
+
+        if (Gate::allows('Commodity Retailer')) {
+
+            $role = "commodityDistributorProfile";
+        }
+
+        if (Gate::allows('Commodity Consumer')) {
+
+            $role = "commodityRetailerProfile";
+        }
+
+        return view('pages.marketplace.orders', ['orders' => $orders, 'role' => $role]);
     }
 
     /**
@@ -122,6 +142,7 @@ class OrderController extends Controller
                 throw new ModelNotFoundException("Error Processing Request");
             }
 
+            event(new OrderSuccessfullyPlaced($order));
 
             return true;
         });

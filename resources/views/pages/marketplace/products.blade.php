@@ -1,20 +1,29 @@
 @extends('layouts.farmkonnect')
 @section('content')
+@push('styles')
+<style>
+    .card-img-top {
+        width: 500px;
+        height: 200px;
+        object-fit: contain;
+    }
+</style>
+@endpush
 <div class="container">
     <h3 class="text-success mt-3"> Available Products</h3>
-    <div class="row mt-3 ml-2">
+    <div class="row">
         @if($products->isNotEmpty())
         @foreach($products as $product)
         <div class="col-md-4">
-            <div class="card card-outline" style="width: 18rem;">
+            <div class="card card-outline">
                 <a href=""
                     class="btn btn-link text-center text-success text-capitalize">{{ $product->owner->$role->contact_person }}</a>
-                <img class="card-img-top" src="{{ $product->product_image('products/small/'.$product->image[0]) }}"
-                    alt="Card image cap">
+                <img class="card-img-top img-fluid"
+                    src="{{ $product->product_image('products/small/'.$product->image[0]) }}" alt="Card image cap">
                 <div class="card-body">
                     <h4 class="font-weight-bolder float-right ">&#8358;{{ $product->price }}</h4>
                     <p class="card-title font-weight-bold text-center ">{{ $product->name }}</p><br>
-                    <div class="card-text">{!! $product->description !!}</div>
+                    <div class="card-text">{!! Str::limit($product->description, 100) !!}</div>
                     <div class="card-text">
                         <label for="quantity">Quantity Left</label>
                         <p class="quantity">{{ $product->quantity." ".$product->unit->unit_name."(s)" }}</p>

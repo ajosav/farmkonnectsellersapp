@@ -63,7 +63,6 @@
                             <p>Products</p>
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="layout/fixed-topnav.html" class="nav-link">
                             <i class="fa fa-cart-arrow-down"></i>
@@ -78,7 +77,7 @@
 
             @if(auth()->user()->can('Commodity Retailer') || auth()->user()->can('Commodity Distributor') ||
             auth()->user()->can('Commodity Consumer'))
-            <li class="nav-item has-treeview">
+            <li class="nav-item has-treeview {{Request::is('order*') ? 'menu-open' : ''}}">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-store"></i>
                     <p>
@@ -93,18 +92,14 @@
                             <i class="fas fa-plus nav-icon"></i>Make Order
                         </a>
                     </li>
-
                     <li class="nav-item">
-                        <a href="" class="">
-                            <i class="fa fa-cart-arrow-down nav-icon"></i>My Orders
-                            <span class="badge badge-info right">6</span>
+                        <a href="{{ route('orders') }}" class="nav-link {{Request::is('orders') ? 'active' : ''}}">
+                            <i class="fa fa-cart-arrow-down nav-icon"></i>My Order History
                         </a>
                     </li>
-
                 </ul>
             </li>
             @endif
-
             <li class="nav-item">
                 <a href="{{ url('/bank-account') }}" class="nav-link {{Request::is('bank-account') ? 'active' : ''}}">
                     <i class="nav-icon fas fa-landmark"></i>
@@ -123,8 +118,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{ url('/wallet') }}"
-                            class="nav-link {{Request::is('wallet') ? 'active' : ''}}">
+                        <a href="{{ url('/wallet') }}" class="nav-link {{Request::is('wallet') ? 'active' : ''}}">
                             <i class="fas fa-credit-card nav-icon"></i>
                             <p>Credit Wallet</p>
                         </a>
