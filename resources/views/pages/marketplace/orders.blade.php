@@ -33,6 +33,7 @@
                             <th>Vendor</th>
                             <th>Status</th>
                             <th>Feedback</th>
+                            <th>Action</th>
                             <th>Date and Time</th>
                         </tr>
                     </thead>
@@ -47,15 +48,24 @@
                                     class="btn btn-link text-success">{{ $order->product->owner->$role->contact_person }}</a>
                             </td>
                             <td>
-                                @if($order->status == 1)
-                                <span class="badge badge-success">Successful</span>
-                                @elseif($order->status == 0)
+                                @if($order->status == 0)
                                 <span class="badge badge-danger">Failed</span>
-                                @else
+                                @elseif($order->status == 1)
+                                <span class="badge badge-success">Successful</span>
+                                @elseif($order->status == 2)
                                 <span class="badge badge-warning">Pending</span>
+                                @elseif($order->status == 4)
+                                <span class="badge badge-danger">Cancelled</span>
                                 @endif
                             </td>
                             <td>{{ $order->feedback }}</td>
+                            <td>
+                                @if($order->status == 2)
+                                <button class="btn btn-sm btn-danger">Cancel Order</button>
+                                @elseif($order->status == 1)
+                                <button class="btn btn-sm btn-primary">Request Pickup</button>
+                                @endif
+                            </td>
                             <td>{{ date('D, M j, Y \a\t g:ia', strtotime($order->created_at)) }}</td>
                         </tr>
                         @endforeach
