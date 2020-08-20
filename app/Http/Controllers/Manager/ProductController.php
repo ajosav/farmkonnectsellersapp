@@ -21,7 +21,6 @@ class ProductController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
-
     }
     /**
      * Display a listing of the resource.
@@ -30,7 +29,7 @@ class ProductController extends Controller
      */
     public function index(ProductDatatable $dataTable)
     {
-        if(!(Gate::allows('Farm Manager'))) {
+        if (!(Gate::allows('Farm Manager'))) {
             return redirect()->back()->with(['denied' => "Access Denied!"]);
         }
 
@@ -46,7 +45,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        if(!(Gate::allows('Farm Manager'))) {
+        if (!(Gate::allows('Farm Manager'))) {
             return redirect()->back()->with(['denied' => "Access Denied!"]);
         }
         return view('pages.manager.product.create_products');
@@ -69,25 +68,25 @@ class ProductController extends Controller
         $data['start_date'] = $request->startDate;
         $data['end_date'] = $request->finishDate;
 
-        $prefix = strtoupper('PRO-'.Str::substr(Str::of($data['name'])->before(' '), 0, 3));
+        $prefix = strtoupper('PRO-' . Str::substr(Str::of($data['name'])->before(' '), 0, 3));
         $keygen = Keygen::length(10)->mutable('length', 'prefix');
         $product_code = $keygen->numeric()->prefix($prefix, false)->generate();
         $data['code'] = $product_code;
         $images = $request->image;
-        if(count($images) > 5) {
+        if (count($images) > 5) {
             throw new Exception("Images cannot be more than 5", 1);
         }
         $image_names = [];
-        if($images) {
+        if ($images) {
             foreach ($images as $key => $image) {
                 $imageName = $image->getClientOriginalName();
                 $newImage = \Image::make($image->getRealPath());
-                Storage::put('public/products/large/'.$imageName, $newImage->stream());
-                $newImage->resize(120, 120, function($constraint) {
+                Storage::put('public/products/large/' . $imageName, $newImage->stream());
+                $newImage->resize(120, 120, function ($constraint) {
                     $constraint->aspectRatio();
                 });
                 $newImage->stream();
-                Storage::put('public/products/small/'.$imageName, $newImage, 'public');
+                Storage::put('public/products/small/' . $imageName, $newImage, 'public');
                 $image_names[] = $imageName;
             }
             $data['image'] = implode(",", $image_names);
@@ -95,7 +94,6 @@ class ProductController extends Controller
 
         Product::create($data);
         Session::flash('success', 'Product created successfully');
-
     }
 
     /**
@@ -109,7 +107,8 @@ class ProductController extends Controller
         return $id;
     }
 
-    public function findProductByUUid($uuid) {
+    public function findProductByUUid($uuid)
+    {
         return Product::where('uuid', $uuid)->firstOrFail();
     }
 
@@ -121,7 +120,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        if(!Gate::allows('Farm Manager')) {
+        if (!Gate::allows('Farm Manager')) {
             return redirect()->back()->with('denied', __('Permission Denied'));
         }
 
@@ -150,17 +149,15 @@ class ProductController extends Controller
      */
     public function destroy($uuid)
     {
-        if(!Gate::allows('Farm Manager')) {
+        if (!Gate::allows('Farm Manager')) {
             return redirect()->back()->with('denied', __('Permission Denied'));
         }
-        try{
+        try {
             $product = $this->findProductByUUid($uuid);
             $product->delete();
             return redirect()->back()->with('success', __('Product successfully deleted'));
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             Session()->flash('error', __('Product could not be deleted, contact the admin'));
         }
     }
-
-
 }
