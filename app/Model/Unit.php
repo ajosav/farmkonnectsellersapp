@@ -9,4 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Unit extends Model
 {
     use HasUUID, SoftDeletes;
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'id', 'unit_id');
+    }
 }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use BinaryCabin\LaravelUUID\Traits\HasUUID;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Model\Order;
 
 class Product extends Model
 {

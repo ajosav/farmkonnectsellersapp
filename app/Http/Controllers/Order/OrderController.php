@@ -35,6 +35,8 @@ class OrderController extends Controller
         //
         $orders = Order::where('user_id', Auth::user()->uuid)->with('product')->latest()->get();
 
+        $role = false;
+
         if (Gate::allows('Commodity Distributor')) {
 
             $role = "farmManagerProfile";
@@ -48,6 +50,11 @@ class OrderController extends Controller
         if (Gate::allows('Commodity Consumer')) {
 
             $role = "commodityRetailerProfile";
+        }
+
+        if ($role == false) {
+            # code...
+            return redirect()->back()->with('error', 'Access Denied.');
         }
 
         return view('pages.marketplace.orders', ['orders' => $orders, 'role' => $role]);
@@ -90,6 +97,7 @@ class OrderController extends Controller
         $user_id = auth()->user()->uuid;
         $product_id = $request->product_id;
         $quantity_ordered = $request->quantity_ordered;
+        $unit_id = $request->unit_id;
 
         $valid_order = $this->validate_order($product_id, $quantity_ordered);
 
@@ -126,6 +134,7 @@ class OrderController extends Controller
         $order->product_id = $product_id;
         $order->quantity_ordered = $quantity_ordered;
         $order->total_price = $total_price;
+        $order->unit_id = $unit_id;
 
         $place_order = DB::transaction(function () use ($wallet, $total_price, $order) {
 
@@ -314,5 +323,36 @@ class OrderController extends Controller
         ];
 
         return $details;
+    }
+
+    public function requests()
+    {
+        $requests = Order::whereHas('product', function ($query) {
+            return $query->where('created_by', Auth::user()->uuid);
+        })->where('status', 2)->oldest()->get();
+
+        return view("pages.manager.product.requests", ['requests' => $requests, 'role' => 'CommodityDistributorProfile']);
+    }
+
+    public function cancel(Request $request)
+    {
+        if ($request->ajax()) {
+            # code...
+            $order_uuid = $request->order_uuid;
+
+            $cancel_order = Order::where('uuid', $order_uuid)->where('user_id', Auth::user()->uuid)->update(['status' => 4]);
+
+            if ($cancel_order == false) {
+                # code...
+                throw new ModelNotFoundException("Error Cancelling Order.");
+            }
+
+            $response = [
+                'status' => '1',
+                'msg' => 'Order Successfully Cancelled.'
+            ];
+
+            return response()->json($response);
+        }
     }
 }

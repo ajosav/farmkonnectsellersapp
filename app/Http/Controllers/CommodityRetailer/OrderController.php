@@ -35,7 +35,8 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   $msg = ""; 
+    {
+        $msg = "";
         $user_id = auth()->user()->uuid;
         $product_id = $request->product_id;
         $quantity_ordered = $request->quantity_ordered;
@@ -53,7 +54,7 @@ class OrderController extends Controller
         $create_order->quantity_ordered = $quantity_ordered;
         $create_order->total_price = $totalprice;
         $create_order->save();
-        if($create_order){
+        if ($create_order) {
             return $msg = "order_successful";
         }
         //dd($data);

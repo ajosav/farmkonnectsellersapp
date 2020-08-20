@@ -21,11 +21,7 @@ use Spatie\Permission\Models\Permission;
 */
 
 Route::get('/', function () {
-    if (auth()->check()) {
-        $user = auth()->user();
-        $user->syncPermissions([$user->positionName->name]);
-        return redirect()->route('login');
-    }
+
     return redirect()->route('login');
 });
 
@@ -70,6 +66,10 @@ Route::namespace('Order')->prefix('/orders')->group(function () {
 
     Route::post('/cal_price', 'OrderController@calculatePrice')->name('get-price');
     Route::post('/process-order', 'OrderController@store')->name('process-order');
+
+    Route::get('/order-requests', 'OrderController@requests')->name('requests');
+
+    Route::post('/cancel-order', 'OrderController@cancel')->name('order.cancel');
 });
 
 Route::namespace('Manager')->group(function () {

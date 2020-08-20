@@ -64,7 +64,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="layout/fixed-topnav.html" class="nav-link">
+                        <a href="{{ route('requests') }}" class="nav-link">
                             <i class="fa fa-cart-arrow-down"></i>
                             <p>Orders</p>
                             <span class="badge badge-info right">6</span>

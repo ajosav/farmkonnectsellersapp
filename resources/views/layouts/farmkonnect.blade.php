@@ -127,7 +127,6 @@
         .divider-color {
             border-color: #BDBDBD;
         }
-
     </style>
 
     @stack('styles')
@@ -149,8 +148,6 @@
         @elseif(session()->has('error'))
         <access-denied message="{{session('error')}}"></access-denied>
         @endif
-
-
 
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-dark navbar-teal">
