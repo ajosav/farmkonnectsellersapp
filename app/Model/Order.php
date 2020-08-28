@@ -12,7 +12,7 @@ class Order extends Model
 {
     use HasUUID, SoftDeletes;
 
-    protected $fillable = ['quantity_ordered', 'total_price'];
+    protected $guarded = [];
 
 
     public function user()

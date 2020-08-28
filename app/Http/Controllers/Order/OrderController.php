@@ -6,6 +6,7 @@ use App\Model\Unit;
 use App\Model\Order;
 use App\Model\Product;
 use Illuminate\Http\Request;
+use App\Events\OrderDeclined;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -351,6 +352,42 @@ class OrderController extends Controller
                 'status' => '1',
                 'msg' => 'Order Successfully Cancelled.'
             ];
+
+            return response()->json($response);
+        }
+    }
+
+    public function decline_requests(Request $request)
+    {
+        if ($request->ajax()) {
+            # code...
+            $uuid = $request->uuid;
+
+            $request->validate([
+                'feedback' => ['required']
+            ]);
+
+            $feedback = $request->feedback;
+
+
+            $decline_request = Order::findByUuid($uuid)->update([
+                'status' => 0,
+                'feedback' => $feedback
+            ]);
+
+            if ($decline_request == false) {
+                # code...
+                throw new ModelNotFoundException("Error Declining Request.");
+            }
+
+            $response = [
+                'status' => '1',
+                'msg' => 'Request Successfully Declined.'
+            ];
+
+            $order = Order::where('uuid', $uuid)->first();
+
+            event(new OrderDeclined($order));
 
             return response()->json($response);
         }
