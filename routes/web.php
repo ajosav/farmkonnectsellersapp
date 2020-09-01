@@ -69,6 +69,10 @@ Route::namespace('Order')->prefix('/orders')->group(function () {
 
     Route::get('/order-requests', 'OrderController@requests')->name('requests');
 
+    Route::post('/order-requests', 'OrderController@decline_requests')->name('request.decline');
+
+    Route::post('/order-request', 'OrderController@accept_requests')->name('request.accept');
+
     Route::post('/cancel-order', 'OrderController@cancel')->name('order.cancel');
 });
 
