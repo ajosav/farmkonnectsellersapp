@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Order;
 use App\Model\Unit;
 use App\Model\Order;
 use App\Model\Product;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Events\OrderDeclined;
 use Illuminate\Support\Facades\DB;
@@ -335,6 +336,109 @@ class OrderController extends Controller
         return view("pages.manager.product.requests", ['requests' => $requests, 'role' => 'CommodityDistributorProfile']);
     }
 
+    public function order_quantity($uuid)
+    {
+        $order = Order::where('uuid', $uuid)->first(); //fetching the order
+
+        $product = $order->product;  // fetching the product associated with the order.
+
+        $unit_id = $order->unit_id;  // fetching the unit id of the order
+
+        $unit = Unit::where('id', $unit_id)->first();   // fetching the unit
+
+        $operator = $unit->operator;  // fetching the operation for the specified unit.
+
+        $operation_value = $unit->operation_value;    // fetching the operational_value for the unit
+
+        if ($unit->base_unit == null) {
+            # code...
+
+            $unit->base_unit = 1;
+        }
+
+        $base_unit = Unit::where('id', $unit->base_unit)->first();
+
+        $base_unit_operation_value = $base_unit->operation_value;
+
+        $quantity_ordered = $product->calc_quantity($base_unit_operation_value, $operator, $operation_value, $order->quantity_ordered);
+
+        return $quantity_ordered;
+    }
+
+    public function sell_product($uuid)
+    {
+
+        $order = Order::where('uuid', $uuid)->first();
+
+        $sale = DB::transaction(function () use ($order) {
+
+            $sale = false;
+
+            $quantity_ordered = $this->order_quantity($order->uuid);
+
+            $product = Product::where('uuid', $order->product->uuid)->first();
+
+            //Check if buyer has purchased the product from the same vendor before.
+            $existing_product = Product::where('created_by', $order->user_id)->where('sold_by', Auth::user()->uuid)->where('name', $product->name)->first();
+
+            if ($existing_product == null) {
+                # code...
+
+                $products = $product->replicate();
+                $products->created_by = $order->user_id;
+                $products->sold_by = Auth::user()->uuid;
+                $products->quantity = $order->quantity_ordered;
+                $products->uuid = Str::uuid()->toString();
+
+                if ($products->save() == null) {
+                    # code...
+                    throw new ModelNotFoundException("Error Occurred. Kindly try again later.");
+                }
+
+                $sale = true;
+            }
+
+            if ($existing_product != null) {
+                # code...
+                $quantity_in_stock = $existing_product->quantity;
+                $update_quantity = $existing_product->update([
+                    'quantity' => $quantity_in_stock + $quantity_ordered
+                ]);
+
+                if ($update_quantity == false) {
+                    # code...
+
+                    throw new ModelNotFoundException("Error Occurred. Kindly try again later.");
+                }
+
+                $sale = true;
+            }
+
+            if ($sale == false) {
+                # code...
+                return false;
+            }
+
+            $deduct = $product->update([
+                'quantity' => $product->quantity - $quantity_ordered
+            ]);
+
+            if ($deduct == false) {
+                # code...
+                throw new ModelNotFoundException('Error Occurred. Kindly try again later');
+            }
+
+            return true;
+        });
+
+        if ($sale != true) {
+            # code...
+            return false;
+        }
+
+        return true;
+    }
+
     public function cancel(Request $request)
     {
         if ($request->ajax()) {
@@ -356,6 +460,57 @@ class OrderController extends Controller
             return response()->json($response);
         }
     }
+
+    public function accept_requests(Request $request)
+    {
+        if ($request->ajax()) {
+            # code...
+            $uuid = $request->uuid;
+
+            $feedback = $request->feedback;
+
+            $order_quantity = $this->order_quantity($uuid);
+
+            $quantity_in_stock = Order::where('uuid', $uuid)->first()->product->quantity;
+
+            if ($quantity_in_stock < $order_quantity) {
+                # code...
+
+                $response = [
+                    'status' => '0',
+                    'msg' => 'Order Quantity exceeds product stock quantity.'
+                ];
+
+                return $response;
+            }
+
+            $sell_product = $this->sell_product($uuid);
+
+            if ($sell_product == false) {
+                # code...
+                $response = [
+                    'status' => '0',
+                    'msg' => 'Error Selling Product. Kindly try again later'
+                ];
+
+                return $response;
+            }
+
+            $update_order = Order::where('uuid', $uuid)->update([
+                'status' => 1,
+                'feedback' => $feedback
+            ]);
+
+            $response = [
+                'status' => '1',
+                'msg' => 'Product sale successfully confirmed.'
+            ];
+
+            return $response;
+        }
+    }
+
+
 
     public function decline_requests(Request $request)
     {

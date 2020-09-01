@@ -50,8 +50,9 @@
                             </td>
                             <td class="price">{{ $request->total_price }}</td>
                             <td>
-                                <button class="btn btn-sm btn-success accept-offer">Accept</button>
-                                <button class="btn btn-sm btn-danger decline-offer" data-toggle="modal"
+                                <button class="btn btn-sm btn-success accept-offer" data-toggle="modal"
+                                    data-target="#accept-modal" data-id="{{ $request->uuid }}">Accept</button>
+                                <button class=" btn btn-sm btn-danger decline-offer" data-toggle="modal"
                                     data-target="#decline-modal" data-id="{{ $request->uuid }}">Decline</button>
                             </td>
                             <td>{{ date('D, M j, Y \a\t g:ia', strtotime($request->created_at)) }}</td>
@@ -109,7 +110,7 @@
             </div>
 
             <!--Accept Modal -->
-            <div class="modal fade" style="opacity: 1;" id="exampleModalCenter" tabindex="-1" role="dialog"
+            <div class="modal fade" style="opacity: 1;" id="accept-modal" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -120,32 +121,32 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <h3 class="text-center">Order Cancellation.</h3>
+                            <h3 class="text-center">Accept Request</h3>
                             <div class="text-center">
                                 <label>Product</label>
-                                <p id="product"></p>
+                                <p id="accept_product"></p>
                             </div>
                             <div class="text-center">
                                 <label>Quantity Ordered</label>
-                                <p id="quantity"></p>
+                                <p id="accept_quantity"></p>
                             </div>
                             <div class="text-center">
-                                <label>Vendor</label>
-                                <p id="vendor"></p>
+                                <label>Customer</label>
+                                <p id="accept_customer"></p>
                             </div>
                             <div class="text-center">
                                 <label>Total Price</label>
-                                <p id="price"></p>
+                                <p id="accept_price"></p>
                             </div>
-                            <p class="text-center font-weight-bold">Once cancelled, this order will not be fufilled by
-                                the
-                                vendor.
-                            </p>
+                            <div class="text-center">
+                                <label>Feedback</label>
+                                <textarea id="accept_feedback" rows="5" class="form-control"></textarea>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-danger" id="confirm-cancellation">Confirm
-                                Cancellation</button>
+                            <button type="button" class="btn btn-success" id="confirm-accept">Confirm
+                                Request</button>
                         </div>
                     </div>
                 </div>
@@ -160,7 +161,7 @@
 
 @push('scripts')
 <script>
-    $('document').ready(function () {
+    $('document').ready(function() {
         $('table').dataTable({
             "pageLength": 10
         });
@@ -194,18 +195,18 @@
 
             if (feedback == '') {
 
-                setTimeout(function () {
-                        swal.fire({
-                            icon: 'error',
-                            title: 'Oops!',
-                            text: 'Kindly Include a feedback note for the customer.',
-                            timer: 5000
-                        }).then((value) => {}).catch(swal.noop)
-                    }, 1000);
+                setTimeout(function() {
+                    swal.fire({
+                        icon: 'error',
+                        title: 'Oops!',
+                        text: 'Kindly Include a feedback note for the customer.',
+                        timer: 5000
+                    }).then((value) => {}).catch(swal.noop)
+                }, 1000);
 
-                    $(this).removeAttr('disabled');
+                $(this).removeAttr('disabled');
 
-                    return false;
+                return false;
             }
 
             $.ajax({
@@ -219,20 +220,20 @@
                     uuid: uuid,
                     feedback: feedback
                 },
-                beforeSend: function () {
+                beforeSend: function() {
                     swal.fire({
                         title: 'Processing',
                         onBeforeOpen: () => {
                             swal.showLoading()
                         },
-                    });
+                        });
                 },
-                success: function (data) {
+                success: function(data) {
 
                     swal.close();
 
                     if (data.status == 1) {
-                        setTimeout(function () {
+                        setTimeout(function() {
                             swal.fire({
                                 icon: 'success',
                                 title: 'Success!',
@@ -244,14 +245,16 @@
 
                         $('.modal').modal('hide');
 
-                        $('#'+uuid).remove();
+                        $('#' + uuid).remove();
+
+                        location.reload(true);
 
                         $('button').removeAttr('disabled');
 
                     } else {
 
                         swal.close();
-                        setTimeout(function () {
+                        setTimeout(function() {
                             swal.fire({
                                 icon: 'error',
                                 title: 'Oops!',
@@ -262,12 +265,12 @@
 
                         $('button').removeAttr('disabled');
                     }
-                },
-                error: function (xhr, status, error) {
+                }
+                , error: function(xhr, status, error) {
                     //other stuff
                     swal.close();
 
-                    setTimeout(function () {
+                    setTimeout(function() {
                         swal.fire({
                             icon: 'error',
                             title: 'Error ' + xhr.status,
@@ -281,6 +284,112 @@
             });
 
         });
+
+        $('.accept-offer').click(function() {
+
+            const order_uuid = $(this).attr('data-id');
+            var row = $(this).closest("tr");
+
+            var product = row.find('.product').text();
+            var quantity = row.find('.quantity').text();
+            var price = row.find('.price').text();
+            var customer = row.find('.customer').text();
+
+            $('#accept_product').empty().html(product);
+            $('#accept_quantity').empty().html(quantity);
+            $('#accept_price').empty().html(price);
+            $('#accept_customer').empty().html(customer);
+
+            $('#confirm-accept').removeAttr('data-id').attr('data-id', order_uuid);
+
+        });
+
+
+        $('#confirm-accept').click(function() {
+
+            $(this).attr('disabled', 'disabled');
+
+            const uuid = $(this).attr('data-id');
+
+            const feedback = $('#accept_feedback').val();
+
+            $.ajax({
+
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{ route("request.accept") }}',
+                type: 'POST',
+                data: {
+                    uuid: uuid,
+                    feedback: feedback
+                },
+                beforeSend: function() {
+                    swal.fire({
+                        title: 'Processing',
+                        onBeforeOpen: () => {
+                            swal.showLoading()
+                        },
+                        });
+                },
+                success: function(data) {
+
+                    swal.close();
+
+                    if (data.status == 1) {
+                        setTimeout(function() {
+                            swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: data.msg,
+                                timer: 0300
+                            }).then((value) => {}).catch(swal.noop)
+                        }, 1000);
+
+
+                        $('.modal').modal('hide');
+
+                        $('#' + uuid).remove();
+
+                        location.reload(true);
+
+                        $('button').removeAttr('disabled');
+
+                    } else {
+
+                        swal.close();
+                        setTimeout(function() {
+                            swal.fire({
+                                icon: 'error',
+                                title: 'Oops!',
+                                text: data.msg,
+                                timer: 5000
+                            }).then((value) => {}).catch(swal.noop)
+                        }, 1000);
+
+                        $('button').removeAttr('disabled');
+                    }
+                }
+                , error: function(xhr, status, error) {
+                    //other stuff
+                    swal.close();
+
+                    setTimeout(function() {
+                        swal.fire({
+                            icon: 'error',
+                            title: 'Error ' + xhr.status,
+                            text: xhr.responseJSON.message,
+                            timer: 5000
+                        }).then((value) => {}).catch(swal.noop)
+                    }, 1000);
+
+                    $('button').removeAttr('disabled');
+                }
+            });
+
+    });
+
+
     });
 
 </script>

@@ -53,7 +53,7 @@
                                 @if($order->status == 0)
                                 <span class="badge badge-danger">Declined</span>
                                 @elseif($order->status == 1)
-                                <span class="badge badge-success">Successful</span>
+                                <span class="badge badge-success">Confirmed by Vendor</span>
                                 @elseif($order->status == 2)
                                 <span class="badge badge-warning">Pending</span>
                                 @elseif($order->status == 4)
@@ -68,7 +68,9 @@
                                     Cancel Order
                                 </button>
                                 @elseif($order->status == 1)
-                                <button class="btn btn-sm btn-primary">Request Pickup</button>
+                                <button class="btn btn-sm btn-primary" class="btn btn-sm btn-danger cancel-btn"
+                                    data-toggle="modal" data-target="#pickup-modal" data-id="{{ $order->uuid }}">Request
+                                    Pickup</button>
                                 @endif
                             </td>
                             <td>{{ date('D, M j, Y \a\t g:ia', strtotime($order->created_at)) }}</td>

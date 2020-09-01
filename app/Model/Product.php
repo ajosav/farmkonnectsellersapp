@@ -55,6 +55,16 @@ class Product extends Model
         return explode(',', $image);
     }
 
+    public function calc_quantity($base_unit_operation_value, $operator, $operational_value, $quantity)
+    {
+
+        if ($operator == '*') {
+            return (float) ($base_unit_operation_value * $operational_value) * $quantity;
+        }
+
+        return (float) ($base_unit_operation_value / $operational_value) * $quantity;
+    }
+
     public function calcProductPrice($base_unit_operation_value, $operator, $operational_value, $price, $quantity)
     {
         if ($operator == '*') {
