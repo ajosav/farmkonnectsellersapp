@@ -13,8 +13,8 @@ class Delivery extends Model
 
     protected $guarded = [];
 
-    public function order()
+    public function order($order_id)
     {
-        return $this->belongsTo(Order::class);
+        return Order::where('uuid', $order_id)->first();
     }
 }
