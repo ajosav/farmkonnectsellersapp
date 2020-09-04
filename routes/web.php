@@ -69,6 +69,10 @@ Route::namespace('Order')->prefix('/orders')->group(function () {
 
     Route::get('/order-requests', 'OrderController@requests')->name('requests');
 
+    Route::post('/order-requests', 'OrderController@decline_requests')->name('request.decline');
+
+    Route::post('/order-request', 'OrderController@accept_requests')->name('request.accept');
+
     Route::post('/cancel-order', 'OrderController@cancel')->name('order.cancel');
 });
 
@@ -76,6 +80,22 @@ Route::namespace('Manager')->group(function () {
     Route::get('/product/fetch_units', 'UnitController@index');
     Route::get('/product/sale_unit/{id}', 'UnitController@saleUnit');
     Route::resource('/product', 'ProductController');
+});
+
+Route::namespace('Logistics')->prefix('/logistics')->group(function () {
+
+
+    Route::get('/requests', 'LogisticsController@index')->name('logistics.requests');
+
+    Route::get('/pending', 'LogisticsController@show')->name('logistics.pending');
+
+    Route::get('/history', 'LogisticsController@update')->name('logistics.history');
+
+    Route::get('/request-delivery/{order_id}', 'LogisticsController@create');
+
+    Route::post('/calculate-distance', 'LogisticsController@calculate_distance')->name('distance.calculate');
+
+    Route::post('request-delivery', 'LogisticsController@store')->name('delivery.request');
 });
 
 Route::namespace('CommodityRetailer')->prefix('retailer')->group(function () {

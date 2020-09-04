@@ -53,7 +53,7 @@
                                 @if($order->status == 0)
                                 <span class="badge badge-danger">Declined</span>
                                 @elseif($order->status == 1)
-                                <span class="badge badge-success">Successful</span>
+                                <span class="badge badge-success">Confirmed by Vendor</span>
                                 @elseif($order->status == 2)
                                 <span class="badge badge-warning">Pending</span>
                                 @elseif($order->status == 4)
@@ -67,19 +67,17 @@
                                     data-target="#exampleModalCenter" data-id="{{ $order->uuid }}">
                                     Cancel Order
                                 </button>
-                                @elseif($order->status == 1)
-                                <button class="btn btn-sm btn-primary">Request Pickup</button>
+                                @elseif($order->status == 1 && $order->check_delivery($order->uuid) != true)
+                                <a class="btn btn-sm btn-primary"
+                                    href={{ url('logistics/request-delivery/'.$order->uuid) }}
+                                    data-id="{{ $order->uuid }}">Request
+                                    Pickup</a>
                                 @endif
                             </td>
                             <td>{{ date('D, M j, Y \a\t g:ia', strtotime($order->created_at)) }}</td>
                         </tr>
                         @endforeach
                     </tbody>
-                    <tfoot>
-                        <th>Summary</th>
-                        <th></th>
-                        <th colspan='3'> Total Orders Made - {{ count($orders) }} </th>
-                    </tfoot>
                 </table>
                 <!-- /.box-body -->
             </div>
@@ -126,7 +124,6 @@
                 </div>
             </div>
         </div>
-
         <!-- /.row -->
     </div><!-- /.container-fluid -->
 </section>
@@ -134,6 +131,7 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('js/place-picker.js') }}"></script>
 <script>
     $('document').ready(function () {
         $('table').dataTable({
@@ -238,6 +236,7 @@
 
 
         });
+
     });
 </script>
 @endpush
