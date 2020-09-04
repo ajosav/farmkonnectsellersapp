@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Model\Order;
 use App\Model\Transaction;
+use App\LogisticCompanyProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Queue\InteractsWithQueue;
@@ -37,6 +38,8 @@ class LogDeliveryRequestTransaction
 
         $order = Order::where('uuid', $event->delivery->order_id)->first();
 
+        $logistic_company = LogisticCompanyProfile::where('uuid', $event->delivery->logistic_id)->first();
+
         new Transaction();
 
         return Transaction::create([
@@ -46,7 +49,7 @@ class LogDeliveryRequestTransaction
             'amount' => $event->delivery->fee,
             'type' => 'Debit',
             'title' => 'Payment for Delivery Request',
-            'narration' => 'Request for Delivery of ' . $order->product->name . ' from ' . $order->product->owner->$role->contact_person,
+            'narration' => 'Request for Delivery of ' . $order->product->name . ' from ' . $logistic_company->name,
             'status' => 1
         ]);
     }

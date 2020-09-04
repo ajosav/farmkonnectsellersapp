@@ -22,6 +22,7 @@ class LogisticsController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
+        $this->role = "LogisticCompanyProfile";
     }
 
     /**
@@ -32,9 +33,80 @@ class LogisticsController extends Controller
     public function index()
     {
         //
+        $role = 'LogisticCompanyProfile';
+        $requests = Delivery::where('logistic_id', Auth::user()->$role->uuid)->where('status', 2)->get();
+
+        return view('pages.logistics.view-requests', ['requests' => $requests]);
     }
 
+    public function accept_requests(Request $request)
+    {
+        if ($request->ajax()) {
+            # code...
 
+            $uuid = $request->uuid;
+            $accept_request = Delivery::where('uuid', $uuid)->update([
+                'status' => 1
+            ]);
+
+            if ($accept_request == false) {
+                # code...
+                $response = [
+                    'status' => 0,
+                    'msg' => 'Error Accepting Request.'
+                ];
+
+                return response()->json($response);
+            }
+
+            $response = [
+                'status' => 1,
+                'msg' => 'Request Successfully Accepted.'
+            ];
+
+            return response()->json($response);
+        }
+    }
+
+    public function decline_requests(Request $request)
+    {
+        if ($request->ajax()) {
+            # code...
+
+            $uuid = $request->uuid;
+
+            $role = $this->role;
+
+            $request = Delivery::where('uuid', $uuid)->where('logistic_id', Auth::user()->$role->uuid)->first();
+
+            $order = Order::where('uuid', $request->order_id)->first();
+
+            $decline_request = Delivery::where('uuid', $uuid)->where('logistic_id', Auth::user()->$role->uuid)->update([
+                'status' => 0
+            ]);
+
+            if ($decline_request == false) {
+                # code...
+                $response = [
+                    'status' => 0,
+                    'msg' => 'Error Declining Request.'
+                ];
+
+                return response()->json($response);
+            }
+
+            $wallet = new WalletController();
+
+            $credit_wallet = $wallet->credit_wallet($request->fee, $order->user_id);
+
+            $response = [
+                'status' => 1,
+                'msg' => 'Request Successfully Declined.'
+            ];
+
+            return response()->json($response);
+        }
+    }
     // Using Haversine formula to calculate the shortest distance between both coordinates.
 
     protected function get_distance($point1, $point2)
@@ -187,6 +259,7 @@ class LogisticsController extends Controller
             'details' => $details
         ];
 
+
         $wallet = new WalletController();
 
         $make_request = DB::transaction(function () use ($wallet, $fee, $delivery) {
@@ -241,6 +314,11 @@ class LogisticsController extends Controller
     public function show($id)
     {
         //
+        $request = Delivery::where('uuid', $id)->where('status', 2)->firstOrFail();
+
+        $order = Order::where('uuid', $request->order_id)->firstOrFail();
+
+        return view('pages.logistics.confirm-request', ['request' => $request, 'order' => $order]);
     }
 
     /**
