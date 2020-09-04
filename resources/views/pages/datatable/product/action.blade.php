@@ -45,7 +45,7 @@
                                             $image_location = Storage::url('products/large/'.$p_img)
                                         @endphp -->
                                         <div class="carousel-item {{$index == 0 ? 'active' : ''}}">
-                                            <img class="d-block w-100" src="{{$model->productImage('products/large/', $p_img)}}" alt="Product Image">
+                                            <img class="d-block w-100" src="{{$model->product_image('products/large/'.$p_img)}}" alt="Product Image">
                                         </div>
                                     @endforeach
 

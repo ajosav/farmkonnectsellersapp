@@ -24,7 +24,7 @@ class ProductDatatable extends DataTable
             ->eloquent($query)
             ->editColumn('image', function($query) {
                 $image = $query->image;
-                return '<img src="'.$query->productImage('products/small/', $image[0]).'">';
+                return '<img src="'.$query->product_image('products/small/'.$image[0]).'">';
             })
             ->editColumn('sale unit', function($query) {
                 return $query->saleUnit->unit_code;

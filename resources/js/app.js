@@ -8,8 +8,8 @@ window.toastr = require ('toastr');
 window.Vue = require('vue');
 import moment from 'moment';
 import DateRangePicker from 'vue2-daterange-picker';
-import vue2Dropzone from 'vue2-dropzone'
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import vue2Dropzone from 'vue2-dropzone';
+import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
 
 
@@ -27,7 +27,7 @@ window.flash = function(message) {
 Vue.prototype.$csrfToken = window.csrfToken;
 
 
-Vue.component('vueDropzone', vue2Dropzone)
+Vue.component('vueDropzone', vue2Dropzone);
 
 // Initializing vue form object
 window.Form = Form;
