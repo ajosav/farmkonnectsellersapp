@@ -67,21 +67,17 @@
                                     data-target="#exampleModalCenter" data-id="{{ $order->uuid }}">
                                     Cancel Order
                                 </button>
-                                @elseif($order->status == 1)
-                                <button class="btn btn-sm btn-primary" class="btn btn-sm btn-danger cancel-btn"
-                                    data-toggle="modal" data-target="#pickup-modal" data-id="{{ $order->uuid }}">Request
-                                    Pickup</button>
+                                @elseif($order->status == 1 && $order->check_delivery($order->uuid) != true)
+                                <a class="btn btn-sm btn-primary"
+                                    href={{ url('logistics/request-delivery/'.$order->uuid) }}
+                                    data-id="{{ $order->uuid }}">Request
+                                    Pickup</a>
                                 @endif
                             </td>
                             <td>{{ date('D, M j, Y \a\t g:ia', strtotime($order->created_at)) }}</td>
                         </tr>
                         @endforeach
                     </tbody>
-                    <tfoot>
-                        <th>Summary</th>
-                        <th></th>
-                        <th colspan='3'> Total Orders Made - {{ count($orders) }} </th>
-                    </tfoot>
                 </table>
                 <!-- /.box-body -->
             </div>
@@ -128,7 +124,6 @@
                 </div>
             </div>
         </div>
-
         <!-- /.row -->
     </div><!-- /.container-fluid -->
 </section>
@@ -136,6 +131,7 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('js/place-picker.js') }}"></script>
 <script>
     $('document').ready(function () {
         $('table').dataTable({
@@ -240,6 +236,7 @@
 
 
         });
+
     });
 </script>
 @endpush

@@ -40,15 +40,15 @@ class ProfileController extends Controller
     public function index()
     {
         $user = auth()->user();
-        if(Gate::allows('Farm Manager')) {
+        if (Gate::allows('Farm Manager')) {
             $status = $user->farmManagerProfile != null ? 'true' : 'false';
-        } elseif(Gate::allows('Commodity Distributor')) {
+        } elseif (Gate::allows('Commodity Distributor')) {
             $status = $user->commodityDistributorProfile != null ? 'true' : 'false';
-        } elseif(Gate::allows('Commodity Retailer')) {
+        } elseif (Gate::allows('Commodity Retailer')) {
             $status = $user->commodityRetailerProfile != null ? 'true' : 'false';
-        } elseif(Gate::allows('Commodity Consumer')) {
+        } elseif (Gate::allows('Commodity Consumer')) {
             $status = $user->commodityConsumerProfile != null ? 'true' : 'false';
-        } elseif(Gate::allows('Logistic Company')) {
+        } elseif (Gate::allows('Logistic Company')) {
             $status = $user->logisticCompanyProfile != null ? 'true' : 'false';
         } else {
             return redirect('/home')->with('denied', 'You are not authorized');
@@ -56,27 +56,28 @@ class ProfileController extends Controller
         return view('pages.user.profile', compact('status'));
     }
 
-    public function userProfile() {
+    public function userProfile()
+    {
         $user = auth()->user();
-        if(request()->wantsJson()) {
-            if(Gate::allows('Farm Manager')) {
-                if($user->farmManagerProfile != null) {
+        if (request()->wantsJson()) {
+            if (Gate::allows('Farm Manager')) {
+                if ($user->farmManagerProfile != null) {
                     return new ManagerProfileResource($user->farmManagerProfile);
                 }
-            } elseif(Gate::allows('Commodity Distributor')) {
-                if($user->commodityDistributorProfile != null) {
+            } elseif (Gate::allows('Commodity Distributor')) {
+                if ($user->commodityDistributorProfile != null) {
                     return new SupplierProfileResource($user->commodityDistributorProfile);
                 }
-            } elseif(Gate::allows('Commodity Retailer')) {
-                if($user->commodityRetailerProfile != null) {
+            } elseif (Gate::allows('Commodity Retailer')) {
+                if ($user->commodityRetailerProfile != null) {
                     return new RetailerProfileResource($user->commodityRetailerProfile);
                 }
-            } elseif(Gate::allows('Commodity Consumer')) {
-                if($user->commodityConsumerProfile != null) {
+            } elseif (Gate::allows('Commodity Consumer')) {
+                if ($user->commodityConsumerProfile != null) {
                     return new ConsumerProfileResource($user->commodityConsumerProfile);
                 }
-            } elseif(Gate::allows('Logistic Company')) {
-                if($user->logisticCompanyProfile != null) {
+            } elseif (Gate::allows('Logistic Company')) {
+                if ($user->logisticCompanyProfile != null) {
                     return new LogisticProfileResource($user->logisticCompanyProfile);
                 }
             }
@@ -91,7 +92,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        return Product::whereHas('created_by', function($query) {
+        return Product::whereHas('created_by', function ($query) {
             return $query->permission('Commodity Distributor');
         })->get();
     }
@@ -104,24 +105,23 @@ class ProfileController extends Controller
      */
     public function store(ProfileValidation $request)
     {
-        if(Gate::allows('Farm Manager')){
+        if (Gate::allows('Farm Manager')) {
             FarmManagerProfile::createProfile($request);
-            return response()->json('Success, User profile sucessfully created');
-        } elseif(Gate::allows('Commodity Distributor')) {
+            return response()->json('Success, User profile successfully created');
+        } elseif (Gate::allows('Commodity Distributor')) {
             CommodityDistributorProfile::createProfile($request);
-            return response()->json('Success, User profile sucessfully created');
-        } elseif(Gate::allows('Commodity Retailer')) {
+            return response()->json('Success, User profile successfully created');
+        } elseif (Gate::allows('Commodity Retailer')) {
             CommodityRetailerProfile::createProfile($request);
-            return response()->json('Success, User profile sucessfully created');
-        } elseif(Gate::allows('Commodity Consumer')) {
+            return response()->json('Success, User profile successfully created');
+        } elseif (Gate::allows('Commodity Consumer')) {
             CommodityConsumerProfile::createProfile($request);
-            return response()->json('Success, User profile sucessfully created');
-        } elseif(Gate::allows('Logistic Company')) {
+            return response()->json('Success, User profile successfully created');
+        } elseif (Gate::allows('Logistic Company')) {
             LogisticCompanyProfile::createProfile($request);
-            return response()->json('Success, User profile sucessfully created');
+            return response()->json('Success, User profile successfully created');
         }
         return abort(433, 'You are not authorized');
-
     }
 
     /**
@@ -155,7 +155,6 @@ class ProfileController extends Controller
      */
     public function update(ProfileValidation $request, $id)
     {
-        
     }
 
     /**

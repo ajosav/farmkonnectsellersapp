@@ -22,34 +22,34 @@ class ProductDatatable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('image', function($query) {
+            ->editColumn('image', function ($query) {
                 $image = $query->image;
-                return '<img src="'.$query->product_image('products/small/'.$image[0]).'">';
+                return '<img src="' . $query->product_image('products/small/' . $image[0]) . '">';
             })
-            ->editColumn('sale unit', function($query) {
+            ->editColumn('sale unit', function ($query) {
                 return $query->saleUnit->unit_code;
             })
-            ->editColumn('purchase unit', function($query) {
+            ->editColumn('purchase unit', function ($query) {
                 return $query->purchaseUnit->unit_code;
             })
-            ->editColumn('status', function($query) {
-                if($query->status == 0) {
+            ->editColumn('status', function ($query) {
+                if ($query->status == 0) {
                     return '<span class="right badge badge-warning"><i class="fa fa-clock"></i> In Stock</span>';
-                } elseif($query->status ==1) {
+                } elseif ($query->status == 1) {
                     return '<span class="right badge badge-success"><i class="fa fa-clock"></i> In Order</span>';
                 } else {
                     return '<span class="right badge badge-danger"><i class="fa fa-clock"></i> Sold Out</span>';
                 }
                 return $query->purchaseUnit->unit_code;
             })
-            ->editColumn('price', function($query) {
+            ->editColumn('price', function ($query) {
                 return '₦' . $query->price;
             })
-            ->editColumn('created_at', function($query) {
+            ->editColumn('created_at', function ($query) {
                 return $query->created_at->diffForHumans();
             })
             // ->addColumn('description', 'productdatatable.action')
-            ->editColumn('updated_at', function($query) {
+            ->editColumn('updated_at', function ($query) {
                 return $query->updated_at->diffForHumans();
             })
             // ->addColumn('Action', '
@@ -70,7 +70,9 @@ class ProductDatatable extends DataTable
      */
     public function query(Product $product)
     {
-        return $product->newQuery()->with('unit')->with('saleUnit')->with('purchaseUnit');
+        return $product->whereHas('owner', function ($query) {
+            return $query->permission('Farm Manager');
+        })->with('unit')->with('saleUnit')->with('purchaseUnit');
         // return $model->newQuery()->where('id', 1);
     }
 
@@ -82,18 +84,18 @@ class ProductDatatable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('productdatatable-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1);
-                    // ->buttons(
-                    //     Button::make('create'),
-                    //     Button::make('export'),
-                    //     Button::make('print'),
-                    //     Button::make('reset'),
-                    //     Button::make('reload')
-                    // );
+            ->setTableId('productdatatable-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom('Bfrtip')
+            ->orderBy(1);
+        // ->buttons(
+        //     Button::make('create'),
+        //     Button::make('export'),
+        //     Button::make('print'),
+        //     Button::make('reset'),
+        //     Button::make('reload')
+        // );
     }
 
     /**
@@ -116,15 +118,15 @@ class ProductDatatable extends DataTable
             Column::make('purchase unit', 'purchaseUnit.unit_code'),
             Column::make('price'),
             Column::make('status')
-                    ->searchable(false),
+                ->searchable(false),
             Column::make('category'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('Action')
-                    ->exportable(false)
-                    ->printable(false)
-                    ->width(60)
-                    ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
 
         ];
     }

@@ -198,7 +198,7 @@
     <!-- REQUIRED SCRIPTS -->
 
     <script>
-        window.csrfToken = '{{csrf_token()}}';
+        window.csrfToken = '{{ csrf_token() }}';
 
     </script>
     <script src="{{ mix('js/app.js') }}" rel="stylesheet"></script>

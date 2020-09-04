@@ -39,13 +39,47 @@
                 </a>
 
             </li>
+            @can('Logistic Company')
+            <li class="nav-item has-treeview {{ Request::is('logistics') ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-truck"></i>
+                    <p>
+                        Deliveries
+                        <i class="fas fa-angle-right right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{route('logistics.requests')}}"
+                            class="nav-link {{ Request::is('logistics/requests') ? 'active' : '' }}">
+                            <i class="fas fa-dolly"></i>
+                            <p>Latest Requests</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('logistics.pending')}}"
+                            class="nav-link {{ Request::is('logistics/pending') ? 'active' : '' }}">
+                            <i class="fas fa-dolly-flatbed"></i>
+                            <p>Pending Deliveries</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('logistics.history')}}"
+                            class="nav-link {{Request::is('logistics/history') ? 'active' : ''}}">
+                            <i class="fas fa-shipping-fast"></i>
+                            <p>Delivery History</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            @endcan
             @can('Farm Manager')
             <li class="nav-item has-treeview {{Request::is('product*') ? 'menu-open' : ''}}">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-shopping-cart"></i>
                     <p>
                         Sale
-                        <i class="fas fa-angle-left right"></i>
+                        <i class="fas fa-angle-right right"></i>
                     </p>
                 </a>
                 <ul class="nav nav-treeview">

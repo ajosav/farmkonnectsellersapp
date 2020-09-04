@@ -82,5 +82,27 @@ Route::namespace('Manager')->group(function () {
     Route::resource('/product', 'ProductController');
 });
 
+Route::namespace('Logistics')->prefix('/logistics')->group(function () {
+
+
+    Route::get('/requests', 'LogisticsController@index')->name('logistics.requests');
+
+    Route::get('pending-requests', 'LogisticsController@pending_requests')->name('logistics.pending');
+
+    Route::get('/history', 'LogisticsController@update')->name('logistics.history');
+
+    Route::get('/request-delivery/{order_id}', 'LogisticsController@create');
+
+    Route::post('/calculate-distance', 'LogisticsController@calculate_distance')->name('distance.calculate');
+
+    Route::post('request-delivery', 'LogisticsController@store')->name('delivery.request');
+
+    Route::get('view-request/{id}', 'LogisticsController@show');
+
+    Route::post('/decline-request', 'LogisticsController@decline_requests')->name('request.decline');
+
+    Route::post('/accept-request', 'LogisticsController@accept_requests')->name('request.accept');
+});
+
 Route::namespace('CommodityRetailer')->prefix('retailer')->group(function () {
 });

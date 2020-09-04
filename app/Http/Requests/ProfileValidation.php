@@ -26,7 +26,7 @@ class ProfileValidation extends FormRequest
     public function rules()
     {
 
-        if(Gate::allows('Farm Manager')) {
+        if (Gate::allows('Farm Manager')) {
             return [
                 'farm_size' => 'required|string',
                 'location' => 'required|string|max:250',
@@ -39,24 +39,25 @@ class ProfileValidation extends FormRequest
                 'lg' => 'required|string',
                 'state' => 'required|string'
             ];
-        } elseif(Gate::allows('Commodity Distributor') || Gate::allows('Commodity Retailer') || Gate::allows('Commodity Consumer')) {
+        } elseif (Gate::allows('Commodity Distributor') || Gate::allows('Commodity Retailer') || Gate::allows('Commodity Consumer')) {
             return [
-                'state'=> 'required|string',
-                'lg'=> 'required|string',
-                'address'=> 'required|string',
+                'state' => 'required|string',
+                'lg' => 'required|string',
+                'address' => 'required|string',
                 'name' =>  'required|string|max:150',
                 'email' =>  'required|email',
                 'phone' =>  'required|max:25',
                 'other_info' => 'sometimes'
             ];
-        } elseif(Gate::allows('Logistic Company')) {
+        } elseif (Gate::allows('Logistic Company')) {
             return [
-                'state'=> 'required|string',
-                'lg'=> 'required|string',
-                'address'=> 'required|string',
+                'state' => 'required|string',
+                'rate' => 'required|numeric',
+                'lg' => 'required|string',
+                'address' => 'required|string',
                 'name' =>  'required|string|max:150',
                 'email' =>  'required|email',
-                'phone' =>  'required|max:25',
+                'phone' =>  'required|numeric',
                 'driving_license' =>  'required',
                 'other_info' => 'sometimes',
                 'registration_no' => 'required',
@@ -66,6 +67,5 @@ class ProfileValidation extends FormRequest
         }
 
         throw new Exception('You are not authorized');
-
     }
 }
