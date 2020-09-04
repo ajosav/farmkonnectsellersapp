@@ -21,11 +21,6 @@ use Spatie\Permission\Models\Permission;
 */
 
 Route::get('/', function () {
-    $user = auth()->user();
-    $user_position = $user->positionName->name;
-    $user->givePermissionTo($user_position);
-
-
     return redirect()->route('login');
 });
 
