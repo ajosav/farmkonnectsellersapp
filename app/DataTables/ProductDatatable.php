@@ -8,6 +8,7 @@ use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Services\DataTable;
 
 class ProductDatatable extends DataTable
@@ -71,7 +72,13 @@ class ProductDatatable extends DataTable
     public function query(Product $product)
     {
         return $product->whereHas('owner', function ($query) {
-            return $query->permission('Farm Manager');
+            if(Gate::allows('Farm Manager')) {
+                return $query->permission('Farm Manager');
+            } elseif(Gate::allows('Commodity Distributor')) {
+                return $query->permission('Commodity Distributor');
+            } elseif(Gate::allows('Commodity Retailer')) {
+                return $query->permission('Commodity Retailer');
+            }
         })->with('unit')->with('saleUnit')->with('purchaseUnit');
         // return $model->newQuery()->where('id', 1);
     }
@@ -89,13 +96,6 @@ class ProductDatatable extends DataTable
             ->minifiedAjax()
             ->dom('Bfrtip')
             ->orderBy(1);
-        // ->buttons(
-        //     Button::make('create'),
-        //     Button::make('export'),
-        //     Button::make('print'),
-        //     Button::make('reset'),
-        //     Button::make('reload')
-        // );
     }
 
     /**
@@ -106,11 +106,6 @@ class ProductDatatable extends DataTable
     protected function getColumns()
     {
         return [
-            // Column::computed('action')
-            //       ->exportable(false)
-            //       ->printable(false)
-            //       ->width(60)
-            //       ->addClass('text-center'),
             Column::make('image'),
             Column::make('name'),
             Column::make('description'),
