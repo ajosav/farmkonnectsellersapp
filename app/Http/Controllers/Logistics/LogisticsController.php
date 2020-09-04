@@ -107,6 +107,19 @@ class LogisticsController extends Controller
             return response()->json($response);
         }
     }
+
+    public function pending_requests()
+    {
+        $role = $this->role;
+
+        $requests = Delivery::where('logistic_id', Auth::user()->$role->uuid)->where(function ($query) {
+            $query->where('status', 1)->orWhere('status', 6)->orWhere('status', 3)->orWhere('status', 4)->orWhere('status', 5);
+        })->get();
+
+        return view('pages.logistics.pending-requests', ['requests' => $requests]);
+    }
+
+
     // Using Haversine formula to calculate the shortest distance between both coordinates.
 
     protected function get_distance($point1, $point2)
@@ -339,9 +352,36 @@ class LogisticsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        if ($request->ajax()) {
+            # code...
+
+            $uuid = $request->uuid;
+            $status = $request->status;
+
+            $accept_request = Delivery::where('uuid', $uuid)->update([
+                'status' => $status
+            ]);
+
+            if ($accept_request == false) {
+                # code...
+                $response = [
+                    'status' => 0,
+                    'msg' => 'Error Updating Request.'
+                ];
+
+                return response()->json($response);
+            }
+
+            $response = [
+                'status' => 1,
+                'msg' => 'Request Successfully Updated.'
+            ];
+
+            return response()->json($response);
+        }
     }
 
     /**

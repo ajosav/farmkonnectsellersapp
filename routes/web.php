@@ -101,6 +101,8 @@ Route::namespace('Logistics')->prefix('/logistics')->group(function () {
     Route::post('/decline-request', 'LogisticsController@decline_requests')->name('request.decline');
 
     Route::post('/accept-request', 'LogisticsController@accept_requests')->name('request.accept');
+
+    Route::post('/update-status', 'LogisticsController@update')->name('request.update');
 });
 
 Route::namespace('CommodityRetailer')->prefix('retailer')->group(function () {
