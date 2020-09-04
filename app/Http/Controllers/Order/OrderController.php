@@ -490,7 +490,7 @@ class OrderController extends Controller
                 # code...
                 $response = [
                     'status' => '0',
-                    'msg' => 'Error Selling Product. Kindly try again later'
+                    'msg' => 'Error Confirming Sale. Kindly try again later'
                 ];
 
                 return $response;
@@ -509,8 +509,6 @@ class OrderController extends Controller
             return $response;
         }
     }
-
-
 
     public function decline_requests(Request $request)
     {

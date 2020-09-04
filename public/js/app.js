@@ -2381,6 +2381,153 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     status: {
@@ -2390,16 +2537,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      states: ['Abia', 'Adamawa', 'AkwaIbom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT', 'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Lagos', 'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamafara'],
+      states: ["Abia", "Adamawa", "AkwaIbom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamafara"],
       value: [],
       profile: null,
       commodities: [],
       errors: null,
-      valid_docs: ['National Certificate of Road Worthiness', 'Vehicle Registration', 'Motor Vehicle Insurance', 'Hackney Permit'],
+      valid_docs: ["National Certificate of Road Worthiness", "Vehicle Registration", "Motor Vehicle Insurance", "Hackney Permit"],
       toggleStatus: this.status,
-      btn_success: 'btn-primary',
+      btn_success: "btn-primary",
       loading: false,
-      min_date: ''
+      min_date: ""
     };
   },
   methods: {
@@ -2410,6 +2557,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         name: null,
         email: null,
         phone: null,
+        rate: null,
         address: null,
         other_info: null,
         state: null,
@@ -2423,7 +2571,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, "other_info", null);
 
       if (this.toggleStatus) {
-        axios.get('/getProfile').then(function (response) {
+        axios.get("/getProfile").then(function (response) {
           _this.profile = response.data.data;
 
           _this.$selectState(_this.profile.state);
@@ -2432,7 +2580,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
 
-      axios.get('/all_commodities').then(function (response) {
+      axios.get("/all_commodities").then(function (response) {
         _this.commodities = response.data;
       });
     },
@@ -2441,11 +2589,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var fileObj = event.target.files[0];
 
-      if (fileObj['size'] > 2111775) {
+      if (fileObj["size"] > 2111775) {
         swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'File size can\'t be more than 2MB'
+          icon: "error",
+          title: "Oops...",
+          text: "File size can't be more than 2MB"
         });
         return false;
       }
@@ -2464,11 +2612,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var fileObj = event.target.files[0];
 
-      if (fileObj['size'] > 2111775) {
+      if (fileObj["size"] > 2111775) {
         swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'File size can\'t be more than 2MB'
+          icon: "error",
+          title: "Oops...",
+          text: "File size can't be more than 2MB"
         });
         return false;
       }
@@ -2486,21 +2634,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this4 = this;
 
       this.loading = true;
-      $('.submit_action').attr('disabled', true);
-      axios.post('/profile', this.profile).then(function (response) {
-        swal.fire('Success', 'User Profile Successfully Created', 'success');
+      $(".submit_action").attr("disabled", true);
+      axios.post("/profile", this.profile).then(function (response) {
+        swal.fire("Success", "User Profile Successfully Created", "success");
         _this4.commodities = [];
         _this4.errors = null;
         _this4.toggleStatus = !_this4.toggleStatus;
-        $('.submit_action').attr('disabled', false);
-        Fire.$emit('AfterCreate');
+        $(".submit_action").attr("disabled", false);
+        Fire.$emit("AfterCreate");
       })["catch"](function (error) {
         if (error.response.status == 422) {
           _this4.errors = error.response.data.errors;
         }
 
         toastr["error"](error.response.data.message);
-        $('.submit_action').attr('disabled', false);
+        $(".submit_action").attr("disabled", false);
       })["finally"](function () {
         _this4.loading = false;
       });
@@ -2517,22 +2665,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.loading = true;
-      $('.submit_action').attr('disabled', true);
+      $(".submit_action").attr("disabled", true);
       axios.post("profile", this.profile).then(function (response) {
-        swal.fire('Sucess', 'Profile Updated', 'success');
-        $('.submit_action').attr('disabled', false);
+        swal.fire("Sucess", "Profile Updated", "success");
+        $(".submit_action").attr("disabled", false);
         _this5.commodities = [];
         _this5.errors = null;
         _this5.btn_success = "btn-primary";
         _this5.toggleStatus = !_this5.toggleStatus;
-        Fire.$emit('AfterCreate');
+        Fire.$emit("AfterCreate");
       })["catch"](function (error) {
         if (error.response.status == 422) {
           _this5.errors = error.response.data.errors;
         }
 
         toastr["error"](error.response.data.message);
-        $('.submit_action').attr('disabled', false);
+        $(".submit_action").attr("disabled", false);
       })["finally"](function () {
         _this5.loading = false;
       });
@@ -2555,7 +2703,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.profile.other_fields.length > 1) {
         this.profile.other_fields.forEach(function (element) {
           if (element.document !== null && element.title == fields.title) {
-            swal.fire('Error', "".concat(fields.title, " cannot be selected twice"), 'error');
+            swal.fire("Error", "".concat(fields.title, " cannot be selected twice"), "error");
 
             _this6.removeField(index);
 
@@ -2568,7 +2716,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
 
         if (current_field.length > 1) {
-          swal.fire('Error', 'You already Selected ' + fields.title, 'error');
+          swal.fire("Error", "You already Selected " + fields.title, "error");
           this.removeField(index);
         }
       }
@@ -2577,18 +2725,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     formatDate: function formatDate() {
       var d = new Date(),
-          month = '' + (d.getMonth() + 1),
-          day = '' + d.getDate(),
+          month = "" + (d.getMonth() + 1),
+          day = "" + d.getDate(),
           year = d.getFullYear();
-      if (month.length < 2) month = '0' + month;
-      if (day.length < 2) day = '0' + day;
-      return [year, month, day].join('-');
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+      return [year, month, day].join("-");
     },
     validateFields: function validateFields(fields) {
       try {
         fields.forEach(function (el, index) {
           if (el.document == null || el.title == null || el.expiry_date == null) {
-            toastr["error"]('Other Informations title and attachment must be filled');
+            toastr["error"]("Other Informations title and attachment must be filled");
             throw false;
           }
         });
@@ -2607,7 +2755,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     this.min_date = this.formatDate();
     this.loadCommodities();
-    Fire.$on('AfterCreate', function () {
+    Fire.$on("AfterCreate", function () {
       _this7.loadCommodities();
     });
   }
@@ -12132,7 +12280,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#axiosForm {  /* Components Root Element ID */\n    position: relative;\n}\n#add_doc {\n    cursor: pointer;\n}\n#add_doc:hover {\n    text-decoration: underline;\n    -webkit-text-decoration-color: #38c172;\n            text-decoration-color: #38c172;\n    text-decoration-thickness: 1px;\n}\n", ""]);
+exports.push([module.i, "\n#axiosForm {\n  /* Components Root Element ID */\n  position: relative;\n}\n#add_doc {\n  cursor: pointer;\n}\n#add_doc:hover {\n  text-decoration: underline;\n  -webkit-text-decoration-color: #38c172;\n          text-decoration-color: #38c172;\n  text-decoration-thickness: 1px;\n}\n", ""]);
 
 // exports
 
@@ -12170,7 +12318,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#axiosForm {\r\n    position: relative;\n}\r\n", ""]);
+exports.push([module.i, "\n#axiosForm {\n    position: relative;\n}\n", ""]);
 
 // exports
 
@@ -12208,7 +12356,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#axiosForm {\r\n    position: relative;\n}\n#date_picker {\r\n    width: 100%;\n}\n.daterangepicker {\r\n    top: calc(1.6em + 0.75rem + 2px) !important;\n}\n.reportrange-text {\r\n    min-width: 100% !important;\n}\r\n", ""]);
+exports.push([module.i, "\n#axiosForm {\n    position: relative;\n}\n#date_picker {\n    width: 100%;\n}\n.daterangepicker {\n    top: calc(1.6em + 0.75rem + 2px) !important;\n}\n.reportrange-text {\n    min-width: 100% !important;\n}\n", ""]);
 
 // exports
 
@@ -70744,7 +70892,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "form-group col-md-6" },
+                    { staticClass: "form-group col-md-4" },
                     [
                       _c("label", { staticClass: "control-label" }, [
                         _vm._v("State")
@@ -70783,7 +70931,7 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-6" }, [
+                  _c("div", { staticClass: "form-group col-md-4" }, [
                     _c("label", { staticClass: "control-label" }, [
                       _vm._v("LGA")
                     ]),
@@ -70828,6 +70976,48 @@ var render = function() {
                     _vm.errors && _vm.errors.lg
                       ? _c("span", { staticClass: "help-block text-danger" }, [
                           _vm._v(_vm._s(_vm.errors.lg[0]))
+                        ])
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group col-md-4" }, [
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v("Rate")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.profile.rate,
+                          expression: "profile.rate"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        id: "rate",
+                        name: "rate",
+                        placeholder: "Rate per KM",
+                        step: "5",
+                        disabled: _vm.toggleStatus,
+                        required: ""
+                      },
+                      domProps: { value: _vm.profile.rate },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.profile, "rate", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.errors && _vm.errors.rate
+                      ? _c("span", { staticClass: "help-block text-danger" }, [
+                          _vm._v(_vm._s(_vm.errors.rate[0]))
                         ])
                       : _vm._e()
                   ]),
@@ -71274,7 +71464,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "text-success" }, [
       _c("i", { staticClass: "fas fa-plus" }),
-      _vm._v(" Add other documents")
+      _vm._v(" Add other documents\n              ")
     ])
   }
 ]
@@ -87302,8 +87492,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\sellersApp\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\sellersApp\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /opt/lampp/htdocs/farmkonnectsellersapp/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/farmkonnectsellersapp/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -13,7 +13,9 @@ use Illuminate\Auth\Events\Registered;
 use App\Events\OrderSuccessfullyPlaced;
 use App\Listeners\OnboardVerifiedUsers;
 use App\Listeners\LogDeclinedTransaction;
+use App\Events\DeliverySuccessfullyRequested;
 use App\Events\SuccessfulUserWalletWithdrawal;
+use App\Listeners\LogDeliveryRequestTransaction;
 use App\Listeners\LogSuccessfulOrderTransaction;
 use App\Listeners\ReverseDeclinedOrderTransaction;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -46,6 +48,9 @@ class EventServiceProvider extends ServiceProvider
         OrderDeclined::class => [
             ReverseDeclinedOrderTransaction::class,
             LogDeclinedTransaction::class,
+        ],
+        DeliverySuccessfullyRequested::class => [
+            LogDeliveryRequestTransaction::class,
         ],
     ];
 
