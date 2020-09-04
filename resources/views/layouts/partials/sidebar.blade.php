@@ -73,7 +73,8 @@
                 </ul>
             </li>
             @endcan
-            @can('Farm Manager')
+            @if(auth()->user()->can('Commodity Retailer') || auth()->user()->can('Commodity Distributor') ||
+            auth()->user()->can('Farm Manager'))
             <li class="nav-item has-treeview {{Request::is('product*') ? 'menu-open' : ''}}">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-shopping-cart"></i>
@@ -83,13 +84,15 @@
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{route('product.create')}}"
-                            class="nav-link {{Request::is('product/create') ? 'active' : ''}}">
-                            <i class="fas fa-plus nav-icon"></i>
-                            <p>Add Product</p>
-                        </a>
-                    </li>
+                    @can('Farm Manager')
+                        <li class="nav-item">
+                            <a href="{{route('product.create')}}"
+                                class="nav-link {{Request::is('product/create') ? 'active' : ''}}">
+                                <i class="fas fa-plus nav-icon"></i>
+                                <p>Add Product</p>
+                            </a>
+                        </li>
+                    @endcan
                     <li class="nav-item">
                         <a href="{{route('product.index')}}"
                             class="nav-link {{Request::is('product') ? 'active' : ''}}">
