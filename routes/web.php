@@ -5,6 +5,7 @@ use App\UserPosition;
 use App\Model\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 
@@ -36,6 +37,14 @@ Route::get('/bank-account', 'Wallet\WalletController@accounts');
 Route::post('bank-account', 'Wallet\WalletController@bank_account')->name('bank-account');
 
 Route::get('/transactions', 'Wallet\WalletController@show');
+
+// Visit url/create-symlink on production (cpanel deployment) to create symlink to public folder.
+
+// Route::get('create-symlink', function () {
+
+//     Artisan::call('storage:link');
+
+// });
 
 
 Route::namespace('Wallet')->prefix('/wallet')->group(function () {
@@ -98,9 +107,9 @@ Route::namespace('Logistics')->prefix('/logistics')->group(function () {
 
     Route::get('view-request/{id}', 'LogisticsController@show');
 
-    Route::post('/decline-request', 'LogisticsController@decline_requests')->name('request.decline');
+    Route::post('/decline-request', 'LogisticsController@decline_requests')->name('delivery.request.decline');
 
-    Route::post('/accept-request', 'LogisticsController@accept_requests')->name('request.accept');
+    Route::post('/accept-request', 'LogisticsController@accept_requests')->name('delivery.request.accept');
 
     Route::post('/update-status', 'LogisticsController@update')->name('request.update');
 });

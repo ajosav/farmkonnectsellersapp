@@ -223,6 +223,7 @@
                 beforeSend: function() {
                     swal.fire({
                         title: 'Processing',
+                        allowOutsideClick: false,
                         onBeforeOpen: () => {
                             swal.showLoading()
                         },
@@ -238,16 +239,19 @@
                                 icon: 'success',
                                 title: 'Success!',
                                 text: data.msg,
-                                timer: 0300
+                                timer: 3000
                             }).then((value) => {}).catch(swal.noop)
                         }, 1000);
 
 
-                        $('.modal').modal('hide');
-
                         $('#' + uuid).remove();
 
-                        location.reload(true);
+                        $('.modal').modal('hide');
+
+                        setInterval(() => {
+                            location.reload(true);
+                        }, 2000);
+
 
                         $('button').removeAttr('disabled');
 
@@ -327,6 +331,7 @@
                 beforeSend: function() {
                     swal.fire({
                         title: 'Processing',
+                        allowOutsideClick: false,
                         onBeforeOpen: () => {
                             swal.showLoading()
                         },
@@ -337,21 +342,21 @@
                     swal.close();
 
                     if (data.status == 1) {
+
                         setTimeout(function() {
                             swal.fire({
                                 icon: 'success',
                                 title: 'Success!',
                                 text: data.msg,
-                                timer: 0300
+                                timer: 5000
                             }).then((value) => {}).catch(swal.noop)
                         }, 1000);
 
-
                         $('.modal').modal('hide');
 
-                        $('#' + uuid).remove();
-
-                        location.reload(true);
+                        setTimeout(() => {
+                            location.reload(true);
+                        }, 8000);
 
                         $('button').removeAttr('disabled');
 

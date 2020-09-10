@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Model\Transaction;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -19,7 +20,21 @@ class LogDeclinedTransaction
     {
         //
 
-        $role = 'farmManagerProfile';
+        if (Gate::allows('Farm Manager')) {
+
+            $role = "FarmManagerProfile";
+        }
+
+        if (Gate::allows('Commodity Distributor')) {
+
+            $role = "CommodityDistributorProfile";
+        }
+
+        if (Gate::allows('Commodity Retailer')) {
+
+            $role = "CommodityRetailerProfile";
+        }
+
 
         new Transaction();
 

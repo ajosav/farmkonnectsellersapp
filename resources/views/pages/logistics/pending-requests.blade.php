@@ -249,6 +249,7 @@
                 beforeSend: function () {
                     swal.fire({
                         title: 'Updating Request',
+                        allowOutsideClick: false,
                         onBeforeOpen: () => {
                             swal.showLoading()
                         },
@@ -307,8 +308,6 @@
                     $('button').removeAttr('disabled');
                 }
             });
-
-
         });
 
     });

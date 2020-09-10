@@ -175,6 +175,7 @@
                 beforeSend: function () {
                     swal.fire({
                         title: 'Cancelling Order',
+                        allowOutsideClick: false,
                         onBeforeOpen: () => {
                             swal.showLoading()
                         },

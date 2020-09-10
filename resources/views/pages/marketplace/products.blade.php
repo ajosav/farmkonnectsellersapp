@@ -210,7 +210,13 @@
                 var quantity = $("#quantity" + id).val();
                 var price = $("span#price" + id).html();
                 var totalprice = $("#totalprice" + id).val();
-
+                swal.fire({
+                        title: 'Processing',
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            swal.showLoading()
+                        },
+                    });
                 axios.post('{{ route("process-order") }}', {
                         product_id: id,
                         unit_id: unit_id,

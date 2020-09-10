@@ -227,6 +227,7 @@
                 beforeSend: function() {
                     swal.fire({
                         title: 'Processing',
+                        allowOutsideClick: false,
                         onBeforeOpen: () => {
                             swal.showLoading()
                         },
@@ -331,6 +332,7 @@
                 beforeSend: function() {
                     swal.fire({
                         title: 'Processing',
+                        allowOutsideClick: false,
                         onBeforeOpen: () => {
                             swal.showLoading()
                         },

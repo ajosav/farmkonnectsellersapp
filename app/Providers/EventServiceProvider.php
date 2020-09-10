@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\OrderDeclined;
+use App\Events\OrderConfirmed;
 use App\Listeners\LogWalletCredit;
 use Illuminate\Auth\Events\Verified;
 use App\Events\WalletCreditValidated;
@@ -14,9 +15,12 @@ use App\Events\OrderSuccessfullyPlaced;
 use App\Listeners\OnboardVerifiedUsers;
 use App\Listeners\LogDeclinedTransaction;
 use App\Events\DeliverySuccessfullyRequested;
+use App\Listeners\NotifyBuyerOfDeclinedOrder;
 use App\Events\SuccessfulUserWalletWithdrawal;
+use App\Listeners\NotifyVendorOfOrderPlacement;
 use App\Listeners\LogDeliveryRequestTransaction;
 use App\Listeners\LogSuccessfulOrderTransaction;
+use App\Listeners\NotifyBuyerOfOrderConfirmation;
 use App\Listeners\ReverseDeclinedOrderTransaction;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -43,11 +47,16 @@ class EventServiceProvider extends ServiceProvider
             LogWalletWithdrawal::class
         ],
         OrderSuccessfullyPlaced::class => [
-            LogSuccessfulOrderTransaction::class
+            LogSuccessfulOrderTransaction::class,
+            NotifyVendorOfOrderPlacement::class,
+        ],
+        OrderConfirmed::class => [
+            NotifyBuyerOfOrderConfirmation::class,
         ],
         OrderDeclined::class => [
             ReverseDeclinedOrderTransaction::class,
             LogDeclinedTransaction::class,
+            NotifyBuyerOfDeclinedOrder::class,
         ],
         DeliverySuccessfullyRequested::class => [
             LogDeliveryRequestTransaction::class,

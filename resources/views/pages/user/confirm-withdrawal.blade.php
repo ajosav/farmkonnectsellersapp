@@ -90,6 +90,7 @@
                 beforeSend: function () {
                     swal.fire({
                         title: 'Processing Withdrawal',
+                        allowOutsideClick: false,
                         onBeforeOpen: () => {
                             swal.showLoading()
                         },

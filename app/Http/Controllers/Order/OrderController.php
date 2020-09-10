@@ -8,6 +8,7 @@ use App\Model\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Events\OrderDeclined;
+use App\Events\OrderConfirmed;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -467,6 +468,8 @@ class OrderController extends Controller
             # code...
             $uuid = $request->uuid;
 
+            $order = Order::where('uuid', $uuid)->first();
+
             $feedback = $request->feedback;
 
             $order_quantity = $this->order_quantity($uuid);
@@ -500,6 +503,8 @@ class OrderController extends Controller
                 'status' => 1,
                 'feedback' => $feedback
             ]);
+
+            event(new OrderConfirmed($order));
 
             $response = [
                 'status' => '1',

@@ -159,6 +159,7 @@
                 beforeSend: function () {
                     swal.fire({
                         title: 'Declining Request',
+                        allowOutsideClick: false,
                         onBeforeOpen: () => {
                             swal.showLoading()
                         },
@@ -242,6 +243,7 @@
                 beforeSend: function () {
                     swal.fire({
                         title: 'Accepting Request',
+                        allowOutsideClick: false,
                         onBeforeOpen: () => {
                             swal.showLoading()
                         },

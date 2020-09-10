@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Manager;
 
-use App\DataTables\ProductDatatable;
 use Exception;
 use Keygen\Keygen;
 use App\Model\Unit;
 use App\Model\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\DataTables\ProductDatatable;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\ProductRequest;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,13 +30,11 @@ class ProductController extends Controller
      */
     public function index(ProductDatatable $dataTable)
     {
-        if (!(Gate::allows('Farm Manager'))) {
+        if (Gate::allows('Commodity Consumer')) {
             return redirect()->back()->with(['denied' => "Access Denied!"]);
         }
 
         return $dataTable->render('pages.manager.product.products');
-        // return view('pages.manager.product.products');
-
     }
 
     /**
@@ -80,7 +79,7 @@ class ProductController extends Controller
         if ($images) {
             foreach ($images as $key => $image) {
                 $imageName = $image->getClientOriginalName();
-                $newImage = \Image::make($image->getRealPath());
+                $newImage = Image::make($image->getRealPath());
                 Storage::put('public/products/large/' . $imageName, $newImage->stream());
                 $newImage->resize(120, 120, function ($constraint) {
                     $constraint->aspectRatio();
