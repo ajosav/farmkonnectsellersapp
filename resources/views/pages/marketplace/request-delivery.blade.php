@@ -320,7 +320,7 @@
                         }, 1000);
 
                         setTimeout(function () {
-                            location.reload(true);
+                            // location.reload(true);
                         }, 3000);
 
                         $('button').removeAttr('disabled');

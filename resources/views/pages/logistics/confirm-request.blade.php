@@ -151,7 +151,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '{{ route("request.decline") }}',
+                url: '{{ route("delivery.request.decline") }}',
                 type: 'POST',
                 data: {
                     uuid: uuid
@@ -235,7 +235,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '{{ route("request.accept") }}',
+                url: '{{ route("delivery.request.accept") }}',
                 type: 'POST',
                 data: {
                     uuid: uuid

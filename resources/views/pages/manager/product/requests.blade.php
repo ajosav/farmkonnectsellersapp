@@ -356,9 +356,7 @@
 
                         setTimeout(() => {
                             location.reload(true);
-                        }, 8000);
-
-                        $('button').removeAttr('disabled');
+                        }, 3000);
 
                     } else {
 

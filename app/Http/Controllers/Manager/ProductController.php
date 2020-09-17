@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\DataTables\ProductDatatable;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\ProductRequest;
 use Intervention\Image\Facades\Image;
@@ -47,6 +48,17 @@ class ProductController extends Controller
         if (!(Gate::allows('Farm Manager'))) {
             return redirect()->back()->with(['denied' => "Access Denied!"]);
         }
+
+        $profile = Auth::user()->FarmManagerProfile;
+
+        if (!$profile) {
+            # code...
+
+            return redirect('/profile')->with('error', 'Kindly save your account profile to continue.');
+        }
+
+
+
         return view('pages.manager.product.create_products');
     }
 

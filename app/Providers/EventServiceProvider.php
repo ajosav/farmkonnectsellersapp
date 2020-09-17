@@ -22,6 +22,9 @@ use App\Listeners\LogDeliveryRequestTransaction;
 use App\Listeners\LogSuccessfulOrderTransaction;
 use App\Listeners\NotifyBuyerOfOrderConfirmation;
 use App\Listeners\ReverseDeclinedOrderTransaction;
+use App\Events\DeliveryRequestSuccessfullyConfirmed;
+use App\Listeners\NotifyBuyerOfLogisticsCompanyConfirmation;
+use App\Listeners\NotifyLogisticCompanyOfNewDeliveryRequest;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -60,7 +63,11 @@ class EventServiceProvider extends ServiceProvider
         ],
         DeliverySuccessfullyRequested::class => [
             LogDeliveryRequestTransaction::class,
+            NotifyLogisticCompanyOfNewDeliveryRequest::class,
         ],
+        DeliveryRequestSuccessfullyConfirmed::class => [
+            NotifyBuyerOfLogisticsCompanyConfirmation::class,
+        ]
     ];
 
     /**

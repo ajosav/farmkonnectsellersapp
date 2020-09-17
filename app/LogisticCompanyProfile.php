@@ -75,4 +75,9 @@ class LogisticCompanyProfile extends Model
             ]
         );
     }
+
+    public function deliveries()
+    {
+        return $this->hasMany(Delivery::class, 'logistic_id', 'uuid');
+    }
 }

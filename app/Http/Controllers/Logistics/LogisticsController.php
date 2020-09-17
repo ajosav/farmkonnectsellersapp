@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Gate;
 use GuzzleHttp\Exception\RequestException;
 use App\Events\DeliverySuccessfullyRequested;
 use App\Http\Controllers\Wallet\WalletController;
+use App\Events\DeliveryRequestSuccessfullyConfirmed;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Events\NotifyLogisticsCompanyOfNewDeliveryRequest;
 
 class LogisticsController extends Controller
 {
@@ -33,6 +35,15 @@ class LogisticsController extends Controller
     public function index()
     {
         //
+
+        $profile = Auth::user()->LogisticCompanyProfile;
+
+        if (!$profile) {
+            # code...
+
+            return redirect('/profile')->with('error', 'Kindly save your account profile to continue.');
+        }
+
         $role = 'LogisticCompanyProfile';
         $requests = Delivery::where('logistic_id', Auth::user()->$role->uuid)->where('status', 2)->get();
 
@@ -58,6 +69,10 @@ class LogisticsController extends Controller
 
                 return response()->json($response);
             }
+
+            $delivery = Delivery::where('uuid', $uuid)->first();
+
+            event(new DeliveryRequestSuccessfullyConfirmed($delivery));
 
             $response = [
                 'status' => 1,
@@ -110,6 +125,14 @@ class LogisticsController extends Controller
 
     public function pending_requests()
     {
+        $profile = Auth::user()->LogisticCompanyProfile;
+
+        if (!$profile) {
+            # code...
+
+            return redirect('/profile')->with('error', 'Kindly save your account profile to continue.');
+        }
+
         $role = $this->role;
 
         $requests = Delivery::where('logistic_id', Auth::user()->$role->uuid)->where(function ($query) {
@@ -291,6 +314,8 @@ class LogisticsController extends Controller
 
                 throw new ModelNotFoundException("Error Processing Request");
             }
+
+            $delivery['uuid'] = $save_request->uuid;
 
             event(new DeliverySuccessfullyRequested((object) $delivery));
 

@@ -23,7 +23,7 @@
             {{-- <ul class="nav nav-pills nav-sidebar flex-column nav-legacy nav-compact " data-widget="treeview" role="menu" data-accordion="false"> --}}
 
             <li class="nav-item" id="dashboard">
-                <a href="{{route('home')}}" class="nav-link {{Request::is('home') ? 'active' : ''}}">
+                <a href="{{route('home')}}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-chart-line"></i>
                     <p>
                         Dashboard
@@ -31,7 +31,7 @@
                 </a>
             </li>
             <li id="profile" class="nav-item has-treeview">
-                <a href="{{route('profile.index')}}" class="nav-link {{Request::is('profile') ? 'active' : ''}}">
+                <a href="{{route('profile.index')}}" class="nav-link {{ Request::is('profile') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-id-badge"></i>
                     <p>
                         Profile
@@ -85,13 +85,13 @@
                 </a>
                 <ul class="nav nav-treeview">
                     @can('Farm Manager')
-                        <li class="nav-item">
-                            <a href="{{route('product.create')}}"
-                                class="nav-link {{Request::is('product/create') ? 'active' : ''}}">
-                                <i class="fas fa-plus nav-icon"></i>
-                                <p>Add Product</p>
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a href="{{route('product.create')}}"
+                            class="nav-link {{Request::is('product/create') ? 'active' : ''}}">
+                            <i class="fas fa-plus nav-icon"></i>
+                            <p>Add Product</p>
+                        </a>
+                    </li>
                     @endcan
                     <li class="nav-item">
                         <a href="{{route('product.index')}}"
@@ -104,7 +104,6 @@
                         <a href="{{ route('requests') }}" class="nav-link">
                             <i class="fa fa-cart-arrow-down"></i>
                             <p>Orders</p>
-                            <span class="badge badge-info right">6</span>
                         </a>
                     </li>
 

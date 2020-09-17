@@ -17,4 +17,9 @@ class Delivery extends Model
     {
         return Order::where('uuid', $order_id)->first();
     }
+
+    public function logistic_company()
+    {
+        return $this->belongsTo(LogisticCompanyProfile::class, 'uuid', 'logistic_id');
+    }
 }
