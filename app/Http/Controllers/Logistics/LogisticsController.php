@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Logistics;
 use App\Model\Order;
 use GuzzleHttp\Client;
 use App\Model\Delivery;
+use App\Model\Transaction;
 use Illuminate\Http\Request;
 use App\LogisticCompanyProfile;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,7 @@ use App\Events\DeliverySuccessfullyRequested;
 use App\Http\Controllers\Wallet\WalletController;
 use App\Events\DeliveryRequestSuccessfullyConfirmed;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Events\DeliveryRequestDeclinedByLogisticsCompany;
 use App\Events\NotifyLogisticsCompanyOfNewDeliveryRequest;
 
 class LogisticsController extends Controller
@@ -113,6 +115,10 @@ class LogisticsController extends Controller
             $wallet = new WalletController();
 
             $credit_wallet = $wallet->credit_wallet($request->fee, $order->user_id);
+
+            $delivery = Delivery::where('uuid', $uuid)->first();
+
+            event(new DeliveryRequestDeclinedByLogisticsCompany($delivery));
 
             $response = [
                 'status' => 1,
@@ -294,6 +300,18 @@ class LogisticsController extends Controller
             'date' => $date,
             'details' => $details
         ];
+
+        $wallet_balance = Auth::user()->wallet->balance;
+
+        if ($wallet_balance < $fee) {
+            # code...
+            $response = [
+                'status' => 0,
+                'msg' => 'Insufficient Wallet Balance.'
+            ];
+
+            return response()->json($response);
+        }
 
 
         $wallet = new WalletController();

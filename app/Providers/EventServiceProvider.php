@@ -18,11 +18,13 @@ use App\Events\DeliverySuccessfullyRequested;
 use App\Listeners\NotifyBuyerOfDeclinedOrder;
 use App\Events\SuccessfulUserWalletWithdrawal;
 use App\Listeners\NotifyVendorOfOrderPlacement;
+use App\Listeners\HandleDeclinedDeliveryRequest;
 use App\Listeners\LogDeliveryRequestTransaction;
 use App\Listeners\LogSuccessfulOrderTransaction;
 use App\Listeners\NotifyBuyerOfOrderConfirmation;
 use App\Listeners\ReverseDeclinedOrderTransaction;
 use App\Events\DeliveryRequestSuccessfullyConfirmed;
+use App\Events\DeliveryRequestDeclinedByLogisticsCompany;
 use App\Listeners\NotifyBuyerOfLogisticsCompanyConfirmation;
 use App\Listeners\NotifyLogisticCompanyOfNewDeliveryRequest;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -67,7 +69,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         DeliveryRequestSuccessfullyConfirmed::class => [
             NotifyBuyerOfLogisticsCompanyConfirmation::class,
-        ]
+        ],
+        DeliveryRequestDeclinedByLogisticsCompany::class => [
+            HandleDeclinedDeliveryRequest::class
+        ],
     ];
 
     /**
