@@ -14,15 +14,21 @@ use Illuminate\Auth\Events\Registered;
 use App\Events\OrderSuccessfullyPlaced;
 use App\Listeners\OnboardVerifiedUsers;
 use App\Listeners\LogDeclinedTransaction;
+use App\Events\DeliveryAwaitingConfirmation;
 use App\Events\DeliverySuccessfullyRequested;
 use App\Listeners\NotifyBuyerOfDeclinedOrder;
+use App\Listeners\PayProductOwnerAfterPickUp;
 use App\Events\SuccessfulUserWalletWithdrawal;
+use App\Listeners\NotifyBuyerOfEnrouteDelivery;
+use App\Listeners\NotifyBuyerOfProductsArrival;
 use App\Listeners\NotifyVendorOfOrderPlacement;
 use App\Listeners\HandleDeclinedDeliveryRequest;
 use App\Listeners\LogDeliveryRequestTransaction;
 use App\Listeners\LogSuccessfulOrderTransaction;
+use App\Events\ProductPickedUpByLogisticsCompany;
 use App\Listeners\NotifyBuyerOfOrderConfirmation;
 use App\Listeners\ReverseDeclinedOrderTransaction;
+use App\Events\DeliveryRequestEnrouteToDestination;
 use App\Events\DeliveryRequestSuccessfullyConfirmed;
 use App\Events\DeliveryRequestDeclinedByLogisticsCompany;
 use App\Listeners\NotifyBuyerOfLogisticsCompanyConfirmation;
@@ -71,7 +77,16 @@ class EventServiceProvider extends ServiceProvider
             NotifyBuyerOfLogisticsCompanyConfirmation::class,
         ],
         DeliveryRequestDeclinedByLogisticsCompany::class => [
-            HandleDeclinedDeliveryRequest::class
+            HandleDeclinedDeliveryRequest::class,
+        ],
+        ProductPickedUpByLogisticsCompany::class => [
+            PayProductOwnerAfterPickUp::class,
+        ],
+        DeliveryRequestEnrouteToDestination::class => [
+            NotifyBuyerOfEnrouteDelivery::class,
+        ],
+        DeliveryAwaitingConfirmation::class => [
+            NotifyBuyerOfProductsArrival::class,
         ],
     ];
 

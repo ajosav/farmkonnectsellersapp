@@ -57,7 +57,7 @@
                             </td>
                             <td>{{ $request->distance." KM" }}</td>
                             <td>&#8358;{{ $request->fee }}</td>
-                            <td>
+                            <td class="status" data-status="{{ $request->status }}">
                                 @if($request->status == 1)
                                 <span class="badge badge-info">Awaiting Pickup</span>
                                 @elseif($request->status == 6)
@@ -85,91 +85,6 @@
                 <!-- /.box-body -->
             </div>
 
-            <!-- Decline Modal -->
-            <div class="modal fade" style="opacity: 1;" id="decline-modal" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Cancel Order</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <h3 class="text-center">Decline Request</h3>
-                            <div class="text-center">
-                                <label>Product</label>
-                                <p id="product"></p>
-                            </div>
-                            <div class="text-center">
-                                <label>Quantity Ordered</label>
-                                <p id="quantity"></p>
-                            </div>
-                            <div class="text-center">
-                                <label>Customer</label>
-                                <p id="customer"></p>
-                            </div>
-                            <div class="text-center">
-                                <label>Total Price</label>
-                                <p id="price"></p>
-                            </div>
-                            <div class="text-center">
-                                <label>Feedback</label>
-                                <textarea id="feedback" rows="5" class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-danger" id="confirm-decline">Confirm
-                                Decline</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Accept Modal -->
-            <div class="modal fade" style="opacity: 1;" id="accept-modal" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Cancel Order</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <h3 class="text-center">Accept Request</h3>
-                            <div class="text-center">
-                                <label>Product</label>
-                                <p id="accept_product"></p>
-                            </div>
-                            <div class="text-center">
-                                <label>Quantity Ordered</label>
-                                <p id="accept_quantity"></p>
-                            </div>
-                            <div class="text-center">
-                                <label>Customer</label>
-                                <p id="accept_customer"></p>
-                            </div>
-                            <div class="text-center">
-                                <label>Total Price</label>
-                                <p id="accept_price"></p>
-                            </div>
-                            <div class="text-center">
-                                <label>Feedback</label>
-                                <textarea id="accept_feedback" rows="5" class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-success" id="confirm-accept">Confirm
-                                Request</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             @endif
         </div>
 
@@ -191,7 +106,6 @@
                                 <div class="form-group">
                                     <label>Select Status</label>
                                     <select id="status">
-                                        <option value="1">Awaiting Pickup</option>
                                         <option value="3">Pickup Complete</option>
                                         <option value="4">Enroute to Destination</option>
                                         <option value="5">Awaiting Delivery Confirmation</option>
@@ -220,10 +134,31 @@
             "pageLength": 10
         });
 
-
         $('#update_btn').click(function() {
 
             const uuid = $(this).attr('data-id');
+
+            const row = $(this).closest('tr');
+
+            const status = row.find('.status').attr('data-status');
+
+            if(status == '3') {
+
+                $('#status option:contains("Pickup Complete")').attr('disabled', 'disabled');
+                $('#status option:contains("Awaiting Delivery Confirmation")').attr('disabled', 'disabled');
+            }
+
+            if(status == '4') {
+
+                $('#status option:contains("Enroute to Destination")').attr('disabled', 'disabled');
+                $('#status option:contains("Pickup Complete")').attr('disabled', 'disabled');
+            }
+
+            if(status == '5'){
+                $('#status').attr('disabled', 'disabled');
+                $('#update').attr('disabled', 'disabled');
+            }
+
 
             $('#update').attr('data-id', uuid);
         });

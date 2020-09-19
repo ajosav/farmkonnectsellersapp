@@ -13,8 +13,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use GuzzleHttp\Exception\RequestException;
+use App\Events\DeliveryAwaitingConfirmation;
 use App\Events\DeliverySuccessfullyRequested;
+use App\Events\ProductPickedUpByLogisticsCompany;
 use App\Http\Controllers\Wallet\WalletController;
+use App\Events\DeliveryRequestEnrouteToDestination;
 use App\Events\DeliveryRequestSuccessfullyConfirmed;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Events\DeliveryRequestDeclinedByLogisticsCompany;
@@ -404,11 +407,45 @@ class LogisticsController extends Controller
             $uuid = $request->uuid;
             $status = $request->status;
 
-            $accept_request = Delivery::where('uuid', $uuid)->update([
-                'status' => $status
-            ]);
+            $update_status = DB::transaction(function () use ($uuid, $status) {
+                $accept_request = Delivery::where('uuid', $uuid)->update([
+                    'status' => $status
+                ]);
 
-            if ($accept_request == false) {
+                $delivery = Delivery::where('uuid', $uuid)->first();
+
+                if ($accept_request == false) {
+                    # code...
+
+                    return false;
+                }
+
+                if ($status == 3) {
+                    # code...
+
+                    event(new ProductPickedUpByLogisticsCompany($delivery));
+
+                    return true;
+                }
+
+                if ($status == 4) {
+                    # code...
+
+                    event(new DeliveryRequestEnrouteToDestination($delivery));
+
+                    return true;
+                }
+
+                if ($status == 5) {
+                    # code...
+
+                    event(new DeliveryAwaitingConfirmation($delivery));
+
+                    return true;
+                }
+            });
+
+            if ($update_status == false) {
                 # code...
                 $response = [
                     'status' => 0,
