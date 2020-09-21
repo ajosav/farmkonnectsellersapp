@@ -13,12 +13,14 @@ use App\Listeners\LogWalletWithdrawal;
 use Illuminate\Auth\Events\Registered;
 use App\Events\OrderSuccessfullyPlaced;
 use App\Listeners\OnboardVerifiedUsers;
+use App\Events\DeliveryConfirmedByBuyer;
 use App\Listeners\LogDeclinedTransaction;
 use App\Events\DeliveryAwaitingConfirmation;
 use App\Events\DeliverySuccessfullyRequested;
 use App\Listeners\NotifyBuyerOfDeclinedOrder;
 use App\Listeners\PayProductOwnerAfterPickUp;
 use App\Events\SuccessfulUserWalletWithdrawal;
+use App\Listeners\CreditLogisticCompanyWallet;
 use App\Listeners\NotifyBuyerOfEnrouteDelivery;
 use App\Listeners\NotifyBuyerOfProductsArrival;
 use App\Listeners\NotifyVendorOfOrderPlacement;
@@ -87,6 +89,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         DeliveryAwaitingConfirmation::class => [
             NotifyBuyerOfProductsArrival::class,
+        ],
+        DeliveryConfirmedByBuyer::class => [
+            CreditLogisticCompanyWallet::class,
         ],
     ];
 

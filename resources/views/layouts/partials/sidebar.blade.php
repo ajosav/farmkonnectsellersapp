@@ -129,8 +129,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('orders') }}" class="nav-link {{Request::is('orders') ? 'active' : ''}}">
+                        <a href="{{ route('orders') }}" class="nav-link {{Request::is('orders/') ? 'active' : ''}}">
                             <i class="fa fa-cart-arrow-down nav-icon"></i>My Order History
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('orders.delivery.history') }}"
+                            class="nav-link {{Request::is('orders/delivery-history') ? 'active' : ''}}">
+                            <i class="fa fa-shipping-fast arrow-down nav-icon"></i>Product Delivery History
                         </a>
                     </li>
                 </ul>

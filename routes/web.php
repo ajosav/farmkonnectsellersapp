@@ -47,6 +47,10 @@ Route::get('/transactions', 'Wallet\WalletController@show');
 // });
 
 
+
+Route::get('orders/delivery-history', 'Order\OrderController@delivery_history')->name('orders.delivery.history');
+ROute::post('orders/confirm-delivery', 'Logistics\LogisticsController@confirm_delivery')->name('delivery.request.confirm');
+
 Route::namespace('Wallet')->prefix('/wallet')->group(function () {
     Route::get('/', 'WalletController@index')->name('wallet');
 

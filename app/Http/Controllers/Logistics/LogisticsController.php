@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Events\DeliveryConfirmedByBuyer;
 use GuzzleHttp\Exception\RequestException;
 use App\Events\DeliveryAwaitingConfirmation;
 use App\Events\DeliverySuccessfullyRequested;
@@ -145,7 +146,7 @@ class LogisticsController extends Controller
         $role = $this->role;
 
         $requests = Delivery::where('logistic_id', Auth::user()->$role->uuid)->where(function ($query) {
-            $query->where('status', 1)->orWhere('status', 6)->orWhere('status', 3)->orWhere('status', 4)->orWhere('status', 5);
+            $query->where('status', 1)->orWhere('status', 3)->orWhere('status', 4)->orWhere('status', 5);
         })->get();
 
         return view('pages.logistics.pending-requests', ['requests' => $requests]);
@@ -390,6 +391,56 @@ class LogisticsController extends Controller
     {
         //
     }
+
+    public function confirm_delivery(Request $request)
+    {
+        if ($request->ajax()) {
+            # code...
+            $delivery_id = $request->uuid;
+
+            $confirm_delivery = DB::transaction(function () use ($delivery_id) {
+
+                $delivery = Delivery::where('uuid', $delivery_id)->first();
+
+                $logistic_id = $delivery->logistic_id;
+
+                $order_id = $delivery->order_id;
+
+                $update_status = Delivery::where('uuid', $delivery_id)->update([
+                    'status' => 6
+                ]);
+
+                if ($update_status == false) {
+                    # code...
+
+                    return false;
+                }
+
+                event(new DeliveryConfirmedByBuyer($delivery));
+
+                return true;
+            });
+
+            if ($confirm_delivery == false) {
+                # code...
+
+                $response = [
+                    'status' => '0',
+                    'msg' => 'Error Confirming Delivery.'
+                ];
+
+                return response()->json($response);
+            }
+
+            $response = [
+                'status' => '1',
+                'msg' => 'Delivery Successfully confirmed.'
+            ];
+
+            return response()->json($response);
+        }
+    }
+
 
     /**
      * Update the specified resource in storage.

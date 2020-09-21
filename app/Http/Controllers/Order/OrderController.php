@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Order;
 use App\Model\Unit;
 use App\Model\Order;
 use App\Model\Product;
+use App\Model\Delivery;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Events\OrderDeclined;
 use App\Events\OrderConfirmed;
+use App\LogisticCompanyProfile;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -549,5 +551,14 @@ class OrderController extends Controller
 
             return response()->json($response);
         }
+    }
+
+    public function delivery_history()
+    {
+
+        $deliveries = Delivery::leftJoin('orders', 'orders.uuid', '=', 'deliveries.order_id')->where('orders.user_id', Auth::user()->uuid)->select('deliveries.*', 'orders.*', 'deliveries.status as delivery_status', 'deliveries.uuid as delivery_id')->orderBy('deliveries.created_at', 'DESC')->get();
+
+
+        return view('pages.user.delivery-requests', ['deliveries' => $deliveries]);
     }
 }
