@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\OrderDeclined;
 use App\Events\OrderConfirmed;
 use App\Listeners\LogWalletCredit;
+use App\Listeners\NotifyToAddedUser;
 use Illuminate\Auth\Events\Verified;
 use App\Events\WalletCreditValidated;
 use Illuminate\Support\Facades\Event;
@@ -21,6 +22,7 @@ use App\Listeners\NotifyBuyerOfDeclinedOrder;
 use App\Listeners\PayProductOwnerAfterPickUp;
 use App\Events\SuccessfulUserWalletWithdrawal;
 use App\Listeners\CreditLogisticCompanyWallet;
+use App\Events\NewUserSuccessfullyAddedByAdmin;
 use App\Listeners\NotifyBuyerOfEnrouteDelivery;
 use App\Listeners\NotifyBuyerOfProductsArrival;
 use App\Listeners\NotifyVendorOfOrderPlacement;
@@ -93,6 +95,9 @@ class EventServiceProvider extends ServiceProvider
         DeliveryConfirmedByBuyer::class => [
             CreditLogisticCompanyWallet::class,
         ],
+        NewUserSuccessfullyAddedByAdmin::class => [
+            NotifyToAddedUser::class,
+        ]
     ];
 
     /**

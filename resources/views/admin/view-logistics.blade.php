@@ -1,0 +1,86 @@
+@extends('admin.layouts.layout')
+
+@section('content')
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Commodity Distributor Profiles</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row" id="summary">
+            @if($logistics->isEmpty())
+            <p class="text-center">No commodity distributor profile made yet.</p>
+            @else
+            <div class="table-responsive">
+                <table id="userTable" class="table table-bordered table-striped dataTable" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>SN</th>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>State</th>
+                            <th>L.G.A</th>
+                            <th>Address</th>
+                            <th>Rate/Km</th>
+                            <th>Phone Number</th>
+                            <th>Email Address</th>
+                            <th>Other Info</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($logistics as $logistic)
+                        <tr id="{{ $logistic->uuid }}">
+                            <td>{{ ++$count }}</td>
+                            <td>{{ $logistic->name }}</td>
+                            <td>{{ $logistic->location }}</td>
+                            <td>{{ $logistic->state }}</td>
+                            <td>{{ $logistic->lg }}</td>
+                            <td>{{ $logistic->address }}</td>
+                            <td>&#8358;{{ $logistic->rate }}</td>
+                            <td><a href="tel:{{ $logistic->phone }}">{{ $logistic->phone }}</a>
+                            </td>
+                            <td>
+                                <a href="mailto:{{ $logistic->email }}">{{ $logistic->email }}</a>
+                            </td>
+                            <td>{!! $logistic->other_info !!}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <th>Summary</th>
+                    </tfoot>
+                </table>
+                <!-- /.box-body -->
+            </div>
+            @endif
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+@endsection
+
+@push('scripts')
+<script>
+    $('document').ready(function() {
+        $('table').dataTable({
+            "pageLength": 10
+        });
+
+    });
+
+</script>
+@endpush
