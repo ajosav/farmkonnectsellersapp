@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Model\Order;
 use App\Model\Wallet;
+use App\Model\Delivery;
 use App\Model\Transaction;
 use App\FarmManagerProfile;
 use Illuminate\Http\Request;
@@ -139,5 +141,49 @@ class AdminController extends Controller
         $count = 0;
 
         return view('admin.transactions', ['transactions' => $transactions, 'count' => $count, 'total_credit' => $total_credit, 'total_debit' => $total_debit]);
+    }
+
+    public function fetch_orders(Request $request)
+    {
+        if ($request->is('admin/view-orders/distributors')) {
+            //
+            $role = 'CommodityDistributorProfile';
+            $seller_role = 'FarmManagerProfile';
+
+            $orders = Order::whereHas('user', function ($query) {
+                return $query->permission('Commodity Distributor');
+            })->paginate(10);
+        }
+
+        if ($request->is('admin/view-orders/retailers')) {
+            # code...
+            $role = 'CommodityRetailerProfile';
+            $seller_role = 'CommodityDistributorProfile';
+
+            $orders = Order::whereHas('user', function ($query) {
+                return $query->permission('Commodity Retailer');
+            })->paginate(10);
+        }
+
+        if ($request->is('admin/view-orders/consumers')) {
+            # code...
+            $role = 'CommodityConsumerRole';
+            $seller_role = 'CommodityRetailerProfile';
+
+            $orders = Order::whereHas('user', function ($query) {
+                return $query->permission('Commodity Consumer');
+            })->paginate(10);
+        }
+
+        return view('admin.orders', ['role' => $role, 'seller_role' => $seller_role, 'orders' => $orders]);
+    }
+
+    public function fetch_logistic_requests(Request $request)
+    {
+        $requests = Delivery::where(function ($query) {
+            $query->where('status', 1)->orWhere('status', 3)->orWhere('status', 4)->orWhere('status', 5);
+        })->get();
+
+        return view('admin.view-logistic-requests', ['requests' => $requests]);
     }
 }

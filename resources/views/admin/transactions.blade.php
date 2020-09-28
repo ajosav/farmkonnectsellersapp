@@ -90,7 +90,8 @@
 <script>
     $('document').ready(function () {
         $('table').dataTable({
-            "pageLength": 50
+            "bPaginate": false,
+            "bInfo": false,
         });
     });
 

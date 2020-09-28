@@ -1,3 +1,4 @@
+use App\Model\Delivery;
 @extends('layouts.farmkonnect')
 
 @section('content')

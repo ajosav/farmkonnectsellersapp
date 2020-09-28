@@ -31,7 +31,7 @@
                 </a>
             </li>
 
-            <li class="nav-item has-treeview {{ Request::is('orders*') ? 'menu-open' : '' }}">
+            <li class="nav-item has-treeview {{ Request::is('admin/view-orders*') ? 'menu-open' : '' }}">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-comments-dollar"></i>
                     <p>Orders
@@ -40,29 +40,29 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{ url('/wallet/withdraw') }}"
-                            class="nav-link {{Request::is('view-orders/distributors') ? 'active' : ''}}">
+                        <a href="{{ route('distributors.orders') }}"
+                            class="nav-link {{Request::is('admin/view-orders/distributors') ? 'active' : ''}}">
                             <i class="fas fa-user-check nav-icon"></i>
                             <p>Commodity Distributors</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('/wallet/withdraw') }}"
-                            class="nav-link {{Request::is('view-orders/retailers') ? 'active' : ''}}">
+                        <a href="{{ route('retailers.orders') }}"
+                            class="nav-link {{ Request::is('admin/view-orders/retailers') ? 'active' : '' }}">
                             <i class="fas fa-users-cog nav-icon"></i>
                             <p>Commodity Retailers</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('/wallet/withdraw') }}"
-                            class="nav-link {{Request::is('consumer') ? 'active' : ''}}">
+                        <a href="{{ route('consumers.orders') }}"
+                            class="nav-link {{Request::is('admin/view-orders/consumers') ? 'active' : ''}}">
                             <i class="fas fa-user-tag nav-icon"></i>
                             <p>Commodity Consumers</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('/wallet/withdraw') }}"
-                            class="nav-link {{Request::is('wallet/withdraw') ? 'active' : ''}}">
+                        <a href="{{ url('logistics.requests') }}"
+                            class="nav-link {{Request::is('admin/view-requests/logistics') ? 'active' : ''}}">
                             <i class="fas fa-shipping-fast nav-icon"></i>
                             <p>Logistic Companies</p>
                         </a>
@@ -156,14 +156,14 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('view-consumers') }}"
-                            class="nav-link {{Request::is('admin/view-users/commodity-consumers') ? 'active' : ''}}">
+                            class="nav-link {{ Request::is('admin/view-users/commodity-consumers') ? 'active' : ''}}">
                             <i class="fas fa-user-tag nav-icon"></i>
                             <p>Commodity Consumers</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('view-logistics') }}"
-                            class="nav-link {{Request::is('admin/view-users/logistics-companies') ? 'active' : ''}}">
+                            class="nav-link {{ Request::is('admin/view-users/logistics-companies') ? 'active' : ''}}">
                             <i class="fas fa-shipping-fast nav-icon"></i>
                             <p>Logistic Companies</p>
                         </a>

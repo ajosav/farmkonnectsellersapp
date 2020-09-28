@@ -40,6 +40,14 @@ Route::namespace('Admin')->group(function () {
         Route::get('/logistics-companies', 'AdminController@fetch_logistics')->name('view-logistics');
     });
 
+    Route::prefix('/view-orders')->group(function () {
+        Route::get('/distributors', 'AdminController@fetch_orders')->name('distributors.orders');
+        Route::get('/retailers', 'AdminController@fetch_orders')->name('retailers.orders');
+        Route::get('/consumers', 'AdminController@fetch_orders')->name('consumers.orders');
+    });
+
+    Route::get('/view-requests/logistics', 'AdminController@fetch_logistic_requests')->name('logistics.requests');
+
     Route::get('/view-transactions', 'AdminController@fetch_transactions')->name('view-transactions');
 
     Route::get('/new-user', 'UserController@create')->name('new-user');
